@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<applicationconfiguration>
+    <InboxFolder>/ecs_kesws/inbox/</InboxFolder>
+    <OutboxFolder>/ecs_kesws/outbox/</OutboxFolder>
+    <ProcessingFolder>/ecs_kesws/processbox/</ProcessingFolder> 
+    <!-- create files in achive using date formats-->
+    <ArchiveFolder>/ecs_kesws/archive/</ArchiveFolder>
+    <OutboxArchiveFolder>/ecs_kesws/archive/outbox/</OutboxArchiveFolder>
+    <AdditionalFolders>/ecs_kesws/archive/errors/</AdditionalFolders>
+    <MaximumTimeToHoldFilesBeingProcessed>24:00:00</MaximumTimeToHoldFilesBeingProcessed>
+    <IntergrationDatabaseurl>jdbc:mysql://LOCALHOST/ecsfortesting</IntergrationDatabaseurl>
+    <IntergrationDatabaseuser>IntergrationDatabaseUser</IntergrationDatabaseuser>
+    <IntergrationDatabasepassword>IntergrationDatabasePassword</IntergrationDatabasepassword>
+    <ECSDatabaseUrl>jdbc:mysql://LOCALHOST:3306/ecsfortesting</ECSDatabaseUrl>
+    <ECSDatabaseuser>root</ECSDatabaseuser>
+    <ECSDatabasepassword>TNEILC*1067</ECSDatabasepassword>
+    <!-- /ecs_kesws/MHAccess/kephismhbprod.pro -->
+    <MHXUserProfileFilePath>/ecs_kesws/MHAccess/mhx.pro</MHXUserProfileFilePath>
+    <MHXRetriveIP>192.168.92.2</MHXRetriveIP>
+    <MHXUsername>kephismhbuser</MHXUsername>
+    <MHXUserPassword>ylsekqDG6e7MMyirzWLS5sPLNd3aAqmj</MHXUserPassword>
+    <SenderId>keswsmhbuser</SenderId>
+    <LogFile>ECSKESWSLogFile.html</LogFile>
+    <Email1>bobbykimutai@kephis.org</Email1>
+    <Email2>bobbykimutai@gmail.com</Email2>
+    <FilestoReceiveCount>22</FilestoReceiveCount>
+    <MessageTypes>
+        <!-- message types-->
+        <MessageTypes1>OG_SUB_CD</MessageTypes1>
+        <MessageTypes2>OG_SUB_CD</MessageTypes2>
+        <MessageTypes3>OG_PAY_RES</MessageTypes3>
+    </MessageTypes>
+</applicationconfiguration>

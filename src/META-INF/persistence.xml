@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="ECS-KESWS-MiddlewarePU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>org.kephis.ecs_kesws.entities.EcsResCdFileMsg</class>
+    <class>org.kephis.ecs_kesws.entities.RecCdFileMsg</class>
+    <class>org.kephis.ecs_kesws.entities.ResCdFileMsg</class>
+    <class>org.kephis.ecs_kesws.entities.KeswsInspectors</class>
+    <class>org.kephis.ecs_kesws.entities.CdFileDetails</class>
+    <class>org.kephis.ecs_kesws.entities.Users</class>
+    <class>org.kephis.ecs_kesws.entities.InternalProductcodes</class>
+    <class>org.kephis.ecs_kesws.entities.RecPaymentMsg</class>
+    <class>org.kephis.ecs_kesws.entities.LogTypes</class>
+    <class>org.kephis.ecs_kesws.entities.Pricelist</class>
+    <class>org.kephis.ecs_kesws.entities.PricelistInternalProductcodeDocumentMap</class>
+    <class>org.kephis.ecs_kesws.entities.RecErrorMsg</class>
+    <class>org.kephis.ecs_kesws.entities.EcsDocumentTypes</class>
+    <class>org.kephis.ecs_kesws.entities.MessageTypes</class>
+    <class>org.kephis.ecs_kesws.entities.TransactionLogs</class>
+    <class>org.kephis.ecs_kesws.entities.RecPaymentFileMsg</class>
+    <class>org.kephis.ecs_kesws.entities.PaymentInfoLog</class>
+    <class>org.kephis.ecs_kesws.entities.RecErrorFileMsg</class>
+    <class>org.kephis.ecs_kesws.entities.ECSConDoc</class>
+    <class>org.kephis.ecs_kesws.entities.EcsConDoc</class>
+    <class>org.kephis.ecs_kesws.entities.KeswsRefDataCategory</class>
+    <class>org.kephis.ecs_kesws.entities.KeswsRefData</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ECS_KESWS?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.password" value="TNEILC*1067"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+      <!-- Hibernate properties -->
+      <property name="hibernate.show_sql" value="false"/>
+      <property name="hibernate.format_sql" value="false"/>
+      <!-- Configuring Connection Pool -->
+      <property name="hibernate.c3p0.min_size" value="5"/>
+      <property name="hibernate.c3p0.max_size" value="20"/>
+      <property name="hibernate.c3p0.timeout" value="500"/>
+      <property name="hibernate.c3p0.max_statements" value="50"/>
+      <property name="hibernate.c3p0.idle_test_period" value="2000"/>
+      <property name="org.hibernate" value="false"/>
+    </properties>
+  </persistence-unit>
+</persistence>
