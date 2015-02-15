@@ -32,7 +32,68 @@ public class EcsConDocJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
- 
+    public void create(EcsConDoc ecsConDoc) throws PreexistingEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(ecsConDoc);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findEcsConDoc(ecsConDoc.getId()) != null) {
+                throw new PreexistingEntityException("EcsConDoc " + ecsConDoc + " already exists.", ex);
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(EcsConDoc ecsConDoc) throws NonexistentEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            ecsConDoc = em.merge(ecsConDoc);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                String id = ecsConDoc.getId();
+                if (findEcsConDoc(id) == null) {
+                    throw new NonexistentEntityException("The ecsConDoc with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(String id) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            EcsConDoc ecsConDoc;
+            try {
+                ecsConDoc = em.getReference(EcsConDoc.class, id);
+                ecsConDoc.getId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The ecsConDoc with id " + id + " no longer exists.", enfe);
+            }
+            em.remove(ecsConDoc);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
 
     public List<EcsConDoc> findEcsConDocEntities() {
         return findEcsConDocEntities(true, -1, -1);

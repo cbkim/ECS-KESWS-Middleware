@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "PricelistInternalProductcodeDocumentMap.findAll", query = "SELECT p FROM PricelistInternalProductcodeDocumentMap p"),
     @NamedQuery(name = "PricelistInternalProductcodeDocumentMap.findByPricelistIPCMAPID", query = "SELECT p FROM PricelistInternalProductcodeDocumentMap p WHERE p.pricelistIPCMAPID = :pricelistIPCMAPID"),
+    @NamedQuery(name = "PricelistInternalProductcodeDocumentMap.findByIPCIDRef", query = "SELECT p FROM PricelistInternalProductcodeDocumentMap p WHERE p.iNTERNALPRODUCTCODESIPCIDRef = :iNTERNALPRODUCTCODESIPCIDRef"),
     @NamedQuery(name = "PricelistInternalProductcodeDocumentMap.findByDocumentIDRef", query = "SELECT p FROM PricelistInternalProductcodeDocumentMap p WHERE p.documentIDRef = :documentIDRef")})
 public class PricelistInternalProductcodeDocumentMap implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -5,7 +5,7 @@
     <ProcessingFolder>/ecs_kesws/processbox/</ProcessingFolder> 
     <!-- create files in achive using date formats-->
     <ArchiveFolder>/ecs_kesws/archive/</ArchiveFolder>
-    <OutboxArchiveFolder>/ecs_kesws/archive/outbox/</OutboxArchiveFolder>
+    <OutboxArchiveFolder>/ecs_kesws/archive/</OutboxArchiveFolder>
     <AdditionalFolders>/ecs_kesws/archive/errors/</AdditionalFolders>
     <MaximumTimeToHoldFilesBeingProcessed>24:00:00</MaximumTimeToHoldFilesBeingProcessed>
     <IntergrationDatabaseurl>jdbc:mysql://LOCALHOST/ecsfortesting</IntergrationDatabaseurl>

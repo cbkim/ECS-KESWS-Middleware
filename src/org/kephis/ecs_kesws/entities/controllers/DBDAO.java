@@ -20,7 +20,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import org.kephis.ecs_kesws.entities.CdFileDetails;
-import org.kephis.ecs_kesws.entities.CustomPersistence;
+//import org.kephis.ecs_kesws.entities.CustomPersistence;
 import org.kephis.ecs_kesws.entities.InternalProductcodes;
 import org.kephis.ecs_kesws.entities.LogTypes;
 import org.kephis.ecs_kesws.entities.MessageTypes;
@@ -54,7 +54,7 @@ public class DBDAO {
         System.setProperties(p);
         org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger("org.hibernate");
         java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.WARNING); //or whatever level you need
-        emf = CustomPersistence.createEntityManagerFactory("ECS-KESWS-MiddlewarePU");
+        emf = Persistence.createEntityManagerFactory("ECS-KESWS-MiddlewarePU");
         em = emf.createEntityManager();
 
     }

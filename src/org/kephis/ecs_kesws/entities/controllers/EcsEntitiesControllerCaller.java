@@ -10,12 +10,15 @@ import com.jolbox.bonecp.BoneCPConfig;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -60,10 +63,11 @@ public class EcsEntitiesControllerCaller {
         CreatedECSconsignmentId = createECSconsignmentdetails(ecsConsignmentDocumentObj, ClientId,
                 recCdFileMsg, ecsKeswsEntitiesController);
         if (CreatedECSconsignmentId != 0) {
-            transactioniscomplete=createECSconsignmentVariatyQuantities(recCdFileMsg, keswsConsignmentDocumentObj,
-                    ecsConsignmentDocumentObj, CreatedECSconsignmentId, ClientId ,ecsKeswsEntitiesController);
-            transactioniscomplete=createECSconsignmentPhytoCertificate(CreatedECSconsignmentId,
+            transactioniscomplete = createECSconsignmentVariatyQuantities(recCdFileMsg, keswsConsignmentDocumentObj,
+                    ecsConsignmentDocumentObj, CreatedECSconsignmentId, ClientId, ecsKeswsEntitiesController);
+            transactioniscomplete = createECSconsignmentPhytoCertificate(CreatedECSconsignmentId,
                     recCdFileMsg, ecsKeswsEntitiesController);
+            transactioniscomplete = createConsignmentInvoice(CreatedECSconsignmentId, ClientId, ecsKeswsEntitiesController);
         }
 
         return transactioniscomplete;
@@ -299,12 +303,12 @@ public class EcsEntitiesControllerCaller {
                 CallableStatement stmt1 = null;
                 String sql2 = "{call spclient_insertupdateconsignee(?," + "?,"
                         + "?," + "?," + "?," + "?," + "?," + "?," + "?," + "?,"
-                        + "?,"+"?"
+                        + "?," + "?"
                         + ")}";
-                 System.out.println("{call spclient_insertupdateconsignee("+p_flag+"," + p_csg_id+","
-                        +p_firmname+ "," + p_streetname1+"," +p_streetname2+ "," +p_postalcode+ "," 
-                        +p_town+ "," + p_cnt_id+"," + p_number+"," + p_shortname+","
-                        + p_clt_id+""
+                System.out.println("{call spclient_insertupdateconsignee(" + p_flag + "," + p_csg_id + ","
+                        + p_firmname + "," + p_streetname1 + "," + p_streetname2 + "," + p_postalcode + ","
+                        + p_town + "," + p_cnt_id + "," + p_number + "," + p_shortname + ","
+                        + p_clt_id + ""
                         + ")}");
                 stmt1 = connection.prepareCall(sql2);
                 stmt1.setInt(1, p_flag);
@@ -318,7 +322,7 @@ public class EcsEntitiesControllerCaller {
                 stmt1.setString(9, p_number);
                 stmt1.setString(10, p_shortname);
                 stmt1.setString(11, p_clt_id);
-                stmt1.setString(12,"");
+                stmt1.setString(12, "");
                 stmt1.executeUpdate();
             }
             connectionPool.shutdown();
@@ -489,7 +493,7 @@ public class EcsEntitiesControllerCaller {
     public boolean createECSconsignmentPhytoCertificate(Integer CGT_ID, RecCdFileMsg recCdFileMsgId, EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesControllerCaller) {
         BoneCP connectionPool = null;
         Connection connection = null;
-         boolean transactioniscomplete=false;
+        boolean transactioniscomplete = false;
         try {
             // load the database driver (make sure this is in your classpath!)
             Class.forName(JDBC_DRIVER);
@@ -506,15 +510,15 @@ public class EcsEntitiesControllerCaller {
             if (connection != null) {
 
                 Statement stmt = connection.createStatement();
-                String sql = " insert into CERTIFICATE (CGT_ID, CRT_ID) values ("
+                String sql = " insert into certificate (CGT_ID, CRT_ID) values ("
                         + CGT_ID.toString() + "," + "1" + ");";
                 stmt.executeUpdate(sql);
-                connection.close(); 
+                connection.close();
                 ecsKeswsEntitiesControllerCaller.logInfo(recCdFileMsgId.getFileName(),
                         "CERTIFICATE ID FOR CONSIGNEMENT ID " + CGT_ID.toString() + " CREATED");
-                 transactioniscomplete = true;
-             
-             }
+                transactioniscomplete = true;
+
+            }
             connectionPool.shutdown(); // shutdown connection pool.
         } catch (Exception ex) {
             Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
@@ -811,15 +815,15 @@ public class EcsEntitiesControllerCaller {
                             IPCObj.setAggregateIPCCodeLevel(0);
                             IPCObj.setInternalProductCode(itemDetails2.getCDProduct1().getInternalProductNo());
                             IPCObj.setHscode(itemDetails2.getCDProduct1().getItemHSCode());
-                            IPCObj.setHSCODEDesc("System generated " + itemDetails2.getCDProduct1().getHSDescription() + ":" + itemDetails2.getCDProduct1().getItemDescription());
-                            IPCObj.setDateDeactivated(date); 
-                             System.err.println("ERROR LOG2 "+itemDetails2.getCDProduct1().getInternalProductNo());
+                            IPCObj.setHscodeDesc("System generated " + itemDetails2.getCDProduct1().getHSDescription() + ":" + itemDetails2.getCDProduct1().getItemDescription());
+                            IPCObj.setDateDeactivated(date);
+                            System.err.println("ERROR LOG2 " + itemDetails2.getCDProduct1().getInternalProductNo());
                             ecsKeswsEntitiesController.createInternalProductcode(IPCObj);
                             ecsKeswsEntitiesController.logInfo(recCdFileMsg.getFileName(), "CREATED IPC ENTRY ON ECSKESWSDB");
 
                         }
                         IPCObj = ecsKeswsEntitiesController.getInternalProductcodes(itemDetails2.getCDProduct1().getInternalProductNo());
-                        System.err.println("ERROR LOG3 "+IPCObj.getInternalProductCode());
+                        System.err.println("ERROR LOG3 " + IPCObj.getInternalProductCode());
                         ecsKeswsEntitiesController.updateCreateInternalProductcodePriceDocMappings(IPCObj);
                         ecsKeswsEntitiesController.recCDFileMsgDetails(recCdFileMsg, IPCObj, weight);
                         transactioniscomplete = true;
@@ -866,7 +870,7 @@ public class EcsEntitiesControllerCaller {
                             IPCObj.setAggregateIPCCodeLevel(0);
                             IPCObj.setInternalProductCode(itemDetails2.getCDProduct1().getInternalProductNo());
                             IPCObj.setHscode(itemDetails2.getCDProduct1().getItemHSCode());
-                            IPCObj.setHSCODEDesc("System generated " + itemDetails2.getCDProduct1().getHSDescription() + ":" + itemDetails2.getCDProduct1().getItemDescription());
+                            IPCObj.setHscodeDesc("System generated " + itemDetails2.getCDProduct1().getHSDescription() + ":" + itemDetails2.getCDProduct1().getItemDescription());
                             IPCObj.setDateDeactivated(date);
                             ecsKeswsEntitiesController.createInternalProductcode(IPCObj);
                             ecsKeswsEntitiesController.logInfo(recCdFileMsg.getFileName(), "CREATED IPC ENTRY ON ECSKESWSDB");
@@ -1783,7 +1787,7 @@ public class EcsEntitiesControllerCaller {
             if (connection != null) {
                 Statement stmt = connection.createStatement();
 
-                String sql = "SELECT  DOCUMENT_NR   FROM   `CERTIFICATE` WHERE CGT_ID=" + eCSconsignmentId + " ORDER BY id DESC LIMIT  0, 1";
+                String sql = "SELECT  DOCUMENT_NR   FROM   `certificate` WHERE CGT_ID=" + eCSconsignmentId + " ORDER BY id DESC LIMIT  0, 1";
 
                 ResultSet rs = stmt.executeQuery(sql);
                 if (rs.next()) {
@@ -2177,7 +2181,6 @@ public class EcsEntitiesControllerCaller {
         return createdECSconsignmentId;
     }
 
-   
     public List<Integer> getSubmittedConsignementIds() {
         List<Integer> consignmentIds = new ArrayList<Integer>() {
         };
@@ -2197,17 +2200,17 @@ public class EcsEntitiesControllerCaller {
             connectionPool = new BoneCP(config); // setup the connection pool 
             connection = connectionPool.getConnection(); // fetch a connection 
             if (connection != null) {
-                 String simpleProc = "{ call GET_SUBMITTED_CONDOC(?) }"; 
-            CallableStatement cs = connection.prepareCall(simpleProc);
-            cs.setString(1, "SUBMITTED");
-            cs.execute();
-            ResultSet rs1 = cs.getResultSet();
+                String simpleProc = "{ call GET_SUBMITTED_CONDOC(?) }";
+                CallableStatement cs = connection.prepareCall(simpleProc);
+                cs.setString(1, "SUBMITTED");
+                cs.execute();
+                ResultSet rs1 = cs.getResultSet();
 
-            while (rs1.next()) {
-            consignmentIds.add((Integer)rs1.getInt("consignment_id"));
+                while (rs1.next()) {
+                    consignmentIds.add((Integer) rs1.getInt("consignment_id"));
+                }
             }
-    } 
-                    connectionPool.shutdown(); // shutdown connection pool.
+            connectionPool.shutdown(); // shutdown connection pool.
         } catch (Exception ex) {
             //  ECSKESWSFileLogger.Log(e.toString(), "SEVERE");
             Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
@@ -2222,6 +2225,311 @@ public class EcsEntitiesControllerCaller {
         }
         return consignmentIds;
     }
-    
 
+    /**
+     *
+     * @param ECSconsignmentId
+     * @param ClientId
+     * @param Amount
+     * @param AccpacInvoiceNo
+     * @param AccpacInvoiceRefNo
+     * @param ecsKeswsEntitiesController
+     * @param inseertupdateflag if set to 1 create invoice otherwise update
+     * @param Flow "ECS-KESWS","KESWS-ECS" if ecs kews call to update invoice
+     * cost FINANCE to ECS after billing update actual invoice No
+     *
+     * @return
+     */
+    private boolean InvoiceConsignmentonECS(int ECSconsignmentId, int ClientId, float Amount, String AccpacInvoiceNo, String AccpacInvoiceRefNo, String InvoiceDescription, String ServiceType, EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController, int inseertupdateflag, String Flow) {
+
+        boolean iscreated = false;
+        BoneCP connectionPool = null;
+        Connection connection = null;
+        try {
+            // load the database driver (make sure this is in your classpath!)
+            Class.forName(JDBC_DRIVER);
+            // setup the connection pool
+            BoneCPConfig config = new BoneCPConfig();
+            config.setJdbcUrl(DB_URL); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
+            config.setUsername(USER);
+            config.setPassword(PASS);
+            config.setMinConnectionsPerPartition(5);
+            config.setMaxConnectionsPerPartition(10);
+            config.setPartitionCount(1);
+            connectionPool = new BoneCP(config); // setup the connection pool 
+            connection = connectionPool.getConnection(); // fetch a connection 
+            if (connection != null) {
+
+                int p_flag = inseertupdateflag;
+                int p_emp_id = getECSEmpId(ECSconsignmentId);
+                String p_changed_date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                String p_clt_id = Integer.toString(ClientId);
+                int p_iap_id = getECSEmpId(ECSconsignmentId);
+                String p_iap_date = getECSIAPDate(ECSconsignmentId);
+                String p_insp_date = getECSIinspDate(ECSconsignmentId);
+                float p_amount_payable = Amount;
+                int p_cgt_id = ECSconsignmentId;
+                String p_accpac_inv_id = AccpacInvoiceNo;
+                String p_clk_inv_id = AccpacInvoiceRefNo;
+
+                /* Initialize variables * */
+                Statement stmt;
+
+                stmt = connection.createStatement();
+
+                String sql2 = "{call ecsfortesting.sprecordinspres_insertupdateinvoicedetails_middleware({"
+                        + " ?, "
+                        + " ?, "
+                        + " ? , "
+                        + " ? , "
+                        + " ? , "
+                        + "?,"
+                        + " ? ,"
+                        + "?, "
+                        + "?,"
+                        + "?,"
+                        + "?, "
+                        + "?,"
+                        + "?,"
+                        + "?"
+                        + ")";
+
+                CallableStatement stmt1 = null;
+                stmt1 = connection.prepareCall(sql2);
+                stmt1.setInt(1, p_flag);
+                stmt1.setInt(2, p_emp_id);
+                stmt1.setString(3, p_changed_date);
+                stmt1.setString(4, p_clt_id);
+                stmt1.setInt(5, p_iap_id);
+                stmt1.setString(6, p_iap_date);
+                stmt1.setString(7, p_insp_date);
+                stmt1.setFloat(8, p_amount_payable);
+                stmt1.setInt(9, p_cgt_id);
+                stmt1.setString(10, p_accpac_inv_id);
+                stmt1.setString(11, p_clk_inv_id);
+                stmt1.setString(12, ServiceType);
+                stmt1.setString(13, InvoiceDescription);
+                stmt1.setString(14, p_changed_date);
+                iscreated = stmt1.execute();
+
+            }
+            connectionPool.shutdown(); // shutdown connection pool.
+        } catch (Exception ex) {
+            connectionPool.shutdown(); // shutdown connection pool.
+//            ECSKESWSFileLogger.Log(e.toString(), "SEVERE");
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return iscreated;
+    }
+
+    private boolean InvoiceConsignmentonAccpac(int CreatedECSconsignmentId, String ClientPin, String AccpacInvoiceNo, String AccpacInvoiceRefNo, String InvoiceDescription, EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController) {
+
+        boolean iscreated = false;
+        Connection connection = null;
+
+        // load the database driver (make sure this is in your classpath!)
+        try {
+            ResultSet rs = null;
+            ResultSet temp = null;
+            ResultSet temp2 = null;
+            ResultSet temp1 = null;
+
+            Statement stmt = null;
+            connection = DriverManager.getConnection("jdbc:sqlserver://HQICT005;databaseName=INTERGRATION", "sa", "#@kim4jc");
+            stmt = connection.createStatement();
+            if (connection != null) {
+                //  SELECT COUNT(*) FROM  [dbo].[ECS_INVOICE_DETAILS]
+                String INV_ID = null;
+                String CUST_NUMBER = ClientPin;
+                String REFERENCE_NUMBER = AccpacInvoiceRefNo;
+                String INV_DESCRIPTION = InvoiceDescription;
+                String INV_AMOUNT = null;
+                String INV_DATE = null;
+                String TRANSACTION_TYPE = null;
+                String CUR_CODE = "KES";
+                String STATUS = "1";
+                String BATCHNUMBER = null;
+                String ENTRYNUMBER = null;
+                String CONVERSION_RATE = null;
+                String PROCESSED_T0_SAGE_DATE = null;
+                String PROCESSED_TO_SAGE_REMARKS = null;
+                String Ispaid = null;
+                String RECEIPT_AMOUNT = null;
+                String USER_ID = null;
+                String RECEIPT_NUMBER = null;
+
+                if (stmt.execute("INSERT INTO dbo.ECS_INVOICE_DETAILS ("
+                        + "INV_ID"
+                        + ",CUST_NUMBER"
+                        + ",REFERENCE_NUMBER"
+                        + ",INV_DESCRIPTION"
+                        + ",INV_AMOUNT"
+                        + ",INV_DATE"
+                        + ",TRANSACTION_TYPE"
+                        + ",CUR_CODE"
+                        + ",STATUS"
+                        + ",BATCHNUMBER"
+                        + ",ENTRYNUMBER"
+                        + ",CONVERSION_RATE"
+                        + ",PROCESSED_T0_SAGE_DATE"
+                        + ",PROCESSED_TO_SAGE_REMARKS"
+                        + ",Ispaid"
+                        + ",RECEIPT_AMOUNT"
+                        + ",USER_ID"
+                        + ",RECEIPT_NUMBER"
+                        + ") VALUES  ("
+                        + "'" + INV_ID + "',"
+                        + "'" + CUST_NUMBER + "',"
+                        + "'" + REFERENCE_NUMBER + "',"
+                        + "'" + INV_DESCRIPTION + "',"
+                        + "'" + INV_AMOUNT + "',"
+                        + "'" + INV_DATE + "',"
+                        + "'" + TRANSACTION_TYPE + "',"
+                        + "'" + CUR_CODE + "',"
+                        + "'" + STATUS + "',"
+                        + "'" + BATCHNUMBER + "',"
+                        + "'" + ENTRYNUMBER + "',"
+                        + "'" + CONVERSION_RATE + "',"
+                        + "'" + PROCESSED_T0_SAGE_DATE + "',"
+                        + "'" + PROCESSED_TO_SAGE_REMARKS + "',"
+                        + "'" + Ispaid + "',"
+                        + "'" + RECEIPT_AMOUNT + "',"
+                        + "'" + USER_ID + "',"
+                        + "'" + RECEIPT_NUMBER + "');")) {
+                    // Return  False  Log transaction error
+                } else {
+                    //Return Accpac invoice Refrence 
+                    iscreated = true;
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
+            //Log error 
+//            ECSKESWSFileLogger.Log(e.toString(), "SEVERE");
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        return iscreated;
+    }
+
+    private boolean createConsignmentInvoice(int CreatedECSconsignmentId, int ClientId, EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController) {
+        boolean iscreated = false;
+        //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return iscreated;
+    }
+
+    private int getECSEmpId(int ECSconsignmentId) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 1;
+    }
+
+    private String getECSIAPDate(int ECSconsignmentId) {
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    }
+
+    private String getECSIinspDate(int ECSconsignmentId) {
+        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    }
+
+    boolean CreateClientinACCPAC(String ClientPin, String ClientName) {
+        boolean iscreated = false;
+        Connection connection = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        // load the database driver (make sure this is in your classpath!)
+        try {
+
+            connection = DriverManager.getConnection("jdbc:sqlserver://HQICT005;databaseName=INTERGRATION", "sa", "#@kim4jc");
+
+            if (connection != null) {
+                stmt = connection.createStatement();
+                //increment to get  INDCUST2 unique  number  from ARCUS table
+                rs = stmt.executeQuery("SELECT CUST_NUMBER FROM  ECS_CUSTOMER_INFO WHERE CUST_NUMBER LIKE '%" + ClientPin + "%'");
+                while (rs.next()) {
+                    iscreated = false;
+                    return iscreated;
+                }
+                stmt = connection.createStatement();
+                if (stmt.execute(" INSERT INTO  dbo.ECS_CUSTOMER_INFO("
+                        + "           CUST_NUMBER"
+                        + "           ,CUST_NAME"
+                        + "           ,CUR_CODE"
+                        + ") VALUES  ("
+                        + "'" + ClientPin + "',"
+                        + "'" + ClientName + "',"
+                        + "'" + "KES" + "');")) {
+                    // Return  False  Log transaction error
+                } else {
+                    //Return Accpac invoice Refrence 
+                    iscreated = true;
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
+            //Log error 
+//            ECSKESWSFileLogger.Log(e.toString(), "SEVERE");
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        return iscreated;
+    }
+
+    String getClientACCPACId(String ClientPin, String ClientName) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        Connection connection = null;
+
+        // load the database driver (make sure this is in your classpath!)
+        try {
+
+            connection = DriverManager.getConnection("jdbc:sqlserver://HQICT005;databaseName=INTERGRATION", "sa", "#@kim4jc");
+
+            if (connection != null) {
+                stmt = connection.createStatement();
+                //increment to get  INDCUST2 unique  number  from ARCUS table
+                rs = stmt.executeQuery("SELECT CUST_NUMBER FROM  ECS_CUSTOMER_INFO WHERE CUST_NUMBER LIKE '%" + ClientPin + "%'");
+                while (rs.next()) {
+                    String CUST_NUMBER = rs.getString("CUST_NUMBER");
+                    return CUST_NUMBER;
+                }
+            }//Call CustomerDetails DOA and create customer details
+        } catch (Exception ex) {
+            Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
+             return "";
+
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return "";
+    }
 }

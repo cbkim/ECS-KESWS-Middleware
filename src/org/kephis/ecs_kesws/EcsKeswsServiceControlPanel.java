@@ -67,6 +67,7 @@ public class EcsKeswsServiceControlPanel extends javax.swing.JFrame {
         jRadioButton2.setText("Pre Payment");
 
         jButton3.setText("Stop");
+        jButton3.setSelected(true);
 
         jLabel1.setText("Files processed");
 

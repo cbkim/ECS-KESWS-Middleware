@@ -13,11 +13,11 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import org.kephis.ecs_kesws.entities.EcsResCdFileMsg;
 import org.kephis.ecs_kesws.entities.ResCdFileMsg;
 import org.kephis.ecs_kesws.entities.RecPaymentFileMsg;
 import org.kephis.ecs_kesws.entities.RecCdFileMsg;
 import org.kephis.ecs_kesws.entities.LogTypes;
+import org.kephis.ecs_kesws.entities.EcsResCdFileMsg;
 import org.kephis.ecs_kesws.entities.TransactionLogs;
 import org.kephis.ecs_kesws.entities.controllers.exceptions.NonexistentEntityException;
 
@@ -41,11 +41,6 @@ public class TransactionLogsJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileID = transactionLogs.getECSRESCDFILEMSGRECCDFileID();
-            if (ECSRESCDFILEMSGRECCDFileID != null) {
-                ECSRESCDFILEMSGRECCDFileID = em.getReference(ECSRESCDFILEMSGRECCDFileID.getClass(), ECSRESCDFILEMSGRECCDFileID.getRECCDFileID());
-                transactionLogs.setECSRESCDFILEMSGRECCDFileID(ECSRESCDFILEMSGRECCDFileID);
-            }
             ResCdFileMsg resCdFileMsgResCdFileId = transactionLogs.getResCdFileMsgResCdFileId();
             if (resCdFileMsgResCdFileId != null) {
                 resCdFileMsgResCdFileId = em.getReference(resCdFileMsgResCdFileId.getClass(), resCdFileMsgResCdFileId.getResCdFileId());
@@ -66,11 +61,12 @@ public class TransactionLogsJpaController implements Serializable {
                 logTypesLogIdLevel = em.getReference(logTypesLogIdLevel.getClass(), logTypesLogIdLevel.getLogIdLevel());
                 transactionLogs.setLogTypesLogIdLevel(logTypesLogIdLevel);
             }
-            em.persist(transactionLogs);
+            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileID = transactionLogs.getECSRESCDFILEMSGRECCDFileID();
             if (ECSRESCDFILEMSGRECCDFileID != null) {
-                ECSRESCDFILEMSGRECCDFileID.getTransactionLogsCollection().add(transactionLogs);
-                ECSRESCDFILEMSGRECCDFileID = em.merge(ECSRESCDFILEMSGRECCDFileID);
+                ECSRESCDFILEMSGRECCDFileID = em.getReference(ECSRESCDFILEMSGRECCDFileID.getClass(), ECSRESCDFILEMSGRECCDFileID.getRECCDFileID());
+                transactionLogs.setECSRESCDFILEMSGRECCDFileID(ECSRESCDFILEMSGRECCDFileID);
             }
+            em.persist(transactionLogs);
             if (resCdFileMsgResCdFileId != null) {
                 resCdFileMsgResCdFileId.getTransactionLogsCollection().add(transactionLogs);
                 resCdFileMsgResCdFileId = em.merge(resCdFileMsgResCdFileId);
@@ -87,6 +83,10 @@ public class TransactionLogsJpaController implements Serializable {
                 logTypesLogIdLevel.getTransactionLogsCollection().add(transactionLogs);
                 logTypesLogIdLevel = em.merge(logTypesLogIdLevel);
             }
+            if (ECSRESCDFILEMSGRECCDFileID != null) {
+                ECSRESCDFILEMSGRECCDFileID.getTransactionLogsCollection().add(transactionLogs);
+                ECSRESCDFILEMSGRECCDFileID = em.merge(ECSRESCDFILEMSGRECCDFileID);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -101,8 +101,6 @@ public class TransactionLogsJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             TransactionLogs persistentTransactionLogs = em.find(TransactionLogs.class, transactionLogs.getLogID());
-            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileIDOld = persistentTransactionLogs.getECSRESCDFILEMSGRECCDFileID();
-            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileIDNew = transactionLogs.getECSRESCDFILEMSGRECCDFileID();
             ResCdFileMsg resCdFileMsgResCdFileIdOld = persistentTransactionLogs.getResCdFileMsgResCdFileId();
             ResCdFileMsg resCdFileMsgResCdFileIdNew = transactionLogs.getResCdFileMsgResCdFileId();
             RecPaymentFileMsg recPaymentMsgReceivedPaymentMsgIdOld = persistentTransactionLogs.getRecPaymentMsgReceivedPaymentMsgId();
@@ -111,10 +109,8 @@ public class TransactionLogsJpaController implements Serializable {
             RecCdFileMsg recCdFileMsgRecCdFileIdNew = transactionLogs.getRecCdFileMsgRecCdFileId();
             LogTypes logTypesLogIdLevelOld = persistentTransactionLogs.getLogTypesLogIdLevel();
             LogTypes logTypesLogIdLevelNew = transactionLogs.getLogTypesLogIdLevel();
-            if (ECSRESCDFILEMSGRECCDFileIDNew != null) {
-                ECSRESCDFILEMSGRECCDFileIDNew = em.getReference(ECSRESCDFILEMSGRECCDFileIDNew.getClass(), ECSRESCDFILEMSGRECCDFileIDNew.getRECCDFileID());
-                transactionLogs.setECSRESCDFILEMSGRECCDFileID(ECSRESCDFILEMSGRECCDFileIDNew);
-            }
+            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileIDOld = persistentTransactionLogs.getECSRESCDFILEMSGRECCDFileID();
+            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileIDNew = transactionLogs.getECSRESCDFILEMSGRECCDFileID();
             if (resCdFileMsgResCdFileIdNew != null) {
                 resCdFileMsgResCdFileIdNew = em.getReference(resCdFileMsgResCdFileIdNew.getClass(), resCdFileMsgResCdFileIdNew.getResCdFileId());
                 transactionLogs.setResCdFileMsgResCdFileId(resCdFileMsgResCdFileIdNew);
@@ -131,15 +127,11 @@ public class TransactionLogsJpaController implements Serializable {
                 logTypesLogIdLevelNew = em.getReference(logTypesLogIdLevelNew.getClass(), logTypesLogIdLevelNew.getLogIdLevel());
                 transactionLogs.setLogTypesLogIdLevel(logTypesLogIdLevelNew);
             }
+            if (ECSRESCDFILEMSGRECCDFileIDNew != null) {
+                ECSRESCDFILEMSGRECCDFileIDNew = em.getReference(ECSRESCDFILEMSGRECCDFileIDNew.getClass(), ECSRESCDFILEMSGRECCDFileIDNew.getRECCDFileID());
+                transactionLogs.setECSRESCDFILEMSGRECCDFileID(ECSRESCDFILEMSGRECCDFileIDNew);
+            }
             transactionLogs = em.merge(transactionLogs);
-            if (ECSRESCDFILEMSGRECCDFileIDOld != null && !ECSRESCDFILEMSGRECCDFileIDOld.equals(ECSRESCDFILEMSGRECCDFileIDNew)) {
-                ECSRESCDFILEMSGRECCDFileIDOld.getTransactionLogsCollection().remove(transactionLogs);
-                ECSRESCDFILEMSGRECCDFileIDOld = em.merge(ECSRESCDFILEMSGRECCDFileIDOld);
-            }
-            if (ECSRESCDFILEMSGRECCDFileIDNew != null && !ECSRESCDFILEMSGRECCDFileIDNew.equals(ECSRESCDFILEMSGRECCDFileIDOld)) {
-                ECSRESCDFILEMSGRECCDFileIDNew.getTransactionLogsCollection().add(transactionLogs);
-                ECSRESCDFILEMSGRECCDFileIDNew = em.merge(ECSRESCDFILEMSGRECCDFileIDNew);
-            }
             if (resCdFileMsgResCdFileIdOld != null && !resCdFileMsgResCdFileIdOld.equals(resCdFileMsgResCdFileIdNew)) {
                 resCdFileMsgResCdFileIdOld.getTransactionLogsCollection().remove(transactionLogs);
                 resCdFileMsgResCdFileIdOld = em.merge(resCdFileMsgResCdFileIdOld);
@@ -172,6 +164,14 @@ public class TransactionLogsJpaController implements Serializable {
                 logTypesLogIdLevelNew.getTransactionLogsCollection().add(transactionLogs);
                 logTypesLogIdLevelNew = em.merge(logTypesLogIdLevelNew);
             }
+            if (ECSRESCDFILEMSGRECCDFileIDOld != null && !ECSRESCDFILEMSGRECCDFileIDOld.equals(ECSRESCDFILEMSGRECCDFileIDNew)) {
+                ECSRESCDFILEMSGRECCDFileIDOld.getTransactionLogsCollection().remove(transactionLogs);
+                ECSRESCDFILEMSGRECCDFileIDOld = em.merge(ECSRESCDFILEMSGRECCDFileIDOld);
+            }
+            if (ECSRESCDFILEMSGRECCDFileIDNew != null && !ECSRESCDFILEMSGRECCDFileIDNew.equals(ECSRESCDFILEMSGRECCDFileIDOld)) {
+                ECSRESCDFILEMSGRECCDFileIDNew.getTransactionLogsCollection().add(transactionLogs);
+                ECSRESCDFILEMSGRECCDFileIDNew = em.merge(ECSRESCDFILEMSGRECCDFileIDNew);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -201,11 +201,6 @@ public class TransactionLogsJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The transactionLogs with id " + id + " no longer exists.", enfe);
             }
-            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileID = transactionLogs.getECSRESCDFILEMSGRECCDFileID();
-            if (ECSRESCDFILEMSGRECCDFileID != null) {
-                ECSRESCDFILEMSGRECCDFileID.getTransactionLogsCollection().remove(transactionLogs);
-                ECSRESCDFILEMSGRECCDFileID = em.merge(ECSRESCDFILEMSGRECCDFileID);
-            }
             ResCdFileMsg resCdFileMsgResCdFileId = transactionLogs.getResCdFileMsgResCdFileId();
             if (resCdFileMsgResCdFileId != null) {
                 resCdFileMsgResCdFileId.getTransactionLogsCollection().remove(transactionLogs);
@@ -225,6 +220,11 @@ public class TransactionLogsJpaController implements Serializable {
             if (logTypesLogIdLevel != null) {
                 logTypesLogIdLevel.getTransactionLogsCollection().remove(transactionLogs);
                 logTypesLogIdLevel = em.merge(logTypesLogIdLevel);
+            }
+            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileID = transactionLogs.getECSRESCDFILEMSGRECCDFileID();
+            if (ECSRESCDFILEMSGRECCDFileID != null) {
+                ECSRESCDFILEMSGRECCDFileID.getTransactionLogsCollection().remove(transactionLogs);
+                ECSRESCDFILEMSGRECCDFileID = em.merge(ECSRESCDFILEMSGRECCDFileID);
             }
             em.remove(transactionLogs);
             em.getTransaction().commit();

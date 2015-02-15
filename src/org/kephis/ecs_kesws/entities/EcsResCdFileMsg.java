@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,7 +56,7 @@ public class EcsResCdFileMsg implements Serializable {
     @Column(name = "File_Name")
     private String fileName;
     @Basic(optional = false)
-    @Column(name = "Received_Date_Time")
+    @Column(name = "Received_Date_Time", insertable = false, updatable = false) 
     @Temporal(TemporalType.TIMESTAMP)
     private Date receivedDateTime;
     @Basic(optional = false)
@@ -91,14 +92,14 @@ public class EcsResCdFileMsg implements Serializable {
     private String filePath;
     @Column(name = "ISPAYMENTREQ")
     private Integer ispaymentreq;
-    @OneToMany(mappedBy = "eCSRESCDFILEMSGRECCDFileID")
+    @OneToMany(mappedBy = "eCSRESCDFILEMSGRECCDFileID",fetch = FetchType.EAGER)
     private Collection<ResCdFileMsg> resCdFileMsgCollection;
     @JoinColumn(name = "MESSAGE_TYPES_MESSAGE_TYPE_ID", referencedColumnName = "MESSAGE_TYPE_ID")
     @ManyToOne(optional = false)
     private MessageTypes messageTypesMessageTypeId;
     @OneToMany(mappedBy = "eCSRESCDFILEMSGRECCDFileID")
     private Collection<TransactionLogs> transactionLogsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eCSRESCDFILEMSGRECCDFileID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eCSRESCDFILEMSGRECCDFileID",fetch = FetchType.EAGER)
     private Collection<CdFileDetails> cdFileDetailsCollection;
 
     public EcsResCdFileMsg() {

@@ -48,13 +48,13 @@ public class CdFileDetails implements Serializable {
     @Column(name = "IPC_ID_CODE")
     private String ipcIdCode;
     @JoinColumn(name = "REC_CD_FILE_MSG_REC_CD_FILE_ID_Ref", referencedColumnName = "REC_CD_File_ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private RecCdFileMsg rECCDFILEMSGRECCDFILEIDRef;
     @JoinColumn(name = "PRICE_LIST_INT_IPC_DOCUMENT_MAP_Pricelist_IPC_MAP_ID_Ref", referencedColumnName = "Pricelist_IPC_MAP_ID")
     @ManyToOne(optional = false)
     private PricelistInternalProductcodeDocumentMap pRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef;
     @JoinColumn(name = "ECS_RES_CD_FILE_MSG_REC_CD_File_ID", referencedColumnName = "REC_CD_File_ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private EcsResCdFileMsg eCSRESCDFILEMSGRECCDFileID;
 
     public CdFileDetails() {

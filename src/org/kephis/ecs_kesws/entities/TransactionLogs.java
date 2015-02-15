@@ -46,7 +46,7 @@ public class TransactionLogs implements Serializable {
     @Column(name = "Log_Details")
     private String logDetails;
     @Basic(optional = false)
-    @Column(name = "Date_Time_Logged")
+    @Column(name = "Date_Time_Logged",insertable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateTimeLogged;
     @JoinColumn(name = "RES_CD_FILE_MSG_RES_CD_FILE_ID", referencedColumnName = "RES_CD_FILE_ID")

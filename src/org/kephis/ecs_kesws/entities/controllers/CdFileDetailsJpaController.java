@@ -14,9 +14,9 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.kephis.ecs_kesws.entities.CdFileDetails;
-import org.kephis.ecs_kesws.entities.EcsResCdFileMsg;
 import org.kephis.ecs_kesws.entities.RecCdFileMsg;
 import org.kephis.ecs_kesws.entities.PricelistInternalProductcodeDocumentMap;
+import org.kephis.ecs_kesws.entities.EcsResCdFileMsg;
 import org.kephis.ecs_kesws.entities.controllers.exceptions.NonexistentEntityException;
 
 /**
@@ -39,11 +39,6 @@ public class CdFileDetailsJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileID = cdFileDetails.getECSRESCDFILEMSGRECCDFileID();
-            if (ECSRESCDFILEMSGRECCDFileID != null) {
-                ECSRESCDFILEMSGRECCDFileID = em.getReference(ECSRESCDFILEMSGRECCDFileID.getClass(), ECSRESCDFILEMSGRECCDFileID.getRECCDFileID());
-                cdFileDetails.setECSRESCDFILEMSGRECCDFileID(ECSRESCDFILEMSGRECCDFileID);
-            }
             RecCdFileMsg RECCDFILEMSGRECCDFILEIDRef = cdFileDetails.getRECCDFILEMSGRECCDFILEIDRef();
             if (RECCDFILEMSGRECCDFILEIDRef != null) {
                 RECCDFILEMSGRECCDFILEIDRef = em.getReference(RECCDFILEMSGRECCDFILEIDRef.getClass(), RECCDFILEMSGRECCDFILEIDRef.getRECCDFileID());
@@ -54,11 +49,12 @@ public class CdFileDetailsJpaController implements Serializable {
                 PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef = em.getReference(PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef.getClass(), PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef.getPricelistIPCMAPID());
                 cdFileDetails.setPRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef(PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef);
             }
-            em.persist(cdFileDetails);
+            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileID = cdFileDetails.getECSRESCDFILEMSGRECCDFileID();
             if (ECSRESCDFILEMSGRECCDFileID != null) {
-                ECSRESCDFILEMSGRECCDFileID.getCdFileDetailsCollection().add(cdFileDetails);
-                ECSRESCDFILEMSGRECCDFileID = em.merge(ECSRESCDFILEMSGRECCDFileID);
+                ECSRESCDFILEMSGRECCDFileID = em.getReference(ECSRESCDFILEMSGRECCDFileID.getClass(), ECSRESCDFILEMSGRECCDFileID.getRECCDFileID());
+                cdFileDetails.setECSRESCDFILEMSGRECCDFileID(ECSRESCDFILEMSGRECCDFileID);
             }
+            em.persist(cdFileDetails);
             if (RECCDFILEMSGRECCDFILEIDRef != null) {
                 RECCDFILEMSGRECCDFILEIDRef.getCdFileDetailsCollection().add(cdFileDetails);
                 RECCDFILEMSGRECCDFILEIDRef = em.merge(RECCDFILEMSGRECCDFILEIDRef);
@@ -67,9 +63,12 @@ public class CdFileDetailsJpaController implements Serializable {
                 PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef.getCdFileDetailsCollection().add(cdFileDetails);
                 PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef = em.merge(PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef);
             }
+            if (ECSRESCDFILEMSGRECCDFileID != null) {
+                ECSRESCDFILEMSGRECCDFileID.getCdFileDetailsCollection().add(cdFileDetails);
+                ECSRESCDFILEMSGRECCDFileID = em.merge(ECSRESCDFILEMSGRECCDFileID);
+            }
             em.getTransaction().commit();
-        } 
-         finally {
+        } finally {
             if (em != null) {
                 em.close();
             }
@@ -82,16 +81,12 @@ public class CdFileDetailsJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             CdFileDetails persistentCdFileDetails = em.find(CdFileDetails.class, cdFileDetails.getId());
-            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileIDOld = persistentCdFileDetails.getECSRESCDFILEMSGRECCDFileID();
-            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileIDNew = cdFileDetails.getECSRESCDFILEMSGRECCDFileID();
             RecCdFileMsg RECCDFILEMSGRECCDFILEIDRefOld = persistentCdFileDetails.getRECCDFILEMSGRECCDFILEIDRef();
             RecCdFileMsg RECCDFILEMSGRECCDFILEIDRefNew = cdFileDetails.getRECCDFILEMSGRECCDFILEIDRef();
             PricelistInternalProductcodeDocumentMap PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefOld = persistentCdFileDetails.getPRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef();
             PricelistInternalProductcodeDocumentMap PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefNew = cdFileDetails.getPRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef();
-            if (ECSRESCDFILEMSGRECCDFileIDNew != null) {
-                ECSRESCDFILEMSGRECCDFileIDNew = em.getReference(ECSRESCDFILEMSGRECCDFileIDNew.getClass(), ECSRESCDFILEMSGRECCDFileIDNew.getRECCDFileID());
-                cdFileDetails.setECSRESCDFILEMSGRECCDFileID(ECSRESCDFILEMSGRECCDFileIDNew);
-            }
+            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileIDOld = persistentCdFileDetails.getECSRESCDFILEMSGRECCDFileID();
+            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileIDNew = cdFileDetails.getECSRESCDFILEMSGRECCDFileID();
             if (RECCDFILEMSGRECCDFILEIDRefNew != null) {
                 RECCDFILEMSGRECCDFILEIDRefNew = em.getReference(RECCDFILEMSGRECCDFILEIDRefNew.getClass(), RECCDFILEMSGRECCDFILEIDRefNew.getRECCDFileID());
                 cdFileDetails.setRECCDFILEMSGRECCDFILEIDRef(RECCDFILEMSGRECCDFILEIDRefNew);
@@ -100,15 +95,11 @@ public class CdFileDetailsJpaController implements Serializable {
                 PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefNew = em.getReference(PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefNew.getClass(), PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefNew.getPricelistIPCMAPID());
                 cdFileDetails.setPRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef(PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefNew);
             }
+            if (ECSRESCDFILEMSGRECCDFileIDNew != null) {
+                ECSRESCDFILEMSGRECCDFileIDNew = em.getReference(ECSRESCDFILEMSGRECCDFileIDNew.getClass(), ECSRESCDFILEMSGRECCDFileIDNew.getRECCDFileID());
+                cdFileDetails.setECSRESCDFILEMSGRECCDFileID(ECSRESCDFILEMSGRECCDFileIDNew);
+            }
             cdFileDetails = em.merge(cdFileDetails);
-            if (ECSRESCDFILEMSGRECCDFileIDOld != null && !ECSRESCDFILEMSGRECCDFileIDOld.equals(ECSRESCDFILEMSGRECCDFileIDNew)) {
-                ECSRESCDFILEMSGRECCDFileIDOld.getCdFileDetailsCollection().remove(cdFileDetails);
-                ECSRESCDFILEMSGRECCDFileIDOld = em.merge(ECSRESCDFILEMSGRECCDFileIDOld);
-            }
-            if (ECSRESCDFILEMSGRECCDFileIDNew != null && !ECSRESCDFILEMSGRECCDFileIDNew.equals(ECSRESCDFILEMSGRECCDFileIDOld)) {
-                ECSRESCDFILEMSGRECCDFileIDNew.getCdFileDetailsCollection().add(cdFileDetails);
-                ECSRESCDFILEMSGRECCDFileIDNew = em.merge(ECSRESCDFILEMSGRECCDFileIDNew);
-            }
             if (RECCDFILEMSGRECCDFILEIDRefOld != null && !RECCDFILEMSGRECCDFILEIDRefOld.equals(RECCDFILEMSGRECCDFILEIDRefNew)) {
                 RECCDFILEMSGRECCDFILEIDRefOld.getCdFileDetailsCollection().remove(cdFileDetails);
                 RECCDFILEMSGRECCDFILEIDRefOld = em.merge(RECCDFILEMSGRECCDFILEIDRefOld);
@@ -124,6 +115,14 @@ public class CdFileDetailsJpaController implements Serializable {
             if (PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefNew != null && !PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefNew.equals(PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefOld)) {
                 PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefNew.getCdFileDetailsCollection().add(cdFileDetails);
                 PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefNew = em.merge(PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRefNew);
+            }
+            if (ECSRESCDFILEMSGRECCDFileIDOld != null && !ECSRESCDFILEMSGRECCDFileIDOld.equals(ECSRESCDFILEMSGRECCDFileIDNew)) {
+                ECSRESCDFILEMSGRECCDFileIDOld.getCdFileDetailsCollection().remove(cdFileDetails);
+                ECSRESCDFILEMSGRECCDFileIDOld = em.merge(ECSRESCDFILEMSGRECCDFileIDOld);
+            }
+            if (ECSRESCDFILEMSGRECCDFileIDNew != null && !ECSRESCDFILEMSGRECCDFileIDNew.equals(ECSRESCDFILEMSGRECCDFileIDOld)) {
+                ECSRESCDFILEMSGRECCDFileIDNew.getCdFileDetailsCollection().add(cdFileDetails);
+                ECSRESCDFILEMSGRECCDFileIDNew = em.merge(ECSRESCDFILEMSGRECCDFileIDNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -154,11 +153,6 @@ public class CdFileDetailsJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The cdFileDetails with id " + id + " no longer exists.", enfe);
             }
-            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileID = cdFileDetails.getECSRESCDFILEMSGRECCDFileID();
-            if (ECSRESCDFILEMSGRECCDFileID != null) {
-                ECSRESCDFILEMSGRECCDFileID.getCdFileDetailsCollection().remove(cdFileDetails);
-                ECSRESCDFILEMSGRECCDFileID = em.merge(ECSRESCDFILEMSGRECCDFileID);
-            }
             RecCdFileMsg RECCDFILEMSGRECCDFILEIDRef = cdFileDetails.getRECCDFILEMSGRECCDFILEIDRef();
             if (RECCDFILEMSGRECCDFILEIDRef != null) {
                 RECCDFILEMSGRECCDFILEIDRef.getCdFileDetailsCollection().remove(cdFileDetails);
@@ -168,6 +162,11 @@ public class CdFileDetailsJpaController implements Serializable {
             if (PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef != null) {
                 PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef.getCdFileDetailsCollection().remove(cdFileDetails);
                 PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef = em.merge(PRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef);
+            }
+            EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileID = cdFileDetails.getECSRESCDFILEMSGRECCDFileID();
+            if (ECSRESCDFILEMSGRECCDFileID != null) {
+                ECSRESCDFILEMSGRECCDFileID.getCdFileDetailsCollection().remove(cdFileDetails);
+                ECSRESCDFILEMSGRECCDFileID = em.merge(ECSRESCDFILEMSGRECCDFileID);
             }
             em.remove(cdFileDetails);
             em.getTransaction().commit();

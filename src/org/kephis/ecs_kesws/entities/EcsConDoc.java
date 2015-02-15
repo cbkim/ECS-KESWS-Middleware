@@ -45,46 +45,52 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EcsConDoc.findByPortOfArrivalDesc", query = "SELECT e FROM EcsConDoc e WHERE e.portOfArrivalDesc = :portOfArrivalDesc"),
     @NamedQuery(name = "EcsConDoc.findByPortOfDeparture", query = "SELECT e FROM EcsConDoc e WHERE e.portOfDeparture = :portOfDeparture"),
     @NamedQuery(name = "EcsConDoc.findByPortOfDepartureDesc", query = "SELECT e FROM EcsConDoc e WHERE e.portOfDepartureDesc = :portOfDepartureDesc"),
-    @NamedQuery(name = "EcsConDoc.findByConsigneeCityCode", query = "SELECT e FROM EcsConDoc e WHERE e.consigneeCityCode = :consigneeCityCode"),
-    @NamedQuery(name = "EcsConDoc.findByFirmName", query = "SELECT e FROM EcsConDoc e WHERE e.firmName = :firmName"),
-    @NamedQuery(name = "EcsConDoc.findByClientCountry", query = "SELECT e FROM EcsConDoc e WHERE e.clientCountry = :clientCountry"),
-    @NamedQuery(name = "EcsConDoc.findByClientCity", query = "SELECT e FROM EcsConDoc e WHERE e.clientCity = :clientCity"),
-    @NamedQuery(name = "EcsConDoc.findByClientCntCode", query = "SELECT e FROM EcsConDoc e WHERE e.clientCntCode = :clientCntCode"),
-    @NamedQuery(name = "EcsConDoc.findByClientPostNumber", query = "SELECT e FROM EcsConDoc e WHERE e.clientPostNumber = :clientPostNumber"),
-    @NamedQuery(name = "EcsConDoc.findByClientPin", query = "SELECT e FROM EcsConDoc e WHERE e.clientPin = :clientPin"),
-    @NamedQuery(name = "EcsConDoc.findByClientTel", query = "SELECT e FROM EcsConDoc e WHERE e.clientTel = :clientTel"),
-    @NamedQuery(name = "EcsConDoc.findByClientFax", query = "SELECT e FROM EcsConDoc e WHERE e.clientFax = :clientFax"),
-    @NamedQuery(name = "EcsConDoc.findByClientMail", query = "SELECT e FROM EcsConDoc e WHERE e.clientMail = :clientMail"),
-    @NamedQuery(name = "EcsConDoc.findByClientWareHouseCode", query = "SELECT e FROM EcsConDoc e WHERE e.clientWareHouseCode = :clientWareHouseCode"),
-    @NamedQuery(name = "EcsConDoc.findByConsigneeFirm", query = "SELECT e FROM EcsConDoc e WHERE e.consigneeFirm = :consigneeFirm"),
-    @NamedQuery(name = "EcsConDoc.findByConsigneePhysicalAddress", query = "SELECT e FROM EcsConDoc e WHERE e.consigneePhysicalAddress = :consigneePhysicalAddress"),
-    @NamedQuery(name = "EcsConDoc.findByConsigneePhysicalAddress2", query = "SELECT e FROM EcsConDoc e WHERE e.consigneePhysicalAddress2 = :consigneePhysicalAddress2"),
-    @NamedQuery(name = "EcsConDoc.findByConsigneePostalCode", query = "SELECT e FROM EcsConDoc e WHERE e.consigneePostalCode = :consigneePostalCode"),
-    @NamedQuery(name = "EcsConDoc.findByConsigneeCountryIso", query = "SELECT e FROM EcsConDoc e WHERE e.consigneeCountryIso = :consigneeCountryIso"),
-    @NamedQuery(name = "EcsConDoc.findByConsigneeCountry", query = "SELECT e FROM EcsConDoc e WHERE e.consigneeCountry = :consigneeCountry"),
-    @NamedQuery(name = "EcsConDoc.findByConsigneeCity", query = "SELECT e FROM EcsConDoc e WHERE e.consigneeCity = :consigneeCity"),
-    @NamedQuery(name = "EcsConDoc.findByHscode", query = "SELECT e FROM EcsConDoc e WHERE e.hscode = :hscode"),
-    @NamedQuery(name = "EcsConDoc.findByHscode2", query = "SELECT e FROM EcsConDoc e WHERE e.hscode2 = :hscode2"),
-    @NamedQuery(name = "EcsConDoc.findByHscodeDesc", query = "SELECT e FROM EcsConDoc e WHERE e.hscodeDesc = :hscodeDesc"),
-    @NamedQuery(name = "EcsConDoc.findByHscodeDesc2", query = "SELECT e FROM EcsConDoc e WHERE e.hscodeDesc2 = :hscodeDesc2"),
-    @NamedQuery(name = "EcsConDoc.findByConsignmentUnitName", query = "SELECT e FROM EcsConDoc e WHERE e.consignmentUnitName = :consignmentUnitName"),
-    @NamedQuery(name = "EcsConDoc.findByVaqNumberOfPackages", query = "SELECT e FROM EcsConDoc e WHERE e.vaqNumberOfPackages = :vaqNumberOfPackages"),
-    @NamedQuery(name = "EcsConDoc.findByVaqPackagesWeight", query = "SELECT e FROM EcsConDoc e WHERE e.vaqPackagesWeight = :vaqPackagesWeight"),
+    @NamedQuery(name = "EcsConDoc.findByExporterFirmNameCityCode", query = "SELECT e FROM EcsConDoc e WHERE e.exporterFirmNameCityCode = :exporterFirmNameCityCode"),
+    @NamedQuery(name = "EcsConDoc.findByExporterFirmName", query = "SELECT e FROM EcsConDoc e WHERE e.exporterFirmName = :exporterFirmName"),
+    @NamedQuery(name = "EcsConDoc.findByExporterCountry", query = "SELECT e FROM EcsConDoc e WHERE e.exporterCountry = :exporterCountry"),
+    @NamedQuery(name = "EcsConDoc.findByExporterCity", query = "SELECT e FROM EcsConDoc e WHERE e.exporterCity = :exporterCity"),
+    @NamedQuery(name = "EcsConDoc.findByExporterCntCode", query = "SELECT e FROM EcsConDoc e WHERE e.exporterCntCode = :exporterCntCode"),
+    @NamedQuery(name = "EcsConDoc.findByExporterPostNumber", query = "SELECT e FROM EcsConDoc e WHERE e.exporterPostNumber = :exporterPostNumber"),
+    @NamedQuery(name = "EcsConDoc.findByExporterPhysicalAddress", query = "SELECT e FROM EcsConDoc e WHERE e.exporterPhysicalAddress = :exporterPhysicalAddress"),
+    @NamedQuery(name = "EcsConDoc.findByExporterPin", query = "SELECT e FROM EcsConDoc e WHERE e.exporterPin = :exporterPin"),
+    @NamedQuery(name = "EcsConDoc.findByExporterTel", query = "SELECT e FROM EcsConDoc e WHERE e.exporterTel = :exporterTel"),
+    @NamedQuery(name = "EcsConDoc.findByExporterFax", query = "SELECT e FROM EcsConDoc e WHERE e.exporterFax = :exporterFax"),
+    @NamedQuery(name = "EcsConDoc.findByExporterMail", query = "SELECT e FROM EcsConDoc e WHERE e.exporterMail = :exporterMail"),
+    @NamedQuery(name = "EcsConDoc.findByExporterWareHouseCode", query = "SELECT e FROM EcsConDoc e WHERE e.exporterWareHouseCode = :exporterWareHouseCode"),
+    @NamedQuery(name = "EcsConDoc.findByImporterFirm", query = "SELECT e FROM EcsConDoc e WHERE e.importerFirm = :importerFirm"),
+    @NamedQuery(name = "EcsConDoc.findByImporterPhysicalAddress", query = "SELECT e FROM EcsConDoc e WHERE e.importerPhysicalAddress = :importerPhysicalAddress"),
+    @NamedQuery(name = "EcsConDoc.findByImporterPhysicalAddress2", query = "SELECT e FROM EcsConDoc e WHERE e.importerPhysicalAddress2 = :importerPhysicalAddress2"),
+    @NamedQuery(name = "EcsConDoc.findByImporterPostalCode", query = "SELECT e FROM EcsConDoc e WHERE e.importerPostalCode = :importerPostalCode"),
+    @NamedQuery(name = "EcsConDoc.findByImporterCountryIso", query = "SELECT e FROM EcsConDoc e WHERE e.importerCountryIso = :importerCountryIso"),
+    @NamedQuery(name = "EcsConDoc.findByImporterCountry", query = "SELECT e FROM EcsConDoc e WHERE e.importerCountry = :importerCountry"),
+    @NamedQuery(name = "EcsConDoc.findByImporterCity", query = "SELECT e FROM EcsConDoc e WHERE e.importerCity = :importerCity"),
     @NamedQuery(name = "EcsConDoc.findByFreightStation", query = "SELECT e FROM EcsConDoc e WHERE e.freightStation = :freightStation"),
     @NamedQuery(name = "EcsConDoc.findByPreferedInspectionDate", query = "SELECT e FROM EcsConDoc e WHERE e.preferedInspectionDate = :preferedInspectionDate"),
-    @NamedQuery(name = "EcsConDoc.findByUnitCode", query = "SELECT e FROM EcsConDoc e WHERE e.unitCode = :unitCode"),
-    @NamedQuery(name = "EcsConDoc.findByUnitName", query = "SELECT e FROM EcsConDoc e WHERE e.unitName = :unitName"),
-    @NamedQuery(name = "EcsConDoc.findByUnitName2", query = "SELECT e FROM EcsConDoc e WHERE e.unitName2 = :unitName2"),
-    @NamedQuery(name = "EcsConDoc.findByCommodityForm", query = "SELECT e FROM EcsConDoc e WHERE e.commodityForm = :commodityForm"),
-    @NamedQuery(name = "EcsConDoc.findByPackaging", query = "SELECT e FROM EcsConDoc e WHERE e.packaging = :packaging"),
-    @NamedQuery(name = "EcsConDoc.findByPackageCode", query = "SELECT e FROM EcsConDoc e WHERE e.packageCode = :packageCode"),
-    @NamedQuery(name = "EcsConDoc.findByPackageName", query = "SELECT e FROM EcsConDoc e WHERE e.packageName = :packageName"),
-    @NamedQuery(name = "EcsConDoc.findByCommonName", query = "SELECT e FROM EcsConDoc e WHERE e.commonName = :commonName"),
-    @NamedQuery(name = "EcsConDoc.findByBotanicalName", query = "SELECT e FROM EcsConDoc e WHERE e.botanicalName = :botanicalName"),
-    @NamedQuery(name = "EcsConDoc.findByInternalProductCode", query = "SELECT e FROM EcsConDoc e WHERE e.internalProductCode = :internalProductCode"),
-    @NamedQuery(name = "EcsConDoc.findByClassCode", query = "SELECT e FROM EcsConDoc e WHERE e.classCode = :classCode"),
-    @NamedQuery(name = "EcsConDoc.findByClassName", query = "SELECT e FROM EcsConDoc e WHERE e.className = :className"),
-    @NamedQuery(name = "EcsConDoc.findByTransMode", query = "SELECT e FROM EcsConDoc e WHERE e.transMode = :transMode")})
+    @NamedQuery(name = "EcsConDoc.findByHscode", query = "SELECT e FROM EcsConDoc e WHERE e.hscode = :hscode"),
+    @NamedQuery(name = "EcsConDoc.findByHscodeDesc", query = "SELECT e FROM EcsConDoc e WHERE e.hscodeDesc = :hscodeDesc"),
+    @NamedQuery(name = "EcsConDoc.findByHscode2", query = "SELECT e FROM EcsConDoc e WHERE e.hscode2 = :hscode2"),
+    @NamedQuery(name = "EcsConDoc.findByHscodeDesc2", query = "SELECT e FROM EcsConDoc e WHERE e.hscodeDesc2 = :hscodeDesc2"),
+    @NamedQuery(name = "EcsConDoc.findByItemUnitQuantity", query = "SELECT e FROM EcsConDoc e WHERE e.itemUnitQuantity = :itemUnitQuantity"),
+    @NamedQuery(name = "EcsConDoc.findByItemUnit", query = "SELECT e FROM EcsConDoc e WHERE e.itemUnit = :itemUnit"),
+    @NamedQuery(name = "EcsConDoc.findByItemSupUnitQuantity", query = "SELECT e FROM EcsConDoc e WHERE e.itemSupUnitQuantity = :itemSupUnitQuantity"),
+    @NamedQuery(name = "EcsConDoc.findByItemUnit2", query = "SELECT e FROM EcsConDoc e WHERE e.itemUnit2 = :itemUnit2"),
+    @NamedQuery(name = "EcsConDoc.findByKeswsUnitCode", query = "SELECT e FROM EcsConDoc e WHERE e.keswsUnitCode = :keswsUnitCode"),
+    @NamedQuery(name = "EcsConDoc.findByKeswsUnitName", query = "SELECT e FROM EcsConDoc e WHERE e.keswsUnitName = :keswsUnitName"),
+    @NamedQuery(name = "EcsConDoc.findByKeswsUnitCode2", query = "SELECT e FROM EcsConDoc e WHERE e.keswsUnitCode2 = :keswsUnitCode2"),
+    @NamedQuery(name = "EcsConDoc.findByKeswsUnitName2", query = "SELECT e FROM EcsConDoc e WHERE e.keswsUnitName2 = :keswsUnitName2"),
+    @NamedQuery(name = "EcsConDoc.findByKeswsItemClass", query = "SELECT e FROM EcsConDoc e WHERE e.keswsItemClass = :keswsItemClass"),
+    @NamedQuery(name = "EcsConDoc.findByKeswsItemClassDesc", query = "SELECT e FROM EcsConDoc e WHERE e.keswsItemClassDesc = :keswsItemClassDesc"),
+    @NamedQuery(name = "EcsConDoc.findByItemCommodityForm", query = "SELECT e FROM EcsConDoc e WHERE e.itemCommodityForm = :itemCommodityForm"),
+    @NamedQuery(name = "EcsConDoc.findByItemPackaging", query = "SELECT e FROM EcsConDoc e WHERE e.itemPackaging = :itemPackaging"),
+    @NamedQuery(name = "EcsConDoc.findByItemNumberOfPackages", query = "SELECT e FROM EcsConDoc e WHERE e.itemNumberOfPackages = :itemNumberOfPackages"),
+    @NamedQuery(name = "EcsConDoc.findByKeswsPackageCode", query = "SELECT e FROM EcsConDoc e WHERE e.keswsPackageCode = :keswsPackageCode"),
+    @NamedQuery(name = "EcsConDoc.findByKeswsPackageName", query = "SELECT e FROM EcsConDoc e WHERE e.keswsPackageName = :keswsPackageName"),
+    @NamedQuery(name = "EcsConDoc.findByItemCommonName", query = "SELECT e FROM EcsConDoc e WHERE e.itemCommonName = :itemCommonName"),
+    @NamedQuery(name = "EcsConDoc.findByItemBotanicalName", query = "SELECT e FROM EcsConDoc e WHERE e.itemBotanicalName = :itemBotanicalName"),
+    @NamedQuery(name = "EcsConDoc.findByItemInternalProductCode", query = "SELECT e FROM EcsConDoc e WHERE e.itemInternalProductCode = :itemInternalProductCode"),
+    @NamedQuery(name = "EcsConDoc.findByTransMode", query = "SELECT e FROM EcsConDoc e WHERE e.transMode = :transMode"),
+    @NamedQuery(name = "EcsConDoc.findByAdditionalField1", query = "SELECT e FROM EcsConDoc e WHERE e.additionalField1 = :additionalField1"),
+    @NamedQuery(name = "EcsConDoc.findByAdditionalField2", query = "SELECT e FROM EcsConDoc e WHERE e.additionalField2 = :additionalField2")})
 public class EcsConDoc implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "id")
@@ -134,88 +140,100 @@ public class EcsConDoc implements Serializable {
     private String portOfDeparture;
     @Column(name = "PortOfDepartureDesc")
     private String portOfDepartureDesc;
-    @Column(name = "consignee_city_code")
-    private String consigneeCityCode;
-    @Column(name = "firm_name")
-    private String firmName;
-    @Column(name = "client_country")
-    private String clientCountry;
-    @Column(name = "client_city")
-    private String clientCity;
-    @Column(name = "client_cnt_code")
-    private String clientCntCode;
-    @Column(name = "client_post_number")
-    private String clientPostNumber;
-    @Column(name = "client_pin")
-    private String clientPin;
-    @Column(name = "client_tel")
-    private String clientTel;
-    @Column(name = "client_fax")
-    private String clientFax;
-    @Column(name = "client_mail")
-    private String clientMail;
-    @Column(name = "client_ware_house_code")
-    private String clientWareHouseCode;
-    @Column(name = "consignee_firm")
-    private String consigneeFirm;
-    @Column(name = "consignee_physical_address")
-    private String consigneePhysicalAddress;
-    @Column(name = "consignee_physical_address_2")
-    private String consigneePhysicalAddress2;
-    @Column(name = "consignee_postal_code")
-    private String consigneePostalCode;
-    @Column(name = "consignee_country_iso")
-    private String consigneeCountryIso;
-    @Column(name = "consignee_country")
-    private String consigneeCountry;
-    @Column(name = "consignee_city")
-    private String consigneeCity;
-    @Column(name = "HSCODE")
-    private String hscode;
-    @Column(name = "HSCODE2")
-    private String hscode2;
-    @Column(name = "HSCODE_DESC")
-    private String hscodeDesc;
-    @Column(name = "HSCODE_DESC2")
-    private String hscodeDesc2;
-    @Column(name = "consignment_unit_name")
-    private String consignmentUnitName;
-    @Column(name = "vaq_number_of_packages")
-    private Integer vaqNumberOfPackages;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "vaq_packages_weight")
-    private Float vaqPackagesWeight;
+    @Column(name = "exporter_firm_name_city_code")
+    private String exporterFirmNameCityCode;
+    @Column(name = "exporter_firm_name")
+    private String exporterFirmName;
+    @Column(name = "exporter_country")
+    private String exporterCountry;
+    @Column(name = "exporter_city")
+    private String exporterCity;
+    @Column(name = "exporter_cnt_code")
+    private String exporterCntCode;
+    @Column(name = "exporter_post_number")
+    private String exporterPostNumber;
+    @Column(name = "exporter_physical_address")
+    private String exporterPhysicalAddress;
+    @Column(name = "exporter_pin")
+    private String exporterPin;
+    @Column(name = "exporter_tel")
+    private String exporterTel;
+    @Column(name = "exporter_fax")
+    private String exporterFax;
+    @Column(name = "exporter_mail")
+    private String exporterMail;
+    @Column(name = "exporter_ware_house_code")
+    private String exporterWareHouseCode;
+    @Column(name = "importer_firm")
+    private String importerFirm;
+    @Column(name = "importer_physical_address")
+    private String importerPhysicalAddress;
+    @Column(name = "importer_physical_address_2")
+    private String importerPhysicalAddress2;
+    @Column(name = "importer_postal_code")
+    private String importerPostalCode;
+    @Column(name = "importer_country_iso")
+    private String importerCountryIso;
+    @Column(name = "importer_country")
+    private String importerCountry;
+    @Column(name = "importer_city")
+    private String importerCity;
     @Column(name = "FreightStation")
     private String freightStation;
     @Column(name = "prefered_inspection_date")
     @Temporal(TemporalType.DATE)
     private Date preferedInspectionDate;
-    @Column(name = "unit_code")
-    private String unitCode;
-    @Column(name = "unit_name")
-    private String unitName;
-    @Column(name = "unit_name_2")
-    private String unitName2;
-    @Column(name = "commodity_form")
-    private String commodityForm;
-    @Column(name = "packaging")
-    private String packaging;
-    @Column(name = "package_code")
-    private String packageCode;
-    @Column(name = "package_name")
-    private String packageName;
-    @Column(name = "common_name")
-    private String commonName;
-    @Column(name = "botanical_name")
-    private String botanicalName;
-    @Column(name = "InternalProductCode")
-    private String internalProductCode;
-    @Column(name = "class_code")
-    private String classCode;
-    @Column(name = "class_name")
-    private String className;
+    @Column(name = "HSCODE")
+    private String hscode;
+    @Column(name = "HSCODE_DESC")
+    private String hscodeDesc;
+    @Column(name = "HSCODE_2")
+    private String hscode2;
+    @Column(name = "HSCODE_DESC_2")
+    private String hscodeDesc2;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "item_unit_quantity")
+    private Float itemUnitQuantity;
+    @Column(name = "item_unit")
+    private String itemUnit;
+    @Column(name = "item_sup_unit_quantity")
+    private Float itemSupUnitQuantity;
+    @Column(name = "item_unit_2")
+    private String itemUnit2;
+    @Column(name = "kesws_unit_code")
+    private String keswsUnitCode;
+    @Column(name = "kesws_unit_name")
+    private String keswsUnitName;
+    @Column(name = "kesws_unit_code_2")
+    private String keswsUnitCode2;
+    @Column(name = "kesws_unit_name_2")
+    private String keswsUnitName2;
+    @Column(name = "kesws_item_class")
+    private String keswsItemClass;
+    @Column(name = "kesws_item_class_desc")
+    private String keswsItemClassDesc;
+    @Column(name = "item_commodity_form")
+    private String itemCommodityForm;
+    @Column(name = "item_packaging")
+    private String itemPackaging;
+    @Column(name = "item_number_of_packages")
+    private Integer itemNumberOfPackages;
+    @Column(name = "kesws_package_code")
+    private String keswsPackageCode;
+    @Column(name = "kesws_package_name")
+    private String keswsPackageName;
+    @Column(name = "item_common_name")
+    private String itemCommonName;
+    @Column(name = "item_botanical_name")
+    private String itemBotanicalName;
+    @Column(name = "Item_InternalProductCode")
+    private String itemInternalProductCode;
     @Column(name = "trans_mode")
     private String transMode;
+    @Column(name = "additional_field_1")
+    private String additionalField1;
+    @Column(name = "additional_field_2")
+    private String additionalField2;
 
     public EcsConDoc() {
     }
@@ -364,204 +382,156 @@ public class EcsConDoc implements Serializable {
         this.portOfDepartureDesc = portOfDepartureDesc;
     }
 
-    public String getConsigneeCityCode() {
-        return consigneeCityCode;
+    public String getExporterFirmNameCityCode() {
+        return exporterFirmNameCityCode;
     }
 
-    public void setConsigneeCityCode(String consigneeCityCode) {
-        this.consigneeCityCode = consigneeCityCode;
+    public void setExporterFirmNameCityCode(String exporterFirmNameCityCode) {
+        this.exporterFirmNameCityCode = exporterFirmNameCityCode;
     }
 
-    public String getFirmName() {
-        return firmName;
+    public String getExporterFirmName() {
+        return exporterFirmName;
     }
 
-    public void setFirmName(String firmName) {
-        this.firmName = firmName;
+    public void setExporterFirmName(String exporterFirmName) {
+        this.exporterFirmName = exporterFirmName;
     }
 
-    public String getClientCountry() {
-        return clientCountry;
+    public String getExporterCountry() {
+        return exporterCountry;
     }
 
-    public void setClientCountry(String clientCountry) {
-        this.clientCountry = clientCountry;
+    public void setExporterCountry(String exporterCountry) {
+        this.exporterCountry = exporterCountry;
     }
 
-    public String getClientCity() {
-        return clientCity;
+    public String getExporterCity() {
+        return exporterCity;
     }
 
-    public void setClientCity(String clientCity) {
-        this.clientCity = clientCity;
+    public void setExporterCity(String exporterCity) {
+        this.exporterCity = exporterCity;
     }
 
-    public String getClientCntCode() {
-        return clientCntCode;
+    public String getExporterCntCode() {
+        return exporterCntCode;
     }
 
-    public void setClientCntCode(String clientCntCode) {
-        this.clientCntCode = clientCntCode;
+    public void setExporterCntCode(String exporterCntCode) {
+        this.exporterCntCode = exporterCntCode;
     }
 
-    public String getClientPostNumber() {
-        return clientPostNumber;
+    public String getExporterPostNumber() {
+        return exporterPostNumber;
     }
 
-    public void setClientPostNumber(String clientPostNumber) {
-        this.clientPostNumber = clientPostNumber;
+    public void setExporterPostNumber(String exporterPostNumber) {
+        this.exporterPostNumber = exporterPostNumber;
     }
 
-    public String getClientPin() {
-        return clientPin;
+    public String getExporterPhysicalAddress() {
+        return exporterPhysicalAddress;
     }
 
-    public void setClientPin(String clientPin) {
-        this.clientPin = clientPin;
+    public void setExporterPhysicalAddress(String exporterPhysicalAddress) {
+        this.exporterPhysicalAddress = exporterPhysicalAddress;
     }
 
-    public String getClientTel() {
-        return clientTel;
+    public String getExporterPin() {
+        return exporterPin;
     }
 
-    public void setClientTel(String clientTel) {
-        this.clientTel = clientTel;
+    public void setExporterPin(String exporterPin) {
+        this.exporterPin = exporterPin;
     }
 
-    public String getClientFax() {
-        return clientFax;
+    public String getExporterTel() {
+        return exporterTel;
     }
 
-    public void setClientFax(String clientFax) {
-        this.clientFax = clientFax;
+    public void setExporterTel(String exporterTel) {
+        this.exporterTel = exporterTel;
     }
 
-    public String getClientMail() {
-        return clientMail;
+    public String getExporterFax() {
+        return exporterFax;
     }
 
-    public void setClientMail(String clientMail) {
-        this.clientMail = clientMail;
+    public void setExporterFax(String exporterFax) {
+        this.exporterFax = exporterFax;
     }
 
-    public String getClientWareHouseCode() {
-        return clientWareHouseCode;
+    public String getExporterMail() {
+        return exporterMail;
     }
 
-    public void setClientWareHouseCode(String clientWareHouseCode) {
-        this.clientWareHouseCode = clientWareHouseCode;
+    public void setExporterMail(String exporterMail) {
+        this.exporterMail = exporterMail;
     }
 
-    public String getConsigneeFirm() {
-        return consigneeFirm;
+    public String getExporterWareHouseCode() {
+        return exporterWareHouseCode;
     }
 
-    public void setConsigneeFirm(String consigneeFirm) {
-        this.consigneeFirm = consigneeFirm;
+    public void setExporterWareHouseCode(String exporterWareHouseCode) {
+        this.exporterWareHouseCode = exporterWareHouseCode;
     }
 
-    public String getConsigneePhysicalAddress() {
-        return consigneePhysicalAddress;
+    public String getImporterFirm() {
+        return importerFirm;
     }
 
-    public void setConsigneePhysicalAddress(String consigneePhysicalAddress) {
-        this.consigneePhysicalAddress = consigneePhysicalAddress;
+    public void setImporterFirm(String importerFirm) {
+        this.importerFirm = importerFirm;
     }
 
-    public String getConsigneePhysicalAddress2() {
-        return consigneePhysicalAddress2;
+    public String getImporterPhysicalAddress() {
+        return importerPhysicalAddress;
     }
 
-    public void setConsigneePhysicalAddress2(String consigneePhysicalAddress2) {
-        this.consigneePhysicalAddress2 = consigneePhysicalAddress2;
+    public void setImporterPhysicalAddress(String importerPhysicalAddress) {
+        this.importerPhysicalAddress = importerPhysicalAddress;
     }
 
-    public String getConsigneePostalCode() {
-        return consigneePostalCode;
+    public String getImporterPhysicalAddress2() {
+        return importerPhysicalAddress2;
     }
 
-    public void setConsigneePostalCode(String consigneePostalCode) {
-        this.consigneePostalCode = consigneePostalCode;
+    public void setImporterPhysicalAddress2(String importerPhysicalAddress2) {
+        this.importerPhysicalAddress2 = importerPhysicalAddress2;
     }
 
-    public String getConsigneeCountryIso() {
-        return consigneeCountryIso;
+    public String getImporterPostalCode() {
+        return importerPostalCode;
     }
 
-    public void setConsigneeCountryIso(String consigneeCountryIso) {
-        this.consigneeCountryIso = consigneeCountryIso;
+    public void setImporterPostalCode(String importerPostalCode) {
+        this.importerPostalCode = importerPostalCode;
     }
 
-    public String getConsigneeCountry() {
-        return consigneeCountry;
+    public String getImporterCountryIso() {
+        return importerCountryIso;
     }
 
-    public void setConsigneeCountry(String consigneeCountry) {
-        this.consigneeCountry = consigneeCountry;
+    public void setImporterCountryIso(String importerCountryIso) {
+        this.importerCountryIso = importerCountryIso;
     }
 
-    public String getConsigneeCity() {
-        return consigneeCity;
+    public String getImporterCountry() {
+        return importerCountry;
     }
 
-    public void setConsigneeCity(String consigneeCity) {
-        this.consigneeCity = consigneeCity;
+    public void setImporterCountry(String importerCountry) {
+        this.importerCountry = importerCountry;
     }
 
-    public String getHscode() {
-        return hscode;
+    public String getImporterCity() {
+        return importerCity;
     }
 
-    public void setHscode(String hscode) {
-        this.hscode = hscode;
-    }
-
-    public String getHscode2() {
-        return hscode2;
-    }
-
-    public void setHscode2(String hscode2) {
-        this.hscode2 = hscode2;
-    }
-
-    public String getHscodeDesc() {
-        return hscodeDesc;
-    }
-
-    public void setHscodeDesc(String hscodeDesc) {
-        this.hscodeDesc = hscodeDesc;
-    }
-
-    public String getHscodeDesc2() {
-        return hscodeDesc2;
-    }
-
-    public void setHscodeDesc2(String hscodeDesc2) {
-        this.hscodeDesc2 = hscodeDesc2;
-    }
-
-    public String getConsignmentUnitName() {
-        return consignmentUnitName;
-    }
-
-    public void setConsignmentUnitName(String consignmentUnitName) {
-        this.consignmentUnitName = consignmentUnitName;
-    }
-
-    public Integer getVaqNumberOfPackages() {
-        return vaqNumberOfPackages;
-    }
-
-    public void setVaqNumberOfPackages(Integer vaqNumberOfPackages) {
-        this.vaqNumberOfPackages = vaqNumberOfPackages;
-    }
-
-    public Float getVaqPackagesWeight() {
-        return vaqPackagesWeight;
-    }
-
-    public void setVaqPackagesWeight(Float vaqPackagesWeight) {
-        this.vaqPackagesWeight = vaqPackagesWeight;
+    public void setImporterCity(String importerCity) {
+        this.importerCity = importerCity;
     }
 
     public String getFreightStation() {
@@ -580,100 +550,180 @@ public class EcsConDoc implements Serializable {
         this.preferedInspectionDate = preferedInspectionDate;
     }
 
-    public String getUnitCode() {
-        return unitCode;
+    public String getHscode() {
+        return hscode;
     }
 
-    public void setUnitCode(String unitCode) {
-        this.unitCode = unitCode;
+    public void setHscode(String hscode) {
+        this.hscode = hscode;
     }
 
-    public String getUnitName() {
-        return unitName;
+    public String getHscodeDesc() {
+        return hscodeDesc;
     }
 
-    public void setUnitName(String unitName) {
-        this.unitName = unitName;
+    public void setHscodeDesc(String hscodeDesc) {
+        this.hscodeDesc = hscodeDesc;
     }
 
-    public String getUnitName2() {
-        return unitName2;
+    public String getHscode2() {
+        return hscode2;
     }
 
-    public void setUnitName2(String unitName2) {
-        this.unitName2 = unitName2;
+    public void setHscode2(String hscode2) {
+        this.hscode2 = hscode2;
     }
 
-    public String getCommodityForm() {
-        return commodityForm;
+    public String getHscodeDesc2() {
+        return hscodeDesc2;
     }
 
-    public void setCommodityForm(String commodityForm) {
-        this.commodityForm = commodityForm;
+    public void setHscodeDesc2(String hscodeDesc2) {
+        this.hscodeDesc2 = hscodeDesc2;
     }
 
-    public String getPackaging() {
-        return packaging;
+    public Float getItemUnitQuantity() {
+        return itemUnitQuantity;
     }
 
-    public void setPackaging(String packaging) {
-        this.packaging = packaging;
+    public void setItemUnitQuantity(Float itemUnitQuantity) {
+        this.itemUnitQuantity = itemUnitQuantity;
     }
 
-    public String getPackageCode() {
-        return packageCode;
+    public String getItemUnit() {
+        return itemUnit;
     }
 
-    public void setPackageCode(String packageCode) {
-        this.packageCode = packageCode;
+    public void setItemUnit(String itemUnit) {
+        this.itemUnit = itemUnit;
     }
 
-    public String getPackageName() {
-        return packageName;
+    public Float getItemSupUnitQuantity() {
+        return itemSupUnitQuantity;
     }
 
-    public void setPackageName(String packageName) {
-        this.packageName = packageName;
+    public void setItemSupUnitQuantity(Float itemSupUnitQuantity) {
+        this.itemSupUnitQuantity = itemSupUnitQuantity;
     }
 
-    public String getCommonName() {
-        return commonName;
+    public String getItemUnit2() {
+        return itemUnit2;
     }
 
-    public void setCommonName(String commonName) {
-        this.commonName = commonName;
+    public void setItemUnit2(String itemUnit2) {
+        this.itemUnit2 = itemUnit2;
     }
 
-    public String getBotanicalName() {
-        return botanicalName;
+    public String getKeswsUnitCode() {
+        return keswsUnitCode;
     }
 
-    public void setBotanicalName(String botanicalName) {
-        this.botanicalName = botanicalName;
+    public void setKeswsUnitCode(String keswsUnitCode) {
+        this.keswsUnitCode = keswsUnitCode;
     }
 
-    public String getInternalProductCode() {
-        return internalProductCode;
+    public String getKeswsUnitName() {
+        return keswsUnitName;
     }
 
-    public void setInternalProductCode(String internalProductCode) {
-        this.internalProductCode = internalProductCode;
+    public void setKeswsUnitName(String keswsUnitName) {
+        this.keswsUnitName = keswsUnitName;
     }
 
-    public String getClassCode() {
-        return classCode;
+    public String getKeswsUnitCode2() {
+        return keswsUnitCode2;
     }
 
-    public void setClassCode(String classCode) {
-        this.classCode = classCode;
+    public void setKeswsUnitCode2(String keswsUnitCode2) {
+        this.keswsUnitCode2 = keswsUnitCode2;
     }
 
-    public String getClassName() {
-        return className;
+    public String getKeswsUnitName2() {
+        return keswsUnitName2;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setKeswsUnitName2(String keswsUnitName2) {
+        this.keswsUnitName2 = keswsUnitName2;
+    }
+
+    public String getKeswsItemClass() {
+        return keswsItemClass;
+    }
+
+    public void setKeswsItemClass(String keswsItemClass) {
+        this.keswsItemClass = keswsItemClass;
+    }
+
+    public String getKeswsItemClassDesc() {
+        return keswsItemClassDesc;
+    }
+
+    public void setKeswsItemClassDesc(String keswsItemClassDesc) {
+        this.keswsItemClassDesc = keswsItemClassDesc;
+    }
+
+    public String getItemCommodityForm() {
+        return itemCommodityForm;
+    }
+
+    public void setItemCommodityForm(String itemCommodityForm) {
+        this.itemCommodityForm = itemCommodityForm;
+    }
+
+    public String getItemPackaging() {
+        return itemPackaging;
+    }
+
+    public void setItemPackaging(String itemPackaging) {
+        this.itemPackaging = itemPackaging;
+    }
+
+    public Integer getItemNumberOfPackages() {
+        return itemNumberOfPackages;
+    }
+
+    public void setItemNumberOfPackages(Integer itemNumberOfPackages) {
+        this.itemNumberOfPackages = itemNumberOfPackages;
+    }
+
+    public String getKeswsPackageCode() {
+        return keswsPackageCode;
+    }
+
+    public void setKeswsPackageCode(String keswsPackageCode) {
+        this.keswsPackageCode = keswsPackageCode;
+    }
+
+    public String getKeswsPackageName() {
+        return keswsPackageName;
+    }
+
+    public void setKeswsPackageName(String keswsPackageName) {
+        this.keswsPackageName = keswsPackageName;
+    }
+
+    public String getItemCommonName() {
+        return itemCommonName;
+    }
+
+    public void setItemCommonName(String itemCommonName) {
+        this.itemCommonName = itemCommonName;
+    }
+
+    public String getItemBotanicalName() {
+        return itemBotanicalName;
+    }
+
+    public void setItemBotanicalName(String itemBotanicalName) {
+        this.itemBotanicalName = itemBotanicalName;
+    }
+
+    public String getItemInternalProductCode() {
+        return itemInternalProductCode;
+    }
+
+    public void setItemInternalProductCode(String itemInternalProductCode) {
+        this.itemInternalProductCode = itemInternalProductCode;
     }
 
     public String getTransMode() {
@@ -682,6 +732,22 @@ public class EcsConDoc implements Serializable {
 
     public void setTransMode(String transMode) {
         this.transMode = transMode;
+    }
+
+    public String getAdditionalField1() {
+        return additionalField1;
+    }
+
+    public void setAdditionalField1(String additionalField1) {
+        this.additionalField1 = additionalField1;
+    }
+
+    public String getAdditionalField2() {
+        return additionalField2;
+    }
+
+    public void setAdditionalField2(String additionalField2) {
+        this.additionalField2 = additionalField2;
     }
     
 }

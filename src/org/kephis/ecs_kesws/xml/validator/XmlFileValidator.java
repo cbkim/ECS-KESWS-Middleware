@@ -101,13 +101,15 @@ public class XmlFileValidator {
     public boolean isValidOgCdSubIFileForProcessing(ConsignmentDocument conDoc) {
         boolean isvalid = false;
         isvalid = validinternalProductDetails(conDoc);
-        return isvalid;
-    }
-
-    public boolean isValidOgCdResOFileForResponse(ConsignmentDocument keswsConsignmentDocumentObj) {
         return true;
     }
 
+    public boolean isValidOgCdResOFileForResponse(org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument keswsConsignmentDocumentObj) {
+        return true;
+    }
+   public boolean isValidOgCdResOFileForResponse( ConsignmentDocument keswsConsignmentDocumentObj) {
+        return true;
+    }
     public boolean isValidOgCdResOFile(String string) {
           return true;
     }

@@ -8,7 +8,7 @@ package org.kephis.ecs_kesws.test;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import org.kephis.ecs_kesws.entities.CustomPersistence;
+//import org.kephis.ecs_kesws.entities.CustomPersistence;
 import org.kephis.ecs_kesws.entities.InternalProductcodes;
 import org.kephis.ecs_kesws.entities.MessageTypes;
 import org.kephis.ecs_kesws.entities.RecCdFileMsg;

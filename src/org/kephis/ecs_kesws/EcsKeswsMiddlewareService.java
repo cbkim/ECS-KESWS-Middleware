@@ -43,14 +43,14 @@ private static void startMessageProcessors() throws Exception {
                 || incomingMessageTask.isDone()
                 || incomingMessageTask.isCancelled())
         {
-            incomingMessageTask = executor.submit(new IncomingMessageProcessor());
+         //   incomingMessageTask = executor.submit(new IncomingMessageProcessor());
         }
  
         if (outgoingMessageTask == null
                 || outgoingMessageTask.isDone()
                 || outgoingMessageTask.isCancelled())
         {
-         //  outgoingMessageTask = executor.submit(new OutgoingMessageProcessor());
+            outgoingMessageTask = executor.submit(new OutgoingMessageProcessor());
         }
     }
     }

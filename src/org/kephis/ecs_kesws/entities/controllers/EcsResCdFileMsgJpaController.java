@@ -130,14 +130,6 @@ public class EcsResCdFileMsgJpaController implements Serializable {
             Collection<CdFileDetails> cdFileDetailsCollectionOld = persistentEcsResCdFileMsg.getCdFileDetailsCollection();
             Collection<CdFileDetails> cdFileDetailsCollectionNew = ecsResCdFileMsg.getCdFileDetailsCollection();
             List<String> illegalOrphanMessages = null;
-            for (TransactionLogs transactionLogsCollectionOldTransactionLogs : transactionLogsCollectionOld) {
-                if (!transactionLogsCollectionNew.contains(transactionLogsCollectionOldTransactionLogs)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain TransactionLogs " + transactionLogsCollectionOldTransactionLogs + " since its ECSRESCDFILEMSGRECCDFileID field is not nullable.");
-                }
-            }
             for (CdFileDetails cdFileDetailsCollectionOldCdFileDetails : cdFileDetailsCollectionOld) {
                 if (!cdFileDetailsCollectionNew.contains(cdFileDetailsCollectionOldCdFileDetails)) {
                     if (illegalOrphanMessages == null) {
@@ -160,13 +152,7 @@ public class EcsResCdFileMsgJpaController implements Serializable {
             }
             resCdFileMsgCollectionNew = attachedResCdFileMsgCollectionNew;
             ecsResCdFileMsg.setResCdFileMsgCollection(resCdFileMsgCollectionNew);
-            Collection<TransactionLogs> attachedTransactionLogsCollectionNew = new ArrayList<TransactionLogs>();
-            for (TransactionLogs transactionLogsCollectionNewTransactionLogsToAttach : transactionLogsCollectionNew) {
-                transactionLogsCollectionNewTransactionLogsToAttach = em.getReference(transactionLogsCollectionNewTransactionLogsToAttach.getClass(), transactionLogsCollectionNewTransactionLogsToAttach.getLogID());
-                attachedTransactionLogsCollectionNew.add(transactionLogsCollectionNewTransactionLogsToAttach);
-            }
-            transactionLogsCollectionNew = attachedTransactionLogsCollectionNew;
-            ecsResCdFileMsg.setTransactionLogsCollection(transactionLogsCollectionNew);
+            
             Collection<CdFileDetails> attachedCdFileDetailsCollectionNew = new ArrayList<CdFileDetails>();
             for (CdFileDetails cdFileDetailsCollectionNewCdFileDetailsToAttach : cdFileDetailsCollectionNew) {
                 cdFileDetailsCollectionNewCdFileDetailsToAttach = em.getReference(cdFileDetailsCollectionNewCdFileDetailsToAttach.getClass(), cdFileDetailsCollectionNewCdFileDetailsToAttach.getId());
@@ -198,6 +184,12 @@ public class EcsResCdFileMsgJpaController implements Serializable {
                         oldECSRESCDFILEMSGRECCDFileIDOfResCdFileMsgCollectionNewResCdFileMsg.getResCdFileMsgCollection().remove(resCdFileMsgCollectionNewResCdFileMsg);
                         oldECSRESCDFILEMSGRECCDFileIDOfResCdFileMsgCollectionNewResCdFileMsg = em.merge(oldECSRESCDFILEMSGRECCDFileIDOfResCdFileMsgCollectionNewResCdFileMsg);
                     }
+                }
+            }
+            for (TransactionLogs transactionLogsCollectionOldTransactionLogs : transactionLogsCollectionOld) {
+                if (!transactionLogsCollectionNew.contains(transactionLogsCollectionOldTransactionLogs)) {
+                    transactionLogsCollectionOldTransactionLogs.setECSRESCDFILEMSGRECCDFileID(null);
+                    transactionLogsCollectionOldTransactionLogs = em.merge(transactionLogsCollectionOldTransactionLogs);
                 }
             }
             for (TransactionLogs transactionLogsCollectionNewTransactionLogs : transactionLogsCollectionNew) {
@@ -252,13 +244,6 @@ public class EcsResCdFileMsgJpaController implements Serializable {
                 throw new NonexistentEntityException("The ecsResCdFileMsg with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<TransactionLogs> transactionLogsCollectionOrphanCheck = ecsResCdFileMsg.getTransactionLogsCollection();
-            for (TransactionLogs transactionLogsCollectionOrphanCheckTransactionLogs : transactionLogsCollectionOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This EcsResCdFileMsg (" + ecsResCdFileMsg + ") cannot be destroyed since the TransactionLogs " + transactionLogsCollectionOrphanCheckTransactionLogs + " in its transactionLogsCollection field has a non-nullable ECSRESCDFILEMSGRECCDFileID field.");
-            }
             Collection<CdFileDetails> cdFileDetailsCollectionOrphanCheck = ecsResCdFileMsg.getCdFileDetailsCollection();
             for (CdFileDetails cdFileDetailsCollectionOrphanCheckCdFileDetails : cdFileDetailsCollectionOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -278,6 +263,11 @@ public class EcsResCdFileMsgJpaController implements Serializable {
             for (ResCdFileMsg resCdFileMsgCollectionResCdFileMsg : resCdFileMsgCollection) {
                 resCdFileMsgCollectionResCdFileMsg.setECSRESCDFILEMSGRECCDFileID(null);
                 resCdFileMsgCollectionResCdFileMsg = em.merge(resCdFileMsgCollectionResCdFileMsg);
+            }
+            Collection<TransactionLogs> transactionLogsCollection = ecsResCdFileMsg.getTransactionLogsCollection();
+            for (TransactionLogs transactionLogsCollectionTransactionLogs : transactionLogsCollection) {
+                transactionLogsCollectionTransactionLogs.setECSRESCDFILEMSGRECCDFileID(null);
+                transactionLogsCollectionTransactionLogs = em.merge(transactionLogsCollectionTransactionLogs);
             }
             em.remove(ecsResCdFileMsg);
             em.getTransaction().commit();

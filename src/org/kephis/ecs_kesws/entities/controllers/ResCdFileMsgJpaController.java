@@ -10,9 +10,9 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import org.kephis.ecs_kesws.entities.MessageTypes;
 import org.kephis.ecs_kesws.entities.RecCdFileMsg;
 import org.kephis.ecs_kesws.entities.EcsResCdFileMsg;
+import org.kephis.ecs_kesws.entities.MessageTypes;
 import org.kephis.ecs_kesws.entities.RecErrorFileMsg;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,11 +54,6 @@ public class ResCdFileMsgJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            MessageTypes messageTypesMessageTypeId = resCdFileMsg.getMessageTypesMessageTypeId();
-            if (messageTypesMessageTypeId != null) {
-                messageTypesMessageTypeId = em.getReference(messageTypesMessageTypeId.getClass(), messageTypesMessageTypeId.getMessageTypeId());
-                resCdFileMsg.setMessageTypesMessageTypeId(messageTypesMessageTypeId);
-            }
             RecCdFileMsg recCdFileMsgRecCdFileId = resCdFileMsg.getRecCdFileMsgRecCdFileId();
             if (recCdFileMsgRecCdFileId != null) {
                 recCdFileMsgRecCdFileId = em.getReference(recCdFileMsgRecCdFileId.getClass(), recCdFileMsgRecCdFileId.getRECCDFileID());
@@ -68,6 +63,11 @@ public class ResCdFileMsgJpaController implements Serializable {
             if (ECSRESCDFILEMSGRECCDFileID != null) {
                 ECSRESCDFILEMSGRECCDFileID = em.getReference(ECSRESCDFILEMSGRECCDFileID.getClass(), ECSRESCDFILEMSGRECCDFileID.getRECCDFileID());
                 resCdFileMsg.setECSRESCDFILEMSGRECCDFileID(ECSRESCDFILEMSGRECCDFileID);
+            }
+            MessageTypes messageTypesMessageTypeId = resCdFileMsg.getMessageTypesMessageTypeId();
+            if (messageTypesMessageTypeId != null) {
+                messageTypesMessageTypeId = em.getReference(messageTypesMessageTypeId.getClass(), messageTypesMessageTypeId.getMessageTypeId());
+                resCdFileMsg.setMessageTypesMessageTypeId(messageTypesMessageTypeId);
             }
             Collection<RecErrorFileMsg> attachedRecErrorFileMsgCollection = new ArrayList<RecErrorFileMsg>();
             for (RecErrorFileMsg recErrorFileMsgCollectionRecErrorFileMsgToAttach : resCdFileMsg.getRecErrorFileMsgCollection()) {
@@ -88,10 +88,6 @@ public class ResCdFileMsgJpaController implements Serializable {
             }
             resCdFileMsg.setTransactionLogsCollection(attachedTransactionLogsCollection);
             em.persist(resCdFileMsg);
-            if (messageTypesMessageTypeId != null) {
-                messageTypesMessageTypeId.getResCdFileMsgCollection().add(resCdFileMsg);
-                messageTypesMessageTypeId = em.merge(messageTypesMessageTypeId);
-            }
             if (recCdFileMsgRecCdFileId != null) {
                 recCdFileMsgRecCdFileId.getResCdFileMsgCollection().add(resCdFileMsg);
                 recCdFileMsgRecCdFileId = em.merge(recCdFileMsgRecCdFileId);
@@ -99,6 +95,10 @@ public class ResCdFileMsgJpaController implements Serializable {
             if (ECSRESCDFILEMSGRECCDFileID != null) {
                 ECSRESCDFILEMSGRECCDFileID.getResCdFileMsgCollection().add(resCdFileMsg);
                 ECSRESCDFILEMSGRECCDFileID = em.merge(ECSRESCDFILEMSGRECCDFileID);
+            }
+            if (messageTypesMessageTypeId != null) {
+                messageTypesMessageTypeId.getResCdFileMsgCollection().add(resCdFileMsg);
+                messageTypesMessageTypeId = em.merge(messageTypesMessageTypeId);
             }
             for (RecErrorFileMsg recErrorFileMsgCollectionRecErrorFileMsg : resCdFileMsg.getRecErrorFileMsgCollection()) {
                 ResCdFileMsg oldResCdFileMsgResCdFileIdOfRecErrorFileMsgCollectionRecErrorFileMsg = recErrorFileMsgCollectionRecErrorFileMsg.getResCdFileMsgResCdFileId();
@@ -141,12 +141,12 @@ public class ResCdFileMsgJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             ResCdFileMsg persistentResCdFileMsg = em.find(ResCdFileMsg.class, resCdFileMsg.getResCdFileId());
-            MessageTypes messageTypesMessageTypeIdOld = persistentResCdFileMsg.getMessageTypesMessageTypeId();
-            MessageTypes messageTypesMessageTypeIdNew = resCdFileMsg.getMessageTypesMessageTypeId();
             RecCdFileMsg recCdFileMsgRecCdFileIdOld = persistentResCdFileMsg.getRecCdFileMsgRecCdFileId();
             RecCdFileMsg recCdFileMsgRecCdFileIdNew = resCdFileMsg.getRecCdFileMsgRecCdFileId();
             EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileIDOld = persistentResCdFileMsg.getECSRESCDFILEMSGRECCDFileID();
             EcsResCdFileMsg ECSRESCDFILEMSGRECCDFileIDNew = resCdFileMsg.getECSRESCDFILEMSGRECCDFileID();
+            MessageTypes messageTypesMessageTypeIdOld = persistentResCdFileMsg.getMessageTypesMessageTypeId();
+            MessageTypes messageTypesMessageTypeIdNew = resCdFileMsg.getMessageTypesMessageTypeId();
             Collection<RecErrorFileMsg> recErrorFileMsgCollectionOld = persistentResCdFileMsg.getRecErrorFileMsgCollection();
             Collection<RecErrorFileMsg> recErrorFileMsgCollectionNew = resCdFileMsg.getRecErrorFileMsgCollection();
             Collection<PaymentInfoLog> paymentInfoLogCollectionOld = persistentResCdFileMsg.getPaymentInfoLogCollection();
@@ -165,10 +165,6 @@ public class ResCdFileMsgJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (messageTypesMessageTypeIdNew != null) {
-                messageTypesMessageTypeIdNew = em.getReference(messageTypesMessageTypeIdNew.getClass(), messageTypesMessageTypeIdNew.getMessageTypeId());
-                resCdFileMsg.setMessageTypesMessageTypeId(messageTypesMessageTypeIdNew);
-            }
             if (recCdFileMsgRecCdFileIdNew != null) {
                 recCdFileMsgRecCdFileIdNew = em.getReference(recCdFileMsgRecCdFileIdNew.getClass(), recCdFileMsgRecCdFileIdNew.getRECCDFileID());
                 resCdFileMsg.setRecCdFileMsgRecCdFileId(recCdFileMsgRecCdFileIdNew);
@@ -176,6 +172,10 @@ public class ResCdFileMsgJpaController implements Serializable {
             if (ECSRESCDFILEMSGRECCDFileIDNew != null) {
                 ECSRESCDFILEMSGRECCDFileIDNew = em.getReference(ECSRESCDFILEMSGRECCDFileIDNew.getClass(), ECSRESCDFILEMSGRECCDFileIDNew.getRECCDFileID());
                 resCdFileMsg.setECSRESCDFILEMSGRECCDFileID(ECSRESCDFILEMSGRECCDFileIDNew);
+            }
+            if (messageTypesMessageTypeIdNew != null) {
+                messageTypesMessageTypeIdNew = em.getReference(messageTypesMessageTypeIdNew.getClass(), messageTypesMessageTypeIdNew.getMessageTypeId());
+                resCdFileMsg.setMessageTypesMessageTypeId(messageTypesMessageTypeIdNew);
             }
             Collection<RecErrorFileMsg> attachedRecErrorFileMsgCollectionNew = new ArrayList<RecErrorFileMsg>();
             for (RecErrorFileMsg recErrorFileMsgCollectionNewRecErrorFileMsgToAttach : recErrorFileMsgCollectionNew) {
@@ -199,14 +199,6 @@ public class ResCdFileMsgJpaController implements Serializable {
             transactionLogsCollectionNew = attachedTransactionLogsCollectionNew;
             resCdFileMsg.setTransactionLogsCollection(transactionLogsCollectionNew);
             resCdFileMsg = em.merge(resCdFileMsg);
-            if (messageTypesMessageTypeIdOld != null && !messageTypesMessageTypeIdOld.equals(messageTypesMessageTypeIdNew)) {
-                messageTypesMessageTypeIdOld.getResCdFileMsgCollection().remove(resCdFileMsg);
-                messageTypesMessageTypeIdOld = em.merge(messageTypesMessageTypeIdOld);
-            }
-            if (messageTypesMessageTypeIdNew != null && !messageTypesMessageTypeIdNew.equals(messageTypesMessageTypeIdOld)) {
-                messageTypesMessageTypeIdNew.getResCdFileMsgCollection().add(resCdFileMsg);
-                messageTypesMessageTypeIdNew = em.merge(messageTypesMessageTypeIdNew);
-            }
             if (recCdFileMsgRecCdFileIdOld != null && !recCdFileMsgRecCdFileIdOld.equals(recCdFileMsgRecCdFileIdNew)) {
                 recCdFileMsgRecCdFileIdOld.getResCdFileMsgCollection().remove(resCdFileMsg);
                 recCdFileMsgRecCdFileIdOld = em.merge(recCdFileMsgRecCdFileIdOld);
@@ -222,6 +214,14 @@ public class ResCdFileMsgJpaController implements Serializable {
             if (ECSRESCDFILEMSGRECCDFileIDNew != null && !ECSRESCDFILEMSGRECCDFileIDNew.equals(ECSRESCDFILEMSGRECCDFileIDOld)) {
                 ECSRESCDFILEMSGRECCDFileIDNew.getResCdFileMsgCollection().add(resCdFileMsg);
                 ECSRESCDFILEMSGRECCDFileIDNew = em.merge(ECSRESCDFILEMSGRECCDFileIDNew);
+            }
+            if (messageTypesMessageTypeIdOld != null && !messageTypesMessageTypeIdOld.equals(messageTypesMessageTypeIdNew)) {
+                messageTypesMessageTypeIdOld.getResCdFileMsgCollection().remove(resCdFileMsg);
+                messageTypesMessageTypeIdOld = em.merge(messageTypesMessageTypeIdOld);
+            }
+            if (messageTypesMessageTypeIdNew != null && !messageTypesMessageTypeIdNew.equals(messageTypesMessageTypeIdOld)) {
+                messageTypesMessageTypeIdNew.getResCdFileMsgCollection().add(resCdFileMsg);
+                messageTypesMessageTypeIdNew = em.merge(messageTypesMessageTypeIdNew);
             }
             for (RecErrorFileMsg recErrorFileMsgCollectionNewRecErrorFileMsg : recErrorFileMsgCollectionNew) {
                 if (!recErrorFileMsgCollectionOld.contains(recErrorFileMsgCollectionNewRecErrorFileMsg)) {
@@ -308,11 +308,6 @@ public class ResCdFileMsgJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            MessageTypes messageTypesMessageTypeId = resCdFileMsg.getMessageTypesMessageTypeId();
-            if (messageTypesMessageTypeId != null) {
-                messageTypesMessageTypeId.getResCdFileMsgCollection().remove(resCdFileMsg);
-                messageTypesMessageTypeId = em.merge(messageTypesMessageTypeId);
-            }
             RecCdFileMsg recCdFileMsgRecCdFileId = resCdFileMsg.getRecCdFileMsgRecCdFileId();
             if (recCdFileMsgRecCdFileId != null) {
                 recCdFileMsgRecCdFileId.getResCdFileMsgCollection().remove(resCdFileMsg);
@@ -322,6 +317,11 @@ public class ResCdFileMsgJpaController implements Serializable {
             if (ECSRESCDFILEMSGRECCDFileID != null) {
                 ECSRESCDFILEMSGRECCDFileID.getResCdFileMsgCollection().remove(resCdFileMsg);
                 ECSRESCDFILEMSGRECCDFileID = em.merge(ECSRESCDFILEMSGRECCDFileID);
+            }
+            MessageTypes messageTypesMessageTypeId = resCdFileMsg.getMessageTypesMessageTypeId();
+            if (messageTypesMessageTypeId != null) {
+                messageTypesMessageTypeId.getResCdFileMsgCollection().remove(resCdFileMsg);
+                messageTypesMessageTypeId = em.merge(messageTypesMessageTypeId);
             }
             Collection<PaymentInfoLog> paymentInfoLogCollection = resCdFileMsg.getPaymentInfoLogCollection();
             for (PaymentInfoLog paymentInfoLogCollectionPaymentInfoLog : paymentInfoLogCollection) {
