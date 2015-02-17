@@ -13,7 +13,7 @@ import java.util.concurrent.Future;
  *
  * @author kim
  */
-public class EcsKeswsMiddlewareService {
+public class MiddlewareService {
 
     /**
      * @param args the command line arguments
@@ -43,7 +43,7 @@ private static void startMessageProcessors() throws Exception {
                 || incomingMessageTask.isDone()
                 || incomingMessageTask.isCancelled())
         {
-         //   incomingMessageTask = executor.submit(new IncomingMessageProcessor());
+        //   incomingMessageTask = executor.submit(new IncomingMessageProcessor());
         }
  
         if (outgoingMessageTask == null
