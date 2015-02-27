@@ -43,7 +43,9 @@ public class EcsEntitiesControllerCaller {
     String DB_URL = "";
     String USER = "";
     String PASS = "";
-
+   String FIN_DB_URL = "";
+    String FIN_USER = "";
+    String FIN_PASS = "";
     public EcsEntitiesControllerCaller() {
 
     }
@@ -54,6 +56,9 @@ public class EcsEntitiesControllerCaller {
         DB_URL = applicationConfigurationXMLMapper.getECSDatabaseUrl();
         USER = applicationConfigurationXMLMapper.getECSDatabaseuser();
         PASS = applicationConfigurationXMLMapper.getECSDatabasepassword();
+        FIN_DB_URL = applicationConfigurationXMLMapper.getIntergrationDatabaseUrl();
+         FIN_USER = applicationConfigurationXMLMapper.getIntergrationDatabaseuser();
+         FIN_PASS = applicationConfigurationXMLMapper.getIntergrationDatabasepassword();
 
     }
 
@@ -2377,13 +2382,11 @@ public class EcsEntitiesControllerCaller {
             ResultSet temp1 = null;
 
             Statement stmt = null;
-            connection = DriverManager.getConnection("jdbc:sqlserver://172.16.158.135;databaseName=INTERGRATION", "sa", "#@kim4jc");
+            connection = DriverManager.getConnection("jdbc:sqlserver://192.168.0.3;databaseName=INTERGRATION", "ecs_accpac", "ecs_accpac");
             stmt = connection.createStatement();
             if (connection != null) {
                 //  SELECT COUNT(*) FROM  [dbo].[ECS_INVOICE_DETAILS]
-                int INV_ID = CreatedECSconsignmentId;
-                String CUST_NUMBER = ClientPin;
-                String REFERENCE_NUMBER = AccpacInvoiceRefNo;
+               // int INV_ID = CreatedECSconsignmentId;  
                 String INV_DESCRIPTION = InvoiceDescription;
                 float INV_AMOUNT = Amount;
                 String INV_DATE = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -2396,11 +2399,18 @@ public class EcsEntitiesControllerCaller {
                  
                 String USER_ID = "";
                 String RECEIPT_NUMBER = "";
+                String CUST_PIN=ClientPin;
+                String ECS_ID_REF=""+CreatedECSconsignmentId;
+                String ECS_STATUS_FLAG="1";
+                String REFERENCE_NUMBER="ECS "+CreatedECSconsignmentId;
+ 
 
-                if (stmt.execute("INSERT INTO dbo.ECS_INVOICE_DETAILS ("
-                        + "INV_ID"
-                        + ",CUST_NUMBER"
-                        + ",REFERENCE_NUMBER"
+
+                if (stmt.execute("SET ANSI_WARNINGS  OFF;"
+                        + "INSERT INTO dbo.ECS_INVOICE_DETAILS ("
+                        //+ "INV_ID"
+                        //+ "CUST_NUMBER"
+                        + "REFERENCE_NUMBER"
                         + ",INV_DESCRIPTION"
                         + ",INV_AMOUNT"
                         + ",INV_DATE"
@@ -2413,10 +2423,13 @@ public class EcsEntitiesControllerCaller {
                        
                         + ",USER_ID"
                         + ",RECEIPT_NUMBER"
+                       + ",CUST_PIN"
+             + ",ECS_ID_REF"
+            + ",ECS_STATUS_FLAG"
                         + ") VALUES  ("
-                        + "" + INV_ID + ","
-                        + "'" + CUST_NUMBER + "',"
-                        + "'" + REFERENCE_NUMBER + "',"
+                   //     + "" + INV_ID + ","
+                       // + "'" + CUST_NUMBER + "',"
+                       + "'" + REFERENCE_NUMBER + "',"
                         + "'" + INV_DESCRIPTION + "',"
                         + "" + INV_AMOUNT + ","
                         + "'" + INV_DATE + "',"
@@ -2429,7 +2442,12 @@ public class EcsEntitiesControllerCaller {
                         + "" + Ispaid + ","
                           
                         + "'" + USER_ID + "',"
-                        + "'" + RECEIPT_NUMBER + "');")) {
+                          + "'" + RECEIPT_NUMBER + "',"
+                          
+                        + "'" + CUST_PIN + "',"
+                        + "'" + ECS_ID_REF + "',"
+                        + "'" + ECS_STATUS_FLAG + "');"
+                        + "SET ANSI_WARNINGS ON;")) {
                     // Return  False  Log transaction error
                     iscreated = true;
                 } else {
@@ -2483,36 +2501,35 @@ public class EcsEntitiesControllerCaller {
 
         // load the database driver (make sure this is in your classpath!)
         try {
-
-            connection = DriverManager.getConnection("jdbc:sqlserver://172.16.158.135;databaseName=INTERGRATION", "sa", "#@kim4jc");
+            System.out.println("-"+FIN_DB_URL+"-"+FIN_USER+"-"+FIN_PASS);
+            connection = DriverManager.getConnection(FIN_DB_URL, FIN_USER, FIN_PASS);
 
             if (connection != null) {
                 stmt = connection.createStatement();
                 //increment to get  INDCUST2 unique  number  from ARCUS table
-                rs = stmt.executeQuery("SELECT CUST_NUMBER FROM  ECS_CUSTOMER_INFO WHERE CUST_NUMBER LIKE '%" + ClientPin + "%'");
-                while (rs.next()) {
-                    iscreated = false;
-                    return iscreated;
-                }
-                stmt = connection.createStatement();
-                if (stmt.execute(" INSERT INTO  dbo.ECS_CUSTOMER_INFO("
-                        + "           CUST_NUMBER"
-                        + "           ,CUST_NAME"
-                        + "           ,CUR_CODE"
-                        + ") VALUES  ("
-                        + "'" + ClientPin + "',"
-                        + "'" + ClientName + "',"
-                        + "'" + "KES" + "');")) {
-                    // Return  False  Log transaction error
-                } else {
-                    //Return Accpac invoice Refrence 
+                rs = stmt.executeQuery("SELECT CUST_PIN FROM  ECS_CUSTOMER_INFO WHERE CUST_PIN LIKE '%" + ClientPin + "%'");
+                if (rs.next()) {
                     iscreated = true;
+                    
                 }
+                else{
+                stmt = connection.createStatement();
+                stmt.execute("SET ANSI_WARNINGS  OFF;"
+                        + " INSERT INTO  dbo.ECS_CUSTOMER_INFO("
+                        + "           CUST_NAME"
+                        + "           ,CUST_PIN"
+                        + ") VALUES  ("
+                        + "'" + ClientName+ "',"
+                        + "'" + ClientPin  + "'"
+                        + " );"
+                        + "SET ANSI_WARNINGS  ON;");
+                iscreated=CreateClientinACCPAC(ClientPin, ClientName);
+            }
+                return iscreated;
             }
         } catch (Exception ex) {
             Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
-            //Log error 
-//            ECSKESWSFileLogger.Log(e.toString(), "SEVERE");
+ 
         } finally {
             if (connection != null) {
                 try {

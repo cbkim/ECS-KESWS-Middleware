@@ -27,12 +27,16 @@ import org.xml.sax.SAXException;
 public class ApplicationConfigurationXMLMapper {
       private static String InboxFolder;
     private static String OutboxFolder;
-   // private static String IntergrationDatabaseUrl;
+     private static String IntergrationDatabaseUrl;
+
+   
     private static String ECSDatabaseUrl;
     private static String ECSDatabaseuser;
     private static String ECSDatabasepassword;
-   // private static String IntergrationDatabaseuser;
-   // private static String IntergrationDatabasepassword;
+    private static String IntergrationDatabaseuser;
+
+    
+    private static String IntergrationDatabasepassword;
     private static String LogLevel;
     private static String LogFile;
     private static String MHXUserProfileFilePath;
@@ -65,9 +69,9 @@ public class ApplicationConfigurationXMLMapper {
                     setECSDatabaseUrl(eElement.getElementsByTagName("ECSDatabaseUrl").item(0).getTextContent());
                     setECSDatabaseuser(eElement.getElementsByTagName("ECSDatabaseuser").item(0).getTextContent());
                     setECSDatabasepassword(eElement.getElementsByTagName("ECSDatabasepassword").item(0).getTextContent());
-                   // setIntergrationDatabasename(eElement.getElementsByTagName("IntergrationDatabaseurl").item(0).getTextContent());
-                   // setIntergrationDatabaseuser(eElement.getElementsByTagName("IntergrationDatabaseuser").item(0).getTextContent());
-                   // setIntergrationDatabasepassword(eElement.getElementsByTagName("IntergrationDatabasepassword").item(0).getTextContent());
+                    setIntergrationDatabaseUrl(eElement.getElementsByTagName("IntergrationDatabaseurl").item(0).getTextContent());
+                    setIntergrationDatabaseuser(eElement.getElementsByTagName("IntergrationDatabaseuser").item(0).getTextContent());
+                    setIntergrationDatabasepassword(eElement.getElementsByTagName("IntergrationDatabasepassword").item(0).getTextContent());
                     setMHXUserProfileFilePath(eElement.getElementsByTagName("MHXUserProfileFilePath").item(0).getTextContent());
                     setLogFile(eElement.getElementsByTagName("LogFile").item(0).getTextContent());
                     setInboxArchiveFolder(eElement.getElementsByTagName("ArchiveFolder").item(0).getTextContent());
@@ -215,5 +219,43 @@ public class ApplicationConfigurationXMLMapper {
     public static void setFilesTypestoReceive(String FiletoReceive) {
         //System.out.println("file :" + FiletoReceive);
         boolean add = MessageTypestoReceive.add(FiletoReceive);
+    }
+    public static String getIntergrationDatabaseuser() {
+        return IntergrationDatabaseuser;
+    }
+
+    public static void setIntergrationDatabaseuser(String IntergrationDatabaseuser) {
+        ApplicationConfigurationXMLMapper.IntergrationDatabaseuser = IntergrationDatabaseuser;
+    }
+
+    public static String getIntergrationDatabasepassword() {
+        return IntergrationDatabasepassword;
+    }
+
+    public static void setIntergrationDatabasepassword(String IntergrationDatabasepassword) {
+        ApplicationConfigurationXMLMapper.IntergrationDatabasepassword = IntergrationDatabasepassword;
+    }
+
+    public static String getErrorFiles() {
+        return errorFiles;
+    }
+
+    public static void setErrorFiles(String errorFiles) {
+        ApplicationConfigurationXMLMapper.errorFiles = errorFiles;
+    }
+
+    public static List<String> getMessageTypestoReceive() {
+        return MessageTypestoReceive;
+    }
+
+    public static void setMessageTypestoReceive(List<String> MessageTypestoReceive) {
+        ApplicationConfigurationXMLMapper.MessageTypestoReceive = MessageTypestoReceive;
+    }
+     public static String getIntergrationDatabaseUrl() {
+        return IntergrationDatabaseUrl;
+    }
+
+    public static void setIntergrationDatabaseUrl(String IntergrationDatabaseUrl) {
+        ApplicationConfigurationXMLMapper.IntergrationDatabaseUrl = IntergrationDatabaseUrl;
     }
 }

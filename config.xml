@@ -8,17 +8,17 @@
     <OutboxArchiveFolder>/ecs_kesws/archive/</OutboxArchiveFolder>
     <AdditionalFolders>/ecs_kesws/archive/errors/</AdditionalFolders>
     <MaximumTimeToHoldFilesBeingProcessed>24:00:00</MaximumTimeToHoldFilesBeingProcessed>
-    <IntergrationDatabaseurl>jdbc:mysql://LOCALHOST/ecsfortesting</IntergrationDatabaseurl>
-    <IntergrationDatabaseuser>IntergrationDatabaseUser</IntergrationDatabaseuser>
-    <IntergrationDatabasepassword>IntergrationDatabasePassword</IntergrationDatabasepassword>
+    <IntergrationDatabaseurl>jdbc:sqlserver://192.168.0.3;databaseName=INTERGRATION</IntergrationDatabaseurl>
+    <IntergrationDatabaseuser>ecs_accpac</IntergrationDatabaseuser>
+    <IntergrationDatabasepassword>ecs_accpac</IntergrationDatabasepassword>
     <ECSDatabaseUrl>jdbc:mysql://LOCALHOST:3306/ecsfortesting?jdbcCompliantTruncation=false</ECSDatabaseUrl>
     <ECSDatabaseuser>root</ECSDatabaseuser>
     <ECSDatabasepassword>TNEILC*1067</ECSDatabasepassword>
     <!-- /ecs_kesws/MHAccess/kephismhbprod.pro -->
     <MHXUserProfileFilePath>/ecs_kesws/MHAccess/mhx.pro</MHXUserProfileFilePath>
-    <MHXRetriveIP>192.168.92.2</MHXRetriveIP>
+    <MHXRetriveIP>192.168.101.2</MHXRetriveIP>
     <MHXUsername>kephismhbuser</MHXUsername>
-    <MHXUserPassword>ylsekqDG6e7MMyirzWLS5sPLNd3aAqmj</MHXUserPassword>
+    <MHXUserPassword>Pass1234</MHXUserPassword>
     <SenderId>keswsmhbuser</SenderId>
     <LogFile>ECSKESWSLogFile.html</LogFile>
     <Email1>bobbykimutai@kephis.org</Email1>

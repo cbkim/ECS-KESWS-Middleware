@@ -280,6 +280,7 @@ public class FileProcessor {
         if (!isUserProfileOk) {
             LOGGER.severe("The user profile path " + userProfileFilePath + " is invalid or could not be used");
             LOGGER.severe("Failed to submit messsage from the user");
+            System.out.println("ERROR 1 SUBMIT ********************************************************************* ");
             return false;
         }
 
@@ -320,8 +321,12 @@ public class FileProcessor {
 
         if (isSubmitted) {
             LOGGER.info("Submitted " + messageFilePath + " to " + recipientId);
+             System.out.println("SUBMITTED ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ");
+           
         } else {
             LOGGER.severe("Failed to submit message file " + messageFilePath + " to " + recipientId);
+            
+            System.out.println("ERROR 2 SUBMIT ********************************************************************* ");
         }
 
         return isSubmitted;

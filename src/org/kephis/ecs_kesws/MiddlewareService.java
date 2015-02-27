@@ -22,8 +22,7 @@ public class MiddlewareService {
     private static ExecutorService executor = null;
     private static volatile Future incomingMessageTask = null;
     private static volatile Future outgoingMessageTask = null;
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String[] args) { 
      executor = Executors.newFixedThreadPool(3);
 
     
@@ -43,14 +42,14 @@ private static void startMessageProcessors() throws Exception {
                 || incomingMessageTask.isDone()
                 || incomingMessageTask.isCancelled())
         {
-        //   incomingMessageTask = executor.submit(new IncomingMessageProcessor());
+         //incomingMessageTask = executor.submit(new IncomingMessageProcessor());
         }
  
         if (outgoingMessageTask == null
                 || outgoingMessageTask.isDone()
                 || outgoingMessageTask.isCancelled())
         {
-            outgoingMessageTask = executor.submit(new OutgoingMessageProcessor());
+             outgoingMessageTask = executor.submit(new OutgoingMessageProcessor());
         }
     }
     }
