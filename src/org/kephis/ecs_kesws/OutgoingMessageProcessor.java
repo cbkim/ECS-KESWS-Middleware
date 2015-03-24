@@ -46,16 +46,16 @@ import org.kephis.ecs_kesws.entities.InternalProductcodes;
  *
  * @author kim
  */
-class OutgoingMessageProcessor implements Runnable {
+class OutgoingMessageProcessor { //implements Runnable {
 
-    private volatile boolean stop = false;// used to stop thread
+    private static boolean stop = false;// used to stop thread
     private static Lock lock = new ReentrantLock();//locking mechanism to have just one thread run
 
     public OutgoingMessageProcessor() {
     }
 
-    @Override
-    public void run() {
+ //   @Override
+    public static void main(String[] args) { //run() {
         boolean endthread = false;
         try {
             if (OutgoingMessageProcessor.lock.tryLock()) {
@@ -75,7 +75,7 @@ class OutgoingMessageProcessor implements Runnable {
                             getMessages(fileprocessor, applicationConfigurationXMLMapper);
                             scenario3FileProcessor(fileprocessor, applicationConfigurationXMLMapper);
                             scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
-                            //scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper,);
+                           // scenario3FileProcessorTester(fileprocessor, applicationConfigurationXMLMapper);
                         }
                     }
                 }
@@ -91,17 +91,18 @@ class OutgoingMessageProcessor implements Runnable {
         }
     }
 
-    void getMessages(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
-        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        try {
+    static void getMessages(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
+         try {
             fileprocessor.retrieveMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), applicationConfigurationXMLMapper.getInboxFolder(), true);
+        //  get error messages 
+        
         } catch (Exception e) {
             e.printStackTrace(); //TODO send notification 
         }
 
     }
 
-    void sendErrorMessage(String receivedFileName, String invalid_XML_File) {
+   static void sendErrorMessage(String receivedFileName, String invalid_XML_File) {
         //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -111,7 +112,7 @@ class OutgoingMessageProcessor implements Runnable {
      * @param fileprocessor
      * @param applicationConfigurationXMLMapper
      */
-    private void scenario1(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
+    private static void scenario1(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
 
         DBDAO dbao_omp = new DBDAO();
         DBDAO dbao_omp2 = new DBDAO();
@@ -470,7 +471,7 @@ class OutgoingMessageProcessor implements Runnable {
      * @param fileprocessor
      * @param applicationConfigurationXMLMapper
      */
-    private void scenario2(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
+    private static void scenario2(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
 
         EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesControllerCaller = new EcsKeswsEntitiesControllerCaller();
         EcsEntitiesControllerCaller ecsEntitiesControllerCaller = new EcsEntitiesControllerCaller();
@@ -581,8 +582,7 @@ class OutgoingMessageProcessor implements Runnable {
                             String attachment = "";
 
                             // if(true){
-                            if ((recCdFileMsgConsignmentId != 0)) {
-                                // && fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file4, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate4 + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() - 2), "OG_CD_RES", attachment)) {
+                            if ((recCdFileMsgConsignmentId != 0) && fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file4, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate4 + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() - 2), "OG_CD_RES", attachment)) {
 
                                 String sourceDir = applicationConfigurationXMLMapper.getOutboxFolder();
                                 String destDir = applicationConfigurationXMLMapper.getOutboxArchiveFolder()
@@ -750,8 +750,7 @@ class OutgoingMessageProcessor implements Runnable {
                             String[] attachments = new String[]{"", ""};
                             String attachment = "";
                             // if(true){
-                            if ((recCdFileMsgConsignmentId != 0)) {
-                                //   && fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file3, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate3 + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() - 2), "OG_CD_RES", attachment)) {
+                            if ((recCdFileMsgConsignmentId != 0)  && fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file3, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate3 + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() - 2), "OG_CD_RES", attachment)) {
                                 filesinQue.add(file3);
                                 File f = new File(applicationConfigurationXMLMapper.getOutboxFolder() + file3);
                                 if (f.delete()) {
@@ -842,8 +841,7 @@ class OutgoingMessageProcessor implements Runnable {
         }
 
     }
-
-    public void scenario3FileProcessor(FileProcessor fileProcessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
+ public static void scenario3FileProcessor(FileProcessor fileProcessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
         EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController = new EcsKeswsEntitiesControllerCaller();
         EcsEntitiesControllerCaller ecsEntitiesController = new EcsEntitiesControllerCaller(applicationConfigurationXMLMapper);
         OutgoingMessageProcessor outGoingMessage;
@@ -887,8 +885,8 @@ class OutgoingMessageProcessor implements Runnable {
                     JAXBContext contextresObj = JAXBContext.newInstance(org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.class);
                     Marshaller resObjm = contextresObj.createMarshaller();
                     resObjm.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-                    String file = applicationConfigurationXMLMapper.getOutboxFolder() + "OG_SUB_CD-" + RefrenceNo + "-B-" + msgyear + SeqNumber + ".xml";
-                    String fileName = "OG_SUB_CD-" + RefrenceNo + "-B-" + msgyear + SeqNumber + ".xml";
+                    String file = applicationConfigurationXMLMapper.getOutboxFolder() + "OG_SUB_CD-" + RefrenceNo + "-1-" + "B-" + msgyear + SeqNumber + ".xml";
+                    String fileName = "OG_SUB_CD-" + RefrenceNo + "-1-" + "B-" + msgyear + SeqNumber + ".xml";
                     File cdResFile = new File(file);
                     System.out.println("itemCounter " + cdResFile.getAbsoluteFile());
                     ecsResCdFileMsg = ecsKeswsEntitiesController.createEcsResCdFileMsg(fileName, 5, SubmittedConsignmentId);
@@ -898,7 +896,7 @@ class OutgoingMessageProcessor implements Runnable {
                             EcsConDoc ecsConDocDetail = iterator1.next();
                             ecsResCdFileMsg.setInvoiceNO(ecsConDocDetail.getInvoiceNr());
                             keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setCommonRefNumber("" + ecsConDocDetail.getDocumentNumber());
-                            keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setCommonRefNumber("" + RefrenceNo + "01");
+                            keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setSenderID(""+ecsConDocDetail.getExporterSenderName()+"");
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setApplicationCode("" + ecsConDocDetail.getExporterFirmName().substring(0, 3));
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setName("" + ecsConDocDetail.getExporterFirmName());
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setPhyCountry("" + ecsConDocDetail.getExporterCntCode());
@@ -909,7 +907,13 @@ class OutgoingMessageProcessor implements Runnable {
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setApprovalDate("" + util.convertDatetoStringyyyMMdd(ecsConDocDetail.getConsignementApplicationDate()));
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setFinalApprovalDate("" + util.convertDatetoStringyyyMMddhhss(ecsConDocDetail.getConsignementApplicationDate()));
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setApplicationRefNo("" + RefrenceNo);
-                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setUCRNumber("" + ecsConDocDetail.getUCRNo());
+                            if (ecsConDocDetail.getUCRNo()==null) {
+                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setUCRNumber("" + ecsConDocDetail.getUCRNo());
+                           
+                            } else {
+                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setUCRNumber("" + "UCR201500020539");
+                           
+                            }
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setName("" + ecsConDocDetail.getImporterFirm());
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setPhysicalAddress(ecsConDocDetail.getExporterPhysicalAddress());
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setPostalAddress(ecsConDocDetail.getImporterPhysicalAddress2() + ecsConDocDetail.getImporterPostalCode());
@@ -937,14 +941,17 @@ class OutgoingMessageProcessor implements Runnable {
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignor().setWarehouseCode(ecsConDocDetail.getExporterCntCode());
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignor().setWarehouseLocation(ecsConDocDetail.getExporterCntCode());
 
-                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setModeOfTransport(ecsConDocDetail.getTransMode().substring(0, 1));
-                            if (ecsConDocDetail.getTransMode() == "Air transport") {
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setModeOfTransport("Air");
+                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setModeOfTransport("R");
+
+                            if (ecsConDocDetail.getTransMode().contains("Air")) {
+                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setModeOfTransport("A");
                             }
-                            if (ecsConDocDetail.getTransMode() == "Sea transport") {
+                            if (ecsConDocDetail.getTransMode().contains("Sea")) {
+                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setModeOfTransport("S");
                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setModeOfTransport("Sea");
                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setVesselName(ecsConDocDetail.getVesselName());
                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setVoyageNo(ecsConDocDetail.getShippingOrder());
+
                             }
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setPortOfArrival(ecsConDocDetail.getPortOfArrival());
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setPortOfArrivalDesc(ecsConDocDetail.getPortOfArrivalDesc());
@@ -952,6 +959,7 @@ class OutgoingMessageProcessor implements Runnable {
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setPortOfDepartureDesc(ecsConDocDetail.getPortOfDepartureDesc());
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setCustomsOffice("");
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setCustomsOfficeDesc("");
+                           
                             if (ecsConDocDetail.getCollectionOfficeId() != null) {
                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getPGAHeaderFields().setCollectionOffice("" + ecsConDocDetail.getCollectionOfficeId().toString());
                             }
@@ -989,10 +997,8 @@ class OutgoingMessageProcessor implements Runnable {
                                     //UNIT Weight mapping 
                                     itemDetail.getCDProduct1().setItemNetWeight(BigDecimal.valueOf(ecsConDocDetail.getItemUnitQuantity()));
                                     itemDetail.getCDProduct1().setItemGrossWeight(BigDecimal.valueOf(ecsConDocDetail.getItemSupUnitQuantity()));
-
                                     keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().remove(itemCounter);
                                     keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(itemDetail);
-
                                     InternalProductcodes IPCObj = null;
                                     Double weight = (Double) ecsConDocDetail.getItemUnitQuantity().doubleValue();
 
@@ -1006,11 +1012,9 @@ class OutgoingMessageProcessor implements Runnable {
                                         IPCObj.setDateDeactivated(date);
                                         ecsKeswsEntitiesController.createInternalProductcode(IPCObj);
                                         ecsKeswsEntitiesController.logInfo2(file, "CREATED IPC ENTRY ON ECSKESWSDB");
-
                                     }
-
                                     IPCObj = ecsKeswsEntitiesController.getInternalProductcodes(ecsConDocDetail.getItemInternalProductCode());
-                                    ecsKeswsEntitiesController.updateCreateInternalProductcodePriceDocMappings(IPCObj);
+                                    ecsKeswsEntitiesController.updateCreateInternalProductcodePriceDocMappings(ecsResCdFileMsg,IPCObj);
                                     CdFileDetails cdFileDetails = ecsKeswsEntitiesController.recCDFileMsgDetails(ecsResCdFileMsg, IPCObj, weight);
                                     cdFileList.add(cdFileDetails);
                                 }
@@ -1036,7 +1040,106 @@ class OutgoingMessageProcessor implements Runnable {
                         if (isvalidXmlFile && isvalidXmlFileforResponse) {
 
                             ecsKeswsEntitiesController.OgUpdateResCd1Msg(ecsResCdFileMsg);
-                            if ((SubmittedConsignmentId != 0) && (fileProcessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file, attachments, "OG_SUB_CD-" + RefrenceNo + "-B-" + msgyear + SeqNumber + ".xml", RefrenceNo, "OG_SUB_CD", attachment))) {
+                            if ((SubmittedConsignmentId != 0) && (fileProcessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file, attachments, "OG_SUB_CD-" + RefrenceNo + "-1-" + "B-" + msgyear + SeqNumber + ".xml", RefrenceNo, "OG_SUB_CD", attachment))) {
+                                ecsKeswsEntitiesController.logInfo2(fileName, "SUBMITTED " + fileName);
+                                ecsKeswsEntitiesController.OgUpdateResCd1Msg(ecsResCdFileMsg);
+                            }
+                            //Move to process box and sourceDir
+                            String processDir = applicationConfigurationXMLMapper.getProcessingFolder();
+                            String sourceDir = applicationConfigurationXMLMapper.getOutboxFolder();
+                            fileProcessor.moveXmlFileProcessed(sourceDir, processDir, cdResFile.getName());
+                            String destDir = applicationConfigurationXMLMapper.getOutboxArchiveFolder()
+                                    + util.getCurrentYear() + File.separator + util.getCurrentMonth()
+                                    + File.separator + util.getCurrentDay() + File.separator + "cd" + File.separator;
+
+                            fileProcessor.moveXmlFileProcessed(sourceDir, destDir, cdResFile.getName());
+
+                            File deleteOuboxfile = new File(sourceDir + cdResFile.getName());
+
+                            if (deleteOuboxfile.delete()) {
+                                //System.out.println(file.getName() + " is deleted!");
+                                break;
+                            } else {
+                                //System.out.println("Delete operation is failed.");
+                            }
+
+                        }
+                    }
+                } catch (Exception e) {
+                    //copy file to inboxfile archives ERROR/Year/Month/Day
+                    e.printStackTrace();
+                    ecsKeswsEntitiesController.logError(resTemplateFile, "ERROR " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        ecsKeswsEntitiesController.CloseEmf();
+    }
+
+  
+    public static void scenario3FileProcessorTester(FileProcessor fileProcessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
+        EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController = new EcsKeswsEntitiesControllerCaller();
+        EcsEntitiesControllerCaller ecsEntitiesController = new EcsEntitiesControllerCaller(applicationConfigurationXMLMapper);
+        OutgoingMessageProcessor outGoingMessage;
+        List<Integer> SubmittedConsignmentIds = new ArrayList<Integer>();
+
+        // Query submitted consignement id 
+        // check if consignement id is not on response table
+        // if not on response table create object to send back
+        //send file 
+        //update ecsResCdfileMsg
+        // query
+        SubmittedConsignmentIds = ecsEntitiesController.getSubmittedConsignementIds();
+
+        for (Iterator<Integer> iterator = SubmittedConsignmentIds.iterator(); iterator.hasNext();) {
+            Integer SubmittedConsignmentId = 0;
+            SubmittedConsignmentId = iterator.next();
+            //System.out.println(ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId).size());
+            if (ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId) != null) {
+                String resTemplateFile = "/ecs_kesws/service/xml/OG_SUB_CD-FILE.xml";
+
+                EcsResCdFileMsg ecsResCdFileMsg = new EcsResCdFileMsg();
+
+                ecsResCdFileMsg.setECSCONSIGNEMENTIDRef(SubmittedConsignmentId);
+
+                try {
+                    JAXBContext context = null;
+                    Unmarshaller um = null;
+                    org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument keswsConsignmentDocumentObj = new org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument();
+                    ECSConsignmentDoc ecsConsignmentDocumentObj = new ECSConsignmentDoc();
+                    UtilityClass util = new UtilityClass();
+                    context = JAXBContext.newInstance(org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.class);
+                    um = context.createUnmarshaller();
+                    keswsConsignmentDocumentObj = (org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument) um.unmarshal(new FileReader(resTemplateFile));
+                    List<EcsConDoc> ecsConDocDetails = ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId);
+                    String ecsConDocDetailItemId = "";
+                    Integer itemCounter = 0;
+                    String msgyear = new SimpleDateFormat("yyyy").format(new Date());
+                    String docType = "KEEXP";
+                    String SeqNumber = util.RPad(SubmittedConsignmentId.toString(), 10, '0');
+                    String RefrenceNo = "CD" + msgyear + "KEPHIS" + docType + SeqNumber;
+                    JAXBContext contextresObj = JAXBContext.newInstance(org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.class);
+                    Marshaller resObjm = contextresObj.createMarshaller();
+                    resObjm.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+                    String file = applicationConfigurationXMLMapper.getOutboxFolder() + "OG_SUB_CD-" + RefrenceNo + "-1-" + "B-" + msgyear + SeqNumber + ".xml";
+                    String fileName = "OG_SUB_CD-" + RefrenceNo + "-1-" + "B-" + msgyear + SeqNumber + ".xml";
+                    File cdResFile = new File(file);
+                    System.out.println("itemCounter " + cdResFile.getAbsoluteFile());
+                    ecsResCdFileMsg = ecsKeswsEntitiesController.createEcsResCdFileMsg(fileName, 5, SubmittedConsignmentId);
+                    if (ecsResCdFileMsg != null) {
+ 
+
+                        resObjm.marshal(keswsConsignmentDocumentObj, cdResFile);
+                        String[] attachments = new String[]{"", ""};
+                        String attachment = "";
+                        XmlFileValidator xmlvalidator = new XmlFileValidator();
+                        boolean isvalidXmlFile = xmlvalidator.isValidOgCdResOFile(applicationConfigurationXMLMapper.getInboxFolder() + resTemplateFile);
+                        boolean isvalidXmlFileforResponse = xmlvalidator.isValidOgCdResOFileForResponse(keswsConsignmentDocumentObj);
+                        if (isvalidXmlFile && isvalidXmlFileforResponse) {
+
+                            ecsKeswsEntitiesController.OgUpdateResCd1Msg(ecsResCdFileMsg);
+                            if ((SubmittedConsignmentId != 0) && (fileProcessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file, attachments, "OG_SUB_CD-" + RefrenceNo + "-1-" + "B-" + msgyear + SeqNumber + ".xml", RefrenceNo, "OG_SUB_CD", attachment))) {
                                 ecsKeswsEntitiesController.logInfo2(fileName, "SUBMITTED " + fileName);
                                 ecsKeswsEntitiesController.OgUpdateResCd1Msg(ecsResCdFileMsg);
                             }
@@ -1079,7 +1182,7 @@ class OutgoingMessageProcessor implements Runnable {
      * @param fileprocessor
      * @param applicationConfigurationXMLMapper
      */
-    private void scenario3CDApprovalMesg(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
+    private static void scenario3CDApprovalMesg(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
 
         EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesControllerCaller = new EcsKeswsEntitiesControllerCaller();
         EcsEntitiesControllerCaller ecsEntitiesControllerCaller = new EcsEntitiesControllerCaller(applicationConfigurationXMLMapper);
@@ -1147,13 +1250,34 @@ class OutgoingMessageProcessor implements Runnable {
                         if (ecsResCdFileMsg != null) {
                             for (Iterator<CdFileDetails> iterator1 = ecsResCdFileMsg.getCdFileDetailsCollection().iterator(); iterator1.hasNext();) {
                                 CdFileDetails next = iterator1.next();
-                                Amount = (float) (Amount + next.getPRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef().getPRICELISTPriceIDRef().getChargeKshs());
+                                Amount = (float) (next.getPRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef().getPRICELISTPriceIDRef().getChargeKshs());
                                 ChargeDescription = next.getPRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef().getPRICELISTPriceIDRef().getChargeDescription().trim();
                                 ServiceType = next.getPRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef().getDocumentIDRef() + ServiceType;
 
                             }
                         }
-                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("SUBMITTED")
+                        // select all on submitted table not on payment log messages
+                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("PENDING")
+                               && (recCdFileMsgConsignmentId == 0) ) {
+                                      try {
+                                        ecsEntitiesControllerCaller.InvoiceConsignmentonECS(recCdFileMsgConsignmentId, ClientCustomerId, Amount, "Pending Accpac Invoice No", InvoiceNumber, ChargeDescription, ServiceType, ecsKeswsEntitiesControllerCaller, 1, "");
+                                        ecsKeswsEntitiesControllerCaller.logInfo2(fileName, " INVOICED CLIENT WITH PIN " + ClientPin.toUpperCase() + " FOR CONSIGNMENT ID " + recCdFileMsgConsignmentId + " ON ECS KES " + Amount + " FOR " + ChargeDescription.toUpperCase());
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                  
+                                    try {
+                                        if (ecsEntitiesControllerCaller.CreateClientinACCPAC(ClientPin, ClientName)) {
+                                            ecsEntitiesControllerCaller.InvoiceConsignmentonAccpac(recCdFileMsgConsignmentId, ClientPin, Amount, "Pending Accpac Invoice No", InvoiceNumber, ChargeDescription, ecsKeswsEntitiesControllerCaller);
+                                            ecsKeswsEntitiesControllerCaller.logInfo2(fileName, " INVOICED CLIENT WITH PIN " + ClientPin.toUpperCase() + " FOR CONSIGNMENT ID " + recCdFileMsgConsignmentId + " ON ACCPAC KES " + Amount + " FOR " + ChargeDescription.toUpperCase());
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                        }
+                        
+                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("PENDING")
                                 && (recCdFileMsgConsignmentId != 0)) {
                             String additionaldetails = submittedTime;
                             if (isFirstMessageSent == 0) {
@@ -1222,18 +1346,6 @@ class OutgoingMessageProcessor implements Runnable {
                             }
                         }
 
-                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, 0).contains("PENDING")) {
-                           
-                            String additionaldetails = submittedTime; 
-                        }
-                        /**
-                         * *
-                         * TO DO this to be replaced with database trigger hence
-                         * check status on OG_CD_REC Table
-                         *
-                         */
-                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, 0).contains("PLANNED")) {
-                        }
                         if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("REJECTED")
                                 && (recCdFileMsgConsignmentId != 0)) {
                             //inspection status 0 
@@ -1295,7 +1407,7 @@ class OutgoingMessageProcessor implements Runnable {
                                             + util.getCurrentYear() + File.separator + util.getCurrentMonth()
                                             + File.separator + util.getCurrentDay() + File.separator + "cd_res" + File.separator;
                                     fileprocessor.moveXmlFileProcessed(sourceDir, destDir, fileN);
-                                    ResCdFileMsg resCdFileMsg = ecsKeswsEntitiesControllerCaller.resCDFileMsg(recCdFileMsg, 2, file2, fileN);
+                                    ResCdFileMsg resCdFileMsg = ecsKeswsEntitiesControllerCaller.resCDFileMsg(recCdFileMsg, 3, file2, fileN);
                                     ecsKeswsEntitiesControllerCaller.logInfo2(fileN, " SENT IO REJECT STATUS RESPONSE MESSAGE");
                                 }
                             }
@@ -1358,75 +1470,19 @@ class OutgoingMessageProcessor implements Runnable {
                                             + util.getCurrentYear() + File.separator + util.getCurrentMonth()
                                             + File.separator + util.getCurrentDay() + File.separator + "cd_res" + File.separator;
                                     fileprocessor.moveXmlFileProcessed(sourceDir, destDir, fileN);
-                                    ResCdFileMsg resCdFileMsg = ecsKeswsEntitiesControllerCaller.resCDFileMsg(recCdFileMsg, 2, file3, fileN);
+                                    ResCdFileMsg resCdFileMsg = ecsKeswsEntitiesControllerCaller.resCDFileMsg(recCdFileMsg, 3, file3, fileN);
                                     ecsKeswsEntitiesControllerCaller.logInfo2(fileN, " SENT IO PASS STATUS RESPONSE MESSAGE");
                                 }
-
-                            }
-                            try {
-//
-                                //  System.out.println("INVOICEING CLIENT"+ recCdFileMsgConsignmentId+ ClientCustomerId+ Amount+ "Pending Accpac Invoice No"+ InvoiceNumber+ ChargeDescription+ServiceType);
-                                ecsEntitiesControllerCaller.InvoiceConsignmentonECS(recCdFileMsgConsignmentId, ClientCustomerId, Amount, "Pending Accpac Invoice No", InvoiceNumber, ChargeDescription, ServiceType, ecsKeswsEntitiesControllerCaller, 2, "");
-                                ecsKeswsEntitiesControllerCaller.logInfo2(fileName, "INVOICED CLIENT WITH PIN " + ClientPin.toUpperCase() + " FOR CONSIGNMENT ID " + recCdFileMsgConsignmentId + " ON ECS KES " + Amount + " FOR " + ChargeDescription.toUpperCase());
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                if (ecsEntitiesControllerCaller.CreateClientinACCPAC(ClientPin, ClientName)) {
-                                    ecsEntitiesControllerCaller.InvoiceConsignmentonAccpac(recCdFileMsgConsignmentId, ClientPin, Amount, "Pending Accpac Invoice No", InvoiceNumber, ChargeDescription, ecsKeswsEntitiesControllerCaller);
-                                    ecsKeswsEntitiesControllerCaller.logInfo2(fileName, "INVOICED CLIENT WITH PIN " + ClientPin.toUpperCase() + " FOR CONSIGNMENT ID " + recCdFileMsgConsignmentId + " ON ACCPAC KES " + Amount + " FOR " + ChargeDescription.toUpperCase());
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                            if (diffMinutes > 30) {
-                                //email inspector
-                                //   ECSKESWSFileLogger.mailnotification("Kindly check the consignment " + InvoiceNumber + " on ecs it has been pending for 1/2 hour");
-
-                            }
-                            if (diffHours > 1) {
-                                //email it support
-                                //   ECSKESWSFileLogger.mailnotification("Kindly check the consignment " + InvoiceNumber + " on ecs it has been pending for 1 hour and will be deleted in one hours time");
-
-                            }
-
-                            if (diffHours > 2) {
-                                //delete
-                                deleteFile = fileName;
-
+                                
                             }
 
                         }
 
                     } catch (Exception e) {
                         e.printStackTrace();
-//                                        ECSKESWSFileLogger.Log(e.toString(), "SEVERE");
                     }
 
                 }
-
-                /**
-                 * *
-                 * query database for consignements received and response
-                 * messages not sent by checking on saved files in processing
-                 * box and get application refrence query ecs database based on
-                 * refrence id create response message object create response
-                 * message file and save to out box send file remove files from
-                 * processing box determine if response message is generated by
-                 * the system check outbox if so send response messsage to KESWS
-                 * if not query response message and create outbox if
-                 * successfull else repeat process\ INSERT INTO
-                 * `ecshscodepc`.`transaction_logs` (`ID`,
-                 * `RELATEDTRANSACTIONID`, `TRANSACTIONTYPE`,
-                 * `TRANSACTIONDETAILS`, `RECEIVESTATUS`, `RECEIVETIME`,
-                 * `PROCESSSTATUS`, `PROCESSTIME`, `RESPONSESTATUS`,
-                 * `REPONSETIME`, `ACHIVESTATUS`) VALUES (NULL, '0', '1',
-                 * 'RECEIPT', '1', NULL, NULL, NULL, NULL, NULL, NULL);
-                 *
-                 */
-                //delete certificate 
                 File file = new File(applicationConfigurationXMLMapper.getProcessingFolder() + deleteFile);
                 filespendingprocesser.remove(deleteFile);
 
@@ -1440,7 +1496,7 @@ class OutgoingMessageProcessor implements Runnable {
             }
 
             try {
-                java.lang.Thread.sleep(120000);
+                java.lang.Thread.sleep(100);
                 for (Iterator<String> iterator = filesinQue.iterator(); iterator.hasNext();) {
                     String next = iterator.next();
                     File f = new File(next);
@@ -1777,7 +1833,7 @@ class OutgoingMessageProcessor implements Runnable {
         }
 
         try {
-            java.lang.Thread.sleep(1200);
+            java.lang.Thread.sleep(60);
             for (Iterator<String> iterator = filesinQue.iterator(); iterator.hasNext();) {
                 String next = iterator.next();
                 File f = new File(next);

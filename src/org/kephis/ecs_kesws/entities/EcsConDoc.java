@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EcsConDoc.findById", query = "SELECT e FROM EcsConDoc e WHERE e.id = :id"),
     @NamedQuery(name = "EcsConDoc.findByConsignmentId", query = "SELECT e FROM EcsConDoc e WHERE e.consignmentId = :consignmentId"),
     @NamedQuery(name = "EcsConDoc.findByDocumentNumber", query = "SELECT e FROM EcsConDoc e WHERE e.documentNumber = :documentNumber"),
+    @NamedQuery(name = "EcsConDoc.findByExporterSenderName", query = "SELECT e FROM EcsConDoc e WHERE e.exporterSenderName = :exporterSenderName"),
     @NamedQuery(name = "EcsConDoc.findByStatus", query = "SELECT e FROM EcsConDoc e WHERE e.status = :status"),
     @NamedQuery(name = "EcsConDoc.findByConsignementApplicationDate", query = "SELECT e FROM EcsConDoc e WHERE e.consignementApplicationDate = :consignementApplicationDate"),
     @NamedQuery(name = "EcsConDoc.findByDocumentNr", query = "SELECT e FROM EcsConDoc e WHERE e.documentNr = :documentNr"),
@@ -40,6 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EcsConDoc.findByShipmentDate", query = "SELECT e FROM EcsConDoc e WHERE e.shipmentDate = :shipmentDate"),
     @NamedQuery(name = "EcsConDoc.findByShipmentTime", query = "SELECT e FROM EcsConDoc e WHERE e.shipmentTime = :shipmentTime"),
     @NamedQuery(name = "EcsConDoc.findByMarksAndNumbers", query = "SELECT e FROM EcsConDoc e WHERE e.marksAndNumbers = :marksAndNumbers"),
+    @NamedQuery(name = "EcsConDoc.findByTotalConsignmentWeight", query = "SELECT e FROM EcsConDoc e WHERE e.totalConsignmentWeight = :totalConsignmentWeight"),
     @NamedQuery(name = "EcsConDoc.findByCollectionOfficeId", query = "SELECT e FROM EcsConDoc e WHERE e.collectionOfficeId = :collectionOfficeId"),
     @NamedQuery(name = "EcsConDoc.findByPortOfArrival", query = "SELECT e FROM EcsConDoc e WHERE e.portOfArrival = :portOfArrival"),
     @NamedQuery(name = "EcsConDoc.findByPortOfArrivalDesc", query = "SELECT e FROM EcsConDoc e WHERE e.portOfArrivalDesc = :portOfArrivalDesc"),
@@ -51,12 +53,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EcsConDoc.findByExporterCity", query = "SELECT e FROM EcsConDoc e WHERE e.exporterCity = :exporterCity"),
     @NamedQuery(name = "EcsConDoc.findByExporterCntCode", query = "SELECT e FROM EcsConDoc e WHERE e.exporterCntCode = :exporterCntCode"),
     @NamedQuery(name = "EcsConDoc.findByExporterPostNumber", query = "SELECT e FROM EcsConDoc e WHERE e.exporterPostNumber = :exporterPostNumber"),
-    @NamedQuery(name = "EcsConDoc.findByExporterPhysicalAddress", query = "SELECT e FROM EcsConDoc e WHERE e.exporterPhysicalAddress = :exporterPhysicalAddress"),
     @NamedQuery(name = "EcsConDoc.findByExporterPin", query = "SELECT e FROM EcsConDoc e WHERE e.exporterPin = :exporterPin"),
     @NamedQuery(name = "EcsConDoc.findByExporterTel", query = "SELECT e FROM EcsConDoc e WHERE e.exporterTel = :exporterTel"),
     @NamedQuery(name = "EcsConDoc.findByExporterFax", query = "SELECT e FROM EcsConDoc e WHERE e.exporterFax = :exporterFax"),
     @NamedQuery(name = "EcsConDoc.findByExporterMail", query = "SELECT e FROM EcsConDoc e WHERE e.exporterMail = :exporterMail"),
     @NamedQuery(name = "EcsConDoc.findByExporterWareHouseCode", query = "SELECT e FROM EcsConDoc e WHERE e.exporterWareHouseCode = :exporterWareHouseCode"),
+    @NamedQuery(name = "EcsConDoc.findByExporterPhysicalAddress", query = "SELECT e FROM EcsConDoc e WHERE e.exporterPhysicalAddress = :exporterPhysicalAddress"),
     @NamedQuery(name = "EcsConDoc.findByImporterFirm", query = "SELECT e FROM EcsConDoc e WHERE e.importerFirm = :importerFirm"),
     @NamedQuery(name = "EcsConDoc.findByImporterPhysicalAddress", query = "SELECT e FROM EcsConDoc e WHERE e.importerPhysicalAddress = :importerPhysicalAddress"),
     @NamedQuery(name = "EcsConDoc.findByImporterPhysicalAddress2", query = "SELECT e FROM EcsConDoc e WHERE e.importerPhysicalAddress2 = :importerPhysicalAddress2"),
@@ -78,8 +80,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EcsConDoc.findByKeswsUnitName", query = "SELECT e FROM EcsConDoc e WHERE e.keswsUnitName = :keswsUnitName"),
     @NamedQuery(name = "EcsConDoc.findByKeswsUnitCode2", query = "SELECT e FROM EcsConDoc e WHERE e.keswsUnitCode2 = :keswsUnitCode2"),
     @NamedQuery(name = "EcsConDoc.findByKeswsUnitName2", query = "SELECT e FROM EcsConDoc e WHERE e.keswsUnitName2 = :keswsUnitName2"),
-    @NamedQuery(name = "EcsConDoc.findByKeswsItemClass", query = "SELECT e FROM EcsConDoc e WHERE e.keswsItemClass = :keswsItemClass"),
-    @NamedQuery(name = "EcsConDoc.findByKeswsItemClassDesc", query = "SELECT e FROM EcsConDoc e WHERE e.keswsItemClassDesc = :keswsItemClassDesc"),
     @NamedQuery(name = "EcsConDoc.findByItemCommodityForm", query = "SELECT e FROM EcsConDoc e WHERE e.itemCommodityForm = :itemCommodityForm"),
     @NamedQuery(name = "EcsConDoc.findByItemPackaging", query = "SELECT e FROM EcsConDoc e WHERE e.itemPackaging = :itemPackaging"),
     @NamedQuery(name = "EcsConDoc.findByItemNumberOfPackages", query = "SELECT e FROM EcsConDoc e WHERE e.itemNumberOfPackages = :itemNumberOfPackages"),
@@ -89,6 +89,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EcsConDoc.findByItemBotanicalName", query = "SELECT e FROM EcsConDoc e WHERE e.itemBotanicalName = :itemBotanicalName"),
     @NamedQuery(name = "EcsConDoc.findByItemInternalProductCode", query = "SELECT e FROM EcsConDoc e WHERE e.itemInternalProductCode = :itemInternalProductCode"),
     @NamedQuery(name = "EcsConDoc.findByTransMode", query = "SELECT e FROM EcsConDoc e WHERE e.transMode = :transMode"),
+    @NamedQuery(name = "EcsConDoc.findByKeswsItemClass", query = "SELECT e FROM EcsConDoc e WHERE e.keswsItemClass = :keswsItemClass"),
+    @NamedQuery(name = "EcsConDoc.findByKeswsItemClassDesc", query = "SELECT e FROM EcsConDoc e WHERE e.keswsItemClassDesc = :keswsItemClassDesc"),
     @NamedQuery(name = "EcsConDoc.findByAdditionalField1", query = "SELECT e FROM EcsConDoc e WHERE e.additionalField1 = :additionalField1"),
     @NamedQuery(name = "EcsConDoc.findByAdditionalField2", query = "SELECT e FROM EcsConDoc e WHERE e.additionalField2 = :additionalField2")})
 public class EcsConDoc implements Serializable {
@@ -101,6 +103,9 @@ public class EcsConDoc implements Serializable {
     private int consignmentId;
     @Column(name = "DocumentNumber")
     private String documentNumber;
+    @Basic(optional = false)
+    @Column(name = "exporter_sender_name")
+    private String exporterSenderName;
     @Basic(optional = false)
     @Column(name = "status")
     private String status;
@@ -130,6 +135,9 @@ public class EcsConDoc implements Serializable {
     @Basic(optional = false)
     @Column(name = "MarksAndNumbers")
     private String marksAndNumbers;
+    @Basic(optional = false)
+    @Column(name = "TotalConsignmentWeight")
+    private float totalConsignmentWeight;
     @Column(name = "collection_office_id")
     private Integer collectionOfficeId;
     @Column(name = "PortOfArrival")
@@ -142,34 +150,46 @@ public class EcsConDoc implements Serializable {
     private String portOfDepartureDesc;
     @Column(name = "exporter_firm_name_city_code")
     private String exporterFirmNameCityCode;
+    @Basic(optional = false)
     @Column(name = "exporter_firm_name")
     private String exporterFirmName;
     @Column(name = "exporter_country")
     private String exporterCountry;
     @Column(name = "exporter_city")
     private String exporterCity;
+    @Basic(optional = false)
     @Column(name = "exporter_cnt_code")
     private String exporterCntCode;
+    @Basic(optional = false)
     @Column(name = "exporter_post_number")
     private String exporterPostNumber;
-    @Column(name = "exporter_physical_address")
-    private String exporterPhysicalAddress;
+    @Basic(optional = false)
     @Column(name = "exporter_pin")
     private String exporterPin;
+    @Basic(optional = false)
     @Column(name = "exporter_tel")
     private String exporterTel;
+    @Basic(optional = false)
     @Column(name = "exporter_fax")
     private String exporterFax;
+    @Basic(optional = false)
     @Column(name = "exporter_mail")
     private String exporterMail;
+    @Basic(optional = false)
     @Column(name = "exporter_ware_house_code")
     private String exporterWareHouseCode;
+    @Column(name = "exporter_physical_address")
+    private String exporterPhysicalAddress;
+    @Basic(optional = false)
     @Column(name = "importer_firm")
     private String importerFirm;
+    @Basic(optional = false)
     @Column(name = "importer_physical_address")
     private String importerPhysicalAddress;
+    @Basic(optional = false)
     @Column(name = "importer_physical_address_2")
     private String importerPhysicalAddress2;
+    @Basic(optional = false)
     @Column(name = "importer_postal_code")
     private String importerPostalCode;
     @Column(name = "importer_country_iso")
@@ -208,28 +228,34 @@ public class EcsConDoc implements Serializable {
     private String keswsUnitCode2;
     @Column(name = "kesws_unit_name_2")
     private String keswsUnitName2;
-    @Column(name = "kesws_item_class")
-    private String keswsItemClass;
-    @Column(name = "kesws_item_class_desc")
-    private String keswsItemClassDesc;
+    @Basic(optional = false)
     @Column(name = "item_commodity_form")
     private String itemCommodityForm;
+    @Basic(optional = false)
     @Column(name = "item_packaging")
     private String itemPackaging;
+    @Basic(optional = false)
     @Column(name = "item_number_of_packages")
-    private Integer itemNumberOfPackages;
+    private int itemNumberOfPackages;
     @Column(name = "kesws_package_code")
     private String keswsPackageCode;
     @Column(name = "kesws_package_name")
     private String keswsPackageName;
+    @Basic(optional = false)
     @Column(name = "item_common_name")
     private String itemCommonName;
+    @Basic(optional = false)
     @Column(name = "item_botanical_name")
     private String itemBotanicalName;
     @Column(name = "Item_InternalProductCode")
     private String itemInternalProductCode;
     @Column(name = "trans_mode")
     private String transMode;
+    @Column(name = "kesws_item_class")
+    private String keswsItemClass;
+    @Column(name = "kesws_item_class_desc")
+    private String keswsItemClassDesc;
+    @Basic(optional = false)
     @Column(name = "additional_field_1")
     private String additionalField1;
     @Column(name = "additional_field_2")
@@ -260,6 +286,14 @@ public class EcsConDoc implements Serializable {
 
     public void setDocumentNumber(String documentNumber) {
         this.documentNumber = documentNumber;
+    }
+
+    public String getExporterSenderName() {
+        return exporterSenderName;
+    }
+
+    public void setExporterSenderName(String exporterSenderName) {
+        this.exporterSenderName = exporterSenderName;
     }
 
     public String getStatus() {
@@ -340,6 +374,14 @@ public class EcsConDoc implements Serializable {
 
     public void setMarksAndNumbers(String marksAndNumbers) {
         this.marksAndNumbers = marksAndNumbers;
+    }
+
+    public float getTotalConsignmentWeight() {
+        return totalConsignmentWeight;
+    }
+
+    public void setTotalConsignmentWeight(float totalConsignmentWeight) {
+        this.totalConsignmentWeight = totalConsignmentWeight;
     }
 
     public Integer getCollectionOfficeId() {
@@ -430,14 +472,6 @@ public class EcsConDoc implements Serializable {
         this.exporterPostNumber = exporterPostNumber;
     }
 
-    public String getExporterPhysicalAddress() {
-        return exporterPhysicalAddress;
-    }
-
-    public void setExporterPhysicalAddress(String exporterPhysicalAddress) {
-        this.exporterPhysicalAddress = exporterPhysicalAddress;
-    }
-
     public String getExporterPin() {
         return exporterPin;
     }
@@ -476,6 +510,14 @@ public class EcsConDoc implements Serializable {
 
     public void setExporterWareHouseCode(String exporterWareHouseCode) {
         this.exporterWareHouseCode = exporterWareHouseCode;
+    }
+
+    public String getExporterPhysicalAddress() {
+        return exporterPhysicalAddress;
+    }
+
+    public void setExporterPhysicalAddress(String exporterPhysicalAddress) {
+        this.exporterPhysicalAddress = exporterPhysicalAddress;
     }
 
     public String getImporterFirm() {
@@ -646,22 +688,6 @@ public class EcsConDoc implements Serializable {
         this.keswsUnitName2 = keswsUnitName2;
     }
 
-    public String getKeswsItemClass() {
-        return keswsItemClass;
-    }
-
-    public void setKeswsItemClass(String keswsItemClass) {
-        this.keswsItemClass = keswsItemClass;
-    }
-
-    public String getKeswsItemClassDesc() {
-        return keswsItemClassDesc;
-    }
-
-    public void setKeswsItemClassDesc(String keswsItemClassDesc) {
-        this.keswsItemClassDesc = keswsItemClassDesc;
-    }
-
     public String getItemCommodityForm() {
         return itemCommodityForm;
     }
@@ -678,11 +704,11 @@ public class EcsConDoc implements Serializable {
         this.itemPackaging = itemPackaging;
     }
 
-    public Integer getItemNumberOfPackages() {
+    public int getItemNumberOfPackages() {
         return itemNumberOfPackages;
     }
 
-    public void setItemNumberOfPackages(Integer itemNumberOfPackages) {
+    public void setItemNumberOfPackages(int itemNumberOfPackages) {
         this.itemNumberOfPackages = itemNumberOfPackages;
     }
 
@@ -732,6 +758,22 @@ public class EcsConDoc implements Serializable {
 
     public void setTransMode(String transMode) {
         this.transMode = transMode;
+    }
+
+    public String getKeswsItemClass() {
+        return keswsItemClass;
+    }
+
+    public void setKeswsItemClass(String keswsItemClass) {
+        this.keswsItemClass = keswsItemClass;
+    }
+
+    public String getKeswsItemClassDesc() {
+        return keswsItemClassDesc;
+    }
+
+    public void setKeswsItemClassDesc(String keswsItemClassDesc) {
+        this.keswsItemClassDesc = keswsItemClassDesc;
     }
 
     public String getAdditionalField1() {

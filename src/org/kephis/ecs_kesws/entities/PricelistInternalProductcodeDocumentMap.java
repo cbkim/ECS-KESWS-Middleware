@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,7 +45,7 @@ public class PricelistInternalProductcodeDocumentMap implements Serializable {
     private Integer pricelistIPCMAPID;
     @Column(name = "Document_ID_Ref")
     private String documentIDRef;
-    @OneToMany(mappedBy = "pRICELISTINTERNALPRODUCTCODEDOCUMENTMAPPricelistIPCMAPID")
+    @OneToMany(mappedBy = "pRICELISTINTERNALPRODUCTCODEDOCUMENTMAPPricelistIPCMAPID",fetch = FetchType.EAGER)
     private Collection<PaymentInfoLog> paymentInfoLogCollection;
     @JoinColumn(name = "PRICELIST_Price_ID_Ref", referencedColumnName = "Price_ID")
     @ManyToOne(optional = false)
@@ -55,7 +56,7 @@ public class PricelistInternalProductcodeDocumentMap implements Serializable {
     @JoinColumn(name = "DOCUMENT_TYPES_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private EcsDocumentTypes dOCUMENTTYPESid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef",fetch = FetchType.EAGER)
     private Collection<CdFileDetails> cdFileDetailsCollection;
 
     public PricelistInternalProductcodeDocumentMap() {

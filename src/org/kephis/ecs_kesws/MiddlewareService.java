@@ -22,7 +22,7 @@ public class MiddlewareService {
     private static ExecutorService executor = null;
     private static volatile Future incomingMessageTask = null;
     private static volatile Future outgoingMessageTask = null;
-    public static void main(String[] args) { 
+    public  void main(String[] args) { 
      executor = Executors.newFixedThreadPool(3);
 
     
@@ -49,7 +49,7 @@ private static void startMessageProcessors() throws Exception {
                 || outgoingMessageTask.isDone()
                 || outgoingMessageTask.isCancelled())
         {
-             outgoingMessageTask = executor.submit(new OutgoingMessageProcessor());
+             //outgoingMessageTask = executor.submit(new OutgoingMessageProcessor());
         }
     }
     }

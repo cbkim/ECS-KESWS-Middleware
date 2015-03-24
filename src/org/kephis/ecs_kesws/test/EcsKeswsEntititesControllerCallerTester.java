@@ -41,11 +41,13 @@ public class EcsKeswsEntititesControllerCallerTester {
             ex.printStackTrace();
         }
         * **/
-        //cntr.getInternalProductcodes("00000000000000");
-        // System.err.println(cntr.getInternalProductcodes("00000000000000").getIpcId());
-        InternalProductcodes internalProductcodes=new InternalProductcodes(4206);
+        
            EcsKeswsEntitiesControllerCaller cntr = new EcsKeswsEntitiesControllerCaller();
-           cntr.findPricelistIPCDocMapEntitiesbyIPC(internalProductcodes);
+        
+        // System.err.println(cntr.getInternalProductcodes("00000000000000").getIpcId());
+        InternalProductcodes internalProductcodes=cntr.getInternalProductcodes("06014262216147");
+        //   cntr.findPricelistIPCDocMapEntitiesbyIPC(internalProductcodes);
+           //cntr.updateCreateInternalProductcodePriceDocMappings(internalProductcodes);
      
         
     }
