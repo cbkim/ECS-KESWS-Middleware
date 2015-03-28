@@ -52,8 +52,7 @@ class OutgoingMessageProcessor { //implements Runnable {
     private static Lock lock = new ReentrantLock();//locking mechanism to have just one thread run
 
     public OutgoingMessageProcessor() {
-    }
-
+    } 
  //   @Override
     public static void main(String[] args) { //run() {
         boolean endthread = false;
