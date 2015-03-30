@@ -24,8 +24,7 @@ public class MiddlewareService {
     private static volatile Future outgoingMessageTask = null;
     public  void main(String[] args) { 
      executor = Executors.newFixedThreadPool(3);
-
-    
+ 
         while (true)
         {
             try {
