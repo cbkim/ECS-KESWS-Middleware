@@ -37,7 +37,20 @@ import org.kephis.ecs_kesws.xml.validator.XmlFileValidator;
  */
 class IncomingMessageProcessor implements Runnable {
 
+    
+    private int senario = 0;
+    
     public IncomingMessageProcessor() {
+        
+    }
+
+    /**
+     * The constructor takes the scenario selected and calls
+     * ......
+     */
+    public IncomingMessageProcessor(int scenario) {
+        this.senario = scenario;
+        this.run();
     }
 
     public void run() {
@@ -55,7 +68,7 @@ class IncomingMessageProcessor implements Runnable {
             String fileName = (String) inboxfiles.get(inboxfiles.size() - 1);
             try {
                 // switch intergration based on selected model
-                int senario =1;
+             
                 switch (senario) {
                     case 1:
                         scenario1FileProcessor(fileName, fileprocessor, applicationConfigurationXMLMapper);

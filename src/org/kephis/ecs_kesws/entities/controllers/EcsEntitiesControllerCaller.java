@@ -43,9 +43,14 @@ public class EcsEntitiesControllerCaller {
     String DB_URL = "";
     String USER = "";
     String PASS = "";
-   String FIN_DB_URL = "";
+    String FIN_DB_URL = "";
     String FIN_USER = "";
     String FIN_PASS = "";
+    
+    String DB_URL_ECS_KESWS;
+    String USER_ECS_KESWS;
+    String PASS_ECS_KESWS;
+    
     public EcsEntitiesControllerCaller() {
 
     }
@@ -59,6 +64,12 @@ public class EcsEntitiesControllerCaller {
         FIN_DB_URL = applicationConfigurationXMLMapper.getIntergrationDatabaseUrl();
          FIN_USER = applicationConfigurationXMLMapper.getIntergrationDatabaseuser();
          FIN_PASS = applicationConfigurationXMLMapper.getIntergrationDatabasepassword();
+         
+         
+         //THIS IS THE CONNECTION TO ECS_KESWS database
+         DB_URL_ECS_KESWS = applicationConfigurationXMLMapper.getECS_Kesws_DbUrl();
+         USER_ECS_KESWS = applicationConfigurationXMLMapper.getECS_Kesws_user();
+         PASS_ECS_KESWS = applicationConfigurationXMLMapper.getECS_Kesws_pass();
 
     }
 
@@ -2281,13 +2292,16 @@ public class EcsEntitiesControllerCaller {
         BoneCP connectionPool = null;
         Connection connection = null;
         try {
+            
+           
             // load the database driver (make sure this is in your classpath!)
             Class.forName(JDBC_DRIVER);
             // setup the connection pool
             BoneCPConfig config = new BoneCPConfig();
-            config.setJdbcUrl("jdbc:mysql://LOCALHOST:3306/ECS_KESWS"); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
-            config.setUsername(USER);
-            config.setPassword(PASS);
+            //config.setJdbcUrl("jdbc:mysql://192.168.0.9:3306/ECS_KESWS"); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
+            config.setJdbcUrl(DB_URL_ECS_KESWS);
+            config.setUsername(USER_ECS_KESWS);
+            config.setPassword(PASS_ECS_KESWS);
             config.setMinConnectionsPerPartition(5);
             config.setMaxConnectionsPerPartition(10);
             config.setPartitionCount(1);

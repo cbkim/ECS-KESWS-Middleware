@@ -48,6 +48,14 @@ public class ApplicationConfigurationXMLMapper {
     private static String SenderId;
     private static String Email1;
     private static String Email2;
+    
+    
+    //ECS_Kesws_DbUrl
+    private static String ECS_Kesws_DbUrl;
+    private static String ECS_Kesws_user;
+    private static String ECS_Kesws_pass;
+
+    
 
     public ApplicationConfigurationXMLMapper() {
         try {
@@ -82,6 +90,17 @@ public class ApplicationConfigurationXMLMapper {
                     setEmail2(eElement.getElementsByTagName("Email2").item(0).getTextContent());
                     //modified to receive one type of file for import
                     
+                    
+                    /*
+                    * This sets the database url for ECS_KESWS, with parameters from config.xml
+                    */
+                   
+                    setECS_Kesws_DbUrl(eElement.getElementsByTagName("ECS_Kesws_DbUrl").item(0).getTextContent());
+                    setECS_Kesws_user(eElement.getElementsByTagName("ECS_Kesws_user").item(0).getTextContent());
+                    setECS_Kesws_pass(eElement.getElementsByTagName("ECS_Kesws_pass").item(0).getTextContent());
+                   
+                    
+                    
                     for (int temp1 = 1; temp1 < 3; temp1++) { 
                         setFilesTypestoReceive(eElement.getElementsByTagName("MessageTypes" + (temp1) + "").item(0).getTextContent());
                     }
@@ -90,6 +109,37 @@ public class ApplicationConfigurationXMLMapper {
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(ApplicationConfigurationXMLMapper.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    
+    
+    public static String getECS_Kesws_DbUrl() {
+        return ECS_Kesws_DbUrl;
+    }
+
+   
+    public static void setECS_Kesws_DbUrl(String aECS_Kesws_DbUrl) {
+        ECS_Kesws_DbUrl = aECS_Kesws_DbUrl;
+    }
+
+    
+    public static String getECS_Kesws_user() {
+        return ECS_Kesws_user;
+    }
+
+    
+    public static void setECS_Kesws_user(String aECS_Kesws_user) {
+        ECS_Kesws_user = aECS_Kesws_user;
+    }
+
+    
+    public static String getECS_Kesws_pass() {
+        return ECS_Kesws_pass;
+    }
+
+    
+    public static void setECS_Kesws_pass(String aECS_Kesws_pass) {
+        ECS_Kesws_pass = aECS_Kesws_pass;
     }
 
     public static String getInboxFolder() {

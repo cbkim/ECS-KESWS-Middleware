@@ -52,8 +52,8 @@ class OutgoingMessageProcessor { //implements Runnable {
     private static Lock lock = new ReentrantLock();//locking mechanism to have just one thread run
 
     public OutgoingMessageProcessor() {
-    } 
-         
+    }
+
  //   @Override
     public static void main(String[] args) { //run() {
         boolean endthread = false;
@@ -897,6 +897,8 @@ class OutgoingMessageProcessor { //implements Runnable {
                             ecsResCdFileMsg.setInvoiceNO(ecsConDocDetail.getInvoiceNr());
                             keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setCommonRefNumber("" + ecsConDocDetail.getDocumentNumber());
                             keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setSenderID(""+ecsConDocDetail.getExporterSenderName()+"");
+                            
+                            
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setApplicationCode("" + ecsConDocDetail.getExporterFirmName().substring(0, 3));
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setName("" + ecsConDocDetail.getExporterFirmName());
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setPhyCountry("" + ecsConDocDetail.getExporterCntCode());
@@ -1516,6 +1518,44 @@ class OutgoingMessageProcessor { //implements Runnable {
         }
 
     }
+
+    public OutgoingMessageProcessor(int senario){
+        boolean endthread = false;
+        try {
+            if (OutgoingMessageProcessor.lock.tryLock()) {
+                FileProcessor fileprocessor = new FileProcessor();
+                ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper = new ApplicationConfigurationXMLMapper();
+
+                while (!stop && !endthread) {
+                    
+                    switch (senario) {
+                        case 1: {
+                            scenario1(fileprocessor, applicationConfigurationXMLMapper);
+                        }
+                        case 2: {
+                            scenario2(fileprocessor, applicationConfigurationXMLMapper);
+                        }
+                        case 3: {
+                            getMessages(fileprocessor, applicationConfigurationXMLMapper);
+                            scenario3FileProcessor(fileprocessor, applicationConfigurationXMLMapper);
+                            scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
+                           // scenario3FileProcessorTester(fileprocessor, applicationConfigurationXMLMapper);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
 
     private void scenario3CDApprovalMesgandprePayment(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper, int paymentoption) {
 
