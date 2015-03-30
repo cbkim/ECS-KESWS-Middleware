@@ -53,6 +53,7 @@ class OutgoingMessageProcessor { //implements Runnable {
 
     public OutgoingMessageProcessor() {
     } 
+         
  //   @Override
     public static void main(String[] args) { //run() {
         boolean endthread = false;
