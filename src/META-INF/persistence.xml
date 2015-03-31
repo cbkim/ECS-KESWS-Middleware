@@ -43,6 +43,7 @@
             <property name="hibernate.c3p0.numHelperThreads" value="50"/>
               <property name="hibernate.c3p0.maxIdleTime" value="2700"/>
             <property name="org.hibernate" value="false"/>
+            <property name="hibernate.enable_lazy_load_no_trans" value="true" />
         </properties>
     </persistence-unit>
 </persistence>

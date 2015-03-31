@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,7 +52,7 @@ public class CdFileDetails implements Serializable {
     @ManyToOne(optional = true)
     private RecCdFileMsg rECCDFILEMSGRECCDFILEIDRef;
     @JoinColumn(name = "PRICE_LIST_INT_IPC_DOCUMENT_MAP_Pricelist_IPC_MAP_ID_Ref", referencedColumnName = "Pricelist_IPC_MAP_ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private PricelistInternalProductcodeDocumentMap pRICELISTINTIPCDOCUMENTMAPPricelistIPCMAPIDRef;
     @JoinColumn(name = "ECS_RES_CD_FILE_MSG_REC_CD_File_ID", referencedColumnName = "REC_CD_File_ID")
     @ManyToOne(optional = true)

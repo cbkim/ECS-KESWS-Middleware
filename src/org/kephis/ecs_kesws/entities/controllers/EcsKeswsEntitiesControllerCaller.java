@@ -329,8 +329,10 @@ public class EcsKeswsEntitiesControllerCaller {
                     itemweight = itemweight + cdFileDetails.getWeight();
                     cdFileDetails.setWeight(itemweight);
                     PricelistInternalProductcodeDocumentMapJpaController plipcdoc = new PricelistInternalProductcodeDocumentMapJpaController(emf);
-                    PricelistInternalProductcodeDocumentMap defaultdocprice = plipcdoc.findPricelistInternalProductcodeDocumentMap(627);
-Double temp_max_weight = 0.00;
+                   // PricelistInternalProductcodeDocumentMap defaultdocprice = plipcdoc.findPricelistInternalProductcodeDocumentMap(627);
+                PricelistInternalProductcodeDocumentMap defaultdocprice = plipcdoc.findPricelistInternalProductcodeDocumentMap(492);
+
+                    Double temp_max_weight = 0.00;
                             Double temp_min_weight = 0.00;
                             int pricelistid1 = 0;
                             int pricelistid2 = 0;
@@ -374,7 +376,9 @@ Double temp_max_weight = 0.00;
                 cdFileDetails.setECSRESCDFILEMSGRECCDFileID(CDFile);
                 cdFileDetails.setWeight(itemweight);
                 PricelistInternalProductcodeDocumentMapJpaController plipcdoc = new PricelistInternalProductcodeDocumentMapJpaController(emf);
-                PricelistInternalProductcodeDocumentMap defaultdocprice = plipcdoc.findPricelistInternalProductcodeDocumentMap(627);
+                //PricelistInternalProductcodeDocumentMap defaultdocprice = plipcdoc.findPricelistInternalProductcodeDocumentMap(627);
+                PricelistInternalProductcodeDocumentMap defaultdocprice = plipcdoc.findPricelistInternalProductcodeDocumentMap(492);
+                
                 Double temp_max_weight = 0.00;
                         Double temp_min_weight = 0.00;
                         int pricelistid1 = 0;
