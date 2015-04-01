@@ -896,7 +896,8 @@ class OutgoingMessageProcessor { //implements Runnable {
                             EcsConDoc ecsConDocDetail = iterator1.next();
                             ecsResCdFileMsg.setInvoiceNO(ecsConDocDetail.getInvoiceNr());
                             keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setCommonRefNumber("" + ecsConDocDetail.getDocumentNumber());
-                            keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setSenderID(""+ecsConDocDetail.getExporterSenderName()+"");
+                            //keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setSenderID(""+ecsConDocDetail.getExporterSenderName()+"");
+                            keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setSenderID("conyangoexim");
                             
                             
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setApplicationCode("" + ecsConDocDetail.getExporterFirmName().substring(0, 3));
