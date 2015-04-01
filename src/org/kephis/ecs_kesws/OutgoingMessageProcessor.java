@@ -1207,8 +1207,14 @@ class OutgoingMessageProcessor { //implements Runnable {
                         Unmarshaller um = null;
                         um = context.createUnmarshaller();
                         org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument keswsConsignmentDocumentObj = null;
+                     //  try{
                         keswsConsignmentDocumentObj = (org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument) um.unmarshal(new FileReader(applicationConfigurationXMLMapper.getProcessingFolder() + fileName));
-
+                    //   }
+                    //   catch(Exception e){
+                     //      System.out.println(applicationConfigurationXMLMapper.getProcessingFolder() + fileName);
+                     //  e.printStackTrace();
+                     //  System.exit(0);
+                    //   }
                         String InvoiceNumber = keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().getCommonRefNumber();
                         System.out.println("(InvoiceNumber)" + InvoiceNumber);
                         Double versionNumber = Double.parseDouble(keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getVersionNo());

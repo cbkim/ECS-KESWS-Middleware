@@ -775,7 +775,7 @@ public class EcsKeswsEntitiesControllerCaller {
         //get default mappping on existing ipc if none create mappings
         InternalProductcodesJpaController ipjpc = new InternalProductcodesJpaController(emf);
      
-        if (findPricelistIPCDocMapEntitiesbyIPC(IPCObj).isEmpty()) {
+        if (!findPricelistIPCDocMapEntitiesbyIPC(IPCObj).isEmpty()) {
             List<EcsDocumentTypes> docType = new ArrayList<EcsDocumentTypes>();
             EcsDocumentTypesJpaController ecsDocumentTypesJpaController = new EcsDocumentTypesJpaController(emf);
             docType = ecsDocumentTypesJpaController.findEcsDocumentTypesEntities();
