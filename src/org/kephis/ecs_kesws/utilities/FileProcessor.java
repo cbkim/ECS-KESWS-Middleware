@@ -22,10 +22,7 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 import com.sns.base.Response;
-import com.sns.mhx.util.MHAccess;
 import com.sns.mhx.util.MHAccessUnix;
-import java.nio.file.Files;
-import java.util.logging.Level;
 
 public class FileProcessor {
 
@@ -211,8 +208,8 @@ public class FileProcessor {
 
         if (!isUserProfileOk) {
 
-            LOGGER.severe("The user profile path " + userProfileFilePath + " is invalid or could not be used");
-            LOGGER.severe("Failed to retrieve messsages for user");
+            //LOGGER.severe("The user profile path " + userProfileFilePath + " is invalid or could not be used");
+            //LOGGER.severe("Failed to retrieve messsages for user");
             // ECSKESWSFileLogger.mailnotification("The user profile path " + userProfileFilePath + " is invalid or could not be used "+"Failed to retrieve messsages for user");
 
             return false;
@@ -252,16 +249,16 @@ public class FileProcessor {
                     Map responseDetails = (Map) responses.get(i);
                     String messageId = (String) responseDetails.get("msgId");
                     String filePath = (String) responseDetails.get("path");
-                    LOGGER.info("Retrieved " + messageId + " by the file " + filePath);
-                    System.out.println("Retrieved " + messageId + " by the file " + filePath);
+                    //LOGGER.info("Retrieved " + messageId + " by the file " + filePath);
+                    //System.out.println("Retrieved " + messageId + " by the file " + filePath);
 
                 }
             } else if ("Mailbox is empty".equals(status.getProperty("MailboxMsg"))) {
                 // no messages for user
             }
-            LOGGER.info("Retrieved " + (responses.size() - 1));
+            //LOGGER.info("Retrieved " + (responses.size() - 1));
         } else {
-            LOGGER.info("No responses were received from " + senderId);
+            //LOGGER.info("No responses were received from " + senderId);
         }
 
         return isRetrieved;
@@ -277,9 +274,10 @@ public class FileProcessor {
 
         // Initialze user profile
         boolean isUserProfileOk = mhAccess.initUser(userProfileFilePath);
+       
         if (!isUserProfileOk) {
-            LOGGER.severe("The user profile path " + userProfileFilePath + " is invalid or could not be used");
-            LOGGER.severe("Failed to submit messsage from the user");
+            //LOGGER.severe("The user profile path " + userProfileFilePath + " is invalid or could not be used");
+            //LOGGER.severe("Failed to submit messsage from the user");
             System.out.println("ERROR 1 SUBMIT ********************************************************************* ");
             return false;
         }
@@ -320,11 +318,11 @@ public class FileProcessor {
         mhAccess.endSession();
 
         if (isSubmitted) {
-            LOGGER.info("Submitted " + messageFilePath + " to " + recipientId);
+           // LOGGER.info("Submitted " + messageFilePath + " to " + recipientId);
              System.out.println("SUBMITTED ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ");
            
         } else {
-            LOGGER.severe("Failed to submit message file " + messageFilePath + " to " + recipientId);
+           // LOGGER.severe("Failed to submit message file " + messageFilePath + " to " + recipientId);
             
             System.out.println("ERROR 2 SUBMIT ********************************************************************* ");
         }
