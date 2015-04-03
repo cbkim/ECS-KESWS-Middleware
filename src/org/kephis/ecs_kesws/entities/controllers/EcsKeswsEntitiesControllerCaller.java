@@ -809,6 +809,7 @@ public class EcsKeswsEntitiesControllerCaller {
                 }
             }
         } else {
+            /***
             List<PricelistInternalProductcodeDocumentMap> findPricelistIPCDocMapEntitiesbyIPC = findPricelistIPCDocMapEntitiesbyIPC(IPCObj);
             for (Iterator<PricelistInternalProductcodeDocumentMap> iterator = findPricelistIPCDocMapEntitiesbyIPC.iterator(); iterator.hasNext();) {
                 PricelistJpaController plc = new PricelistJpaController(emf);
@@ -857,17 +858,18 @@ public class EcsKeswsEntitiesControllerCaller {
                                 
                                 
                                 
-                            } /*catch (NonexistentEntityException ex) {
+                            } catch (NonexistentEntityException ex) {
                                 Logger.getLogger(EcsKeswsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
-                            }*/ catch (Exception ex) {
+                            }catch (Exception ex) {
                                 Logger.getLogger(EcsKeswsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                             
                     }
                 }
-            }
+            } ***/
         }
+       
     }
     public void updateCreateInternalProductcodePriceDocMappings(RecCdFileMsg ecsResCdFileMsg, InternalProductcodes IPCObj) {
         //get default mappping on existing ipc if none create mappings
