@@ -906,7 +906,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                             keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setSenderID("conyangoexim");
 
                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard> <ServiceProvider>  <ApplicationCode>   */
-                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setApplicationCode("" + ecsConDocDetail.getExporterFirmName().trim().substring(0, 3));
+                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setApplicationCode("" + ecsConDocDetail.getExporterFirmName().trim().substring(0, 3).toUpperCase());
                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard> <ServiceProvider>  <Name>   */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setName("" + ecsConDocDetail.getExporterFirmName());
                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard> <ServiceProvider>  <TIN>   */
