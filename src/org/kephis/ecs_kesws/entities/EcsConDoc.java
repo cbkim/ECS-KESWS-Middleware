@@ -362,7 +362,7 @@ public class EcsConDoc implements Serializable {
     private String cDHeaderOneCountryOfSupply;
     @Column(name = "EndCDHeaderOne")
     private String endCDHeaderOne;
-    @Column(name = "StrCDProductDetails")
+    @Column(name = "StrCDDetails")
     private String strCDProductDetails;
     @Basic(optional = false)
     @Column(name = "CDProduct1_ItemDescription")
