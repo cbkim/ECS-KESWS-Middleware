@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -45,12 +46,12 @@ public class EcsKeswsEntitiesControllerCaller {
 
     public EcsKeswsEntitiesControllerCaller() {
 
-        //  Properties p = new Properties(System.getProperties());
-        // p.put("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
-        //p.put("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "OFF");
+        Properties p = new Properties(System.getProperties());
+         p.put("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
+        p.put("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "OFF");
         // or any other System.setProperties(p);
-        // org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger("org.hibernate");
-        // java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.WARNING);
+        org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger("org.hibernate");
+        java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.OFF);
         //or whatever level you need
         emf = Persistence.createEntityManagerFactory("ECS-KESWS-MiddlewarePU");
 
@@ -697,8 +698,7 @@ public class EcsKeswsEntitiesControllerCaller {
                 for (Iterator iterator = results.iterator(); iterator.hasNext();) {
                     //Object next = iterator.next();
                     PricelistInternalProductcodeDocumentMap plipcdocmp = (PricelistInternalProductcodeDocumentMap) iterator.next();
-                    System.out.println("Price id" + plipcdocmp.getPRICELISTPriceIDRef().getChargeDescription());
-                    if (iterator.hasNext()) {
+                     if (iterator.hasNext()) {
                         plipcdocmap.add((PricelistInternalProductcodeDocumentMap) iterator.next());
                     }
 
@@ -793,11 +793,11 @@ public class EcsKeswsEntitiesControllerCaller {
                         plIpcDocmapping.setINTERNALPRODUCTCODESIPCIDRef(IPCObj);
                         plIpcDocmapping.setDocumentIDRef("AUTO GENERATED"); 
                         //Phytosanitary Certificate (Commercial Agricultural commondities)
-                        if (!IPCObj.getCommodityCategory().toLowerCase().contains("vegatable") && (!IPCObj.getCommodityCategory().toLowerCase().contains("flower"))
-                                && (!IPCObj.getCommodityCategory().toLowerCase().contains("fruit")) && (pricelist.getPriceID() < 6) && (15 > pricelist.getPriceID())) {
-                            plIpcDocMapper.create(plIpcDocmapping);
-                        } //Phytosanitary Certificate for Fresh Produce excluding fruits and veg
-                        else if (IPCObj.getCommodityCategory().toLowerCase().contains("vegatable") && (pricelist.getPriceID() >= 10) && (pricelist.getPriceID() <= 15)) {
+                       // if (!IPCObj.getCommodityCategory().toLowerCase().contains("vegatable") && (!IPCObj.getCommodityCategory().toLowerCase().contains("flower"))
+                        //        && (!IPCObj.getCommodityCategory().toLowerCase().contains("fruit")) && (pricelist.getPriceID() < 6) && (15 > pricelist.getPriceID())) {
+                       //     plIpcDocMapper.create(plIpcDocmapping);
+                       // } //Phytosanitary Certificate for Fresh Produce excluding fruits and veg
+                         if (IPCObj.getCommodityCategory().toLowerCase().contains("vegatable") && (pricelist.getPriceID() >= 10) && (pricelist.getPriceID() <= 15)) {
                             plIpcDocMapper.create(plIpcDocmapping);
                         } //Phytosanitary Certificate for Fresh Produce  fruits and veg
                         else if (IPCObj.getCommodityCategory().toLowerCase().contains("fruit") && (pricelist.getPriceID() >= 10) && (pricelist.getPriceID() <= 15)) {

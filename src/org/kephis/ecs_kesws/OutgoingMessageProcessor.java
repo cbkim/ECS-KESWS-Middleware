@@ -78,6 +78,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                             // scenario3FileProcessorTester(fileprocessor, applicationConfigurationXMLMapper);
                         }
                     }
+                    System.gc();
                 }
             }
         } catch (Exception e) {
@@ -891,7 +892,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                     String file = applicationConfigurationXMLMapper.getOutboxFolder() + "OG_SUB_CD-" + RefrenceNo + "-1-" + "B-" + msgyear + SeqNumber + ".xml";
                     String fileName = "OG_SUB_CD-" + RefrenceNo + "-1-" + "B-" + msgyear + SeqNumber + ".xml";
                     File cdResFile = new File(file);
-                    System.out.println("itemCounter " + cdResFile.getAbsoluteFile());
+                    System.out.println("File path " + cdResFile.getAbsoluteFile());
                     ecsResCdFileMsg = ecsKeswsEntitiesController.createEcsResCdFileMsg(fileName, 5, SubmittedConsignmentId);
                     if (ecsResCdFileMsg != null) {
 
@@ -914,19 +915,19 @@ class OutgoingMessageProcessor { //implements Runnable {
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setPhyCountry("" + ecsConDocDetail.getServiceProviderPhyCountry());
                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   <DocumentCode>      --TO BE LOADED FROM CONFIG FILE*/
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setDocumentCode("" + docType);
-                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < ProcessCode>      --TO BE LOADED FROM CONFIG FILE*/  
+                            /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < ProcessCode>      --TO BE LOADED FROM CONFIG FILE*/
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setProcessCode("KEEXPProc");// TO DO // CHANGE ON GO LIVE
                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < ApplicationDate> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setApplicationDate("" + ecsConDocDetail.getApplicationDate());
-                            /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < UpdatedDate> */ 
+                            /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < UpdatedDate> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setUpdatedDate("" + ecsConDocDetail.getUpdatedDate());
-                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < ApprovalDate> */ 
+                            /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < ApprovalDate> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setApprovalDate("" + ecsConDocDetail.getApplicationDate());
-                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < FinalApprovalDate> */ 
+                            /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < FinalApprovalDate> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setFinalApprovalDate("" + ecsConDocDetail.getPGAHeaderFieldsPreferredInspectionDate());
                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < ApplicationRefNo> */  //<!-- REQ GENERATED-->
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setApplicationRefNo("" + RefrenceNo);
-                           /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < UCRNumber > */
+                            /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard>   < UCRNumber > */
                             if (ecsConDocDetail.getUCRNo() != null) {
                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().setUCRNumber("" + ecsConDocDetail.getUCRNo());
 
@@ -938,13 +939,12 @@ class OutgoingMessageProcessor { //implements Runnable {
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setName("" + ecsConDocDetail.getCDImporterName());
                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDImporter>  <PhysicalAddress> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setPhysicalAddress(ecsConDocDetail.getCDImporterPhysicalAddress());
-                            
-                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setTIN(ecsConDocDetail.getCDImporterTIN());
+
                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDImporter>  <PostalAddress>*/
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setPostalAddress(ecsConDocDetail.getCDImporterPhysicalAddress() + ecsConDocDetail.getCDImporterPostalAddress());
                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDImporter>   <PosCountry>*/
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setPosCountry(ecsConDocDetail.getCDImporterPosCountry());
-                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDImporter> <TeleFax> */          
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDImporter> <TeleFax> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setTeleFax(ecsConDocDetail.getCDImporterTeleFax());
                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDImporter> <SectorofActivity> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setSectorofActivity(ecsConDocDetail.getCDImporterSectorofActivity());
@@ -952,21 +952,18 @@ class OutgoingMessageProcessor { //implements Runnable {
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setWarehouseCode(ecsConDocDetail.getCDImporterWarehouseCode());
                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDImporter>   <WarehouseLocation> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDImporter().setWarehouseLocation(ecsConDocDetail.getCDImporterWarehouseLocation());
-                            
-                            
-                            
+
                             /*  <DocumentDetails> <ConsignmentDocDetails>   <CDConsignee>  <Name>*/
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignee().setName(ecsConDocDetail.getCDConsigneName());
-                            
-                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignee().setTIN(ecsConDocDetail.getCDConsigneeTIN());
+
                             /*  <DocumentDetails> <ConsignmentDocDetails>   <CDConsignee>  <PhysicalAddress> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignee().setPhysicalAddress(ecsConDocDetail.getCDConsigneEPhysicalAddress());
-                             /*  <DocumentDetails> <ConsignmentDocDetails>   <CDConsignee>  <PostalAddress> */
+                            /*  <DocumentDetails> <ConsignmentDocDetails>   <CDConsignee>  <PostalAddress> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignee().setPostalAddress(ecsConDocDetail.getCDConsigneEPhysicalAddress() + ecsConDocDetail.getCDConsigneePostalAddress());
-                             /*  <DocumentDetails> <ConsignmentDocDetails>   <CDConsignee>   <PhyCountry> */
+                            /*  <DocumentDetails> <ConsignmentDocDetails>   <CDConsignee>   <PhyCountry> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignee().setPosCountry(ecsConDocDetail.getCDConsigneePosCountry());
-                            
-                            /*  <DocumentDetails> <ConsignmentDocDetails>   <CDConsignee>   <TeleFax> */ 
+
+                            /*  <DocumentDetails> <ConsignmentDocDetails>   <CDConsignee>   <TeleFax> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignee().setTeleFax(ecsConDocDetail.getCDConsigneeTeleFax());
                             /*  <DocumentDetails> <ConsignmentDocDetails>   <CDConsignee> <Email>m</Email>*/
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignee().setEmail("notavailable@kephis.co.ke");
@@ -976,63 +973,54 @@ class OutgoingMessageProcessor { //implements Runnable {
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignee().setWarehouseCode(ecsConDocDetail.getCCDConsigneeWarehouseCode());
                             /*  <DocumentDetails> <ConsignmentDocDetails>   <CDConsignee>  WarehouseLocation>MSA</WarehouseLocation>*/
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignee().setWarehouseLocation(ecsConDocDetail.getCDConsigneeWarehouseLocation());
-                            
-                            
+
                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter>  <Name> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDExporter().setName(ecsConDocDetail.getCDExporterName());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> TIN */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> TIN */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDExporter().setTIN(ecsConDocDetail.getCDExporterTIN());
                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDExporter>  PhysicalAddress */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDExporter().setPhysicalAddress(ecsConDocDetail.getCDExporterPhysicalAddress());
                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> PhyCountry */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDExporter().setPhyCountry(ecsConDocDetail.getCDExporterPhyCountry());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> PostalAddress */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> PostalAddress */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDExporter().setPostalAddress(ecsConDocDetail.getCDExporterPostalAddress());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> PosCountry */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> PosCountry */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDExporter().setPosCountry(ecsConDocDetail.getCDExporterPosCountry());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> TeleFax */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> TeleFax */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDExporter().setTeleFax(ecsConDocDetail.getCDExporterTeleFax());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> <WarehouseCode> */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> <WarehouseCode> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDExporter().setWarehouseCode(ecsConDocDetail.getCDExporterWarehouseCode());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> <WarehouseLocation> */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDExporter> <WarehouseLocation> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDExporter().setWarehouseLocation(ecsConDocDetail.getCDExporterWarehouseLocation());
-                            
-                            
-                            
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor>  <Name> */
+
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor>  <Name> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignor().setName(ecsConDocDetail.getCDConsignorName());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> TIN */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> TIN */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignor().setTIN(ecsConDocDetail.getCDConsignorTIN());
                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDConsignor>  PhysicalAddress */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignor().setPhysicalAddress(ecsConDocDetail.getCDConsignorPhysicalAddress());
                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> PhyCountry */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignor().setPhyCountry(ecsConDocDetail.getCDConsignorPhyCountry());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> PostalAddress */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> PostalAddress */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignor().setPostalAddress(ecsConDocDetail.getCDConsignorPostalAddress());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> PosCountry */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> PosCountry */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignor().setPosCountry(ecsConDocDetail.getCDConsignorPosCountry());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> TeleFax */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> TeleFax */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignor().setTeleFax(ecsConDocDetail.getCDConsignorTeleFax());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> <WarehouseCode> */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> <WarehouseCode> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignor().setWarehouseCode(ecsConDocDetail.getCDConsignorWarehouseCode());
-                             /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> <WarehouseLocation> */
+                            /*  <DocumentDetails> <ConsignmentDocDetails> <CDConsignor> <WarehouseLocation> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDConsignor().setWarehouseLocation(ecsConDocDetail.getCDConsignorWarehouseLocation());
-                            
-                            
-                            
-                            
-                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDTransport> ModeOfTranspor */
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setModeOfTransport(ecsConDocDetail.getCDTransportModeOfTransport());
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setVesselName(ecsConDocDetail.getCDTransportVesselName());
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setVoyageNo(ecsConDocDetail.getCDTransportVoyageNo());
 
-                            
-                            
-                            
+                            /*  <DocumentDetails> <ConsignmentDocDetails>  <CDTransport> ModeOfTranspor */
+                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setModeOfTransport(ecsConDocDetail.getCDTransportModeOfTransport());
+                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setVesselName(ecsConDocDetail.getCDTransportVesselName());
+                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setVoyageNo(ecsConDocDetail.getCDTransportVoyageNo());
+
                             /*  <DocumentDetails> <ConsignmentDocDetails> <ModeOfTransportDesc>  <PortOfArrival>*/
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setModeOfTransportDesc(ecsConDocDetail.getCDTransportModeOfTransportDesc());
-                           
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setPortOfArrival(ecsConDocDetail.getCDTransportPortOfArrival());
+                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setModeOfTransportDesc(ecsConDocDetail.getCDTransportModeOfTransportDesc());
+
+                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setPortOfArrival(ecsConDocDetail.getCDTransportPortOfArrival());
                             /*  <DocumentDetails> <ConsignmentDocDetails>   <PortOfArrivalDesc> */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setPortOfArrivalDesc(ecsConDocDetail.getCDTransportPortOfArrivalDesc());
                             /*  <DocumentDetails> <ConsignmentDocDetails>   <PortOfDeparture> */
@@ -1041,62 +1029,63 @@ class OutgoingMessageProcessor { //implements Runnable {
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setPortOfDepartureDesc(ecsConDocDetail.getCDTransportPortOfDepartureDesc());
                             /*  <DocumentDetails> <ConsignmentDocDetails>   <CustomsOffice>  */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setCustomsOffice(ecsConDocDetail.getCDTransportCustomsOffice());
-                             /*  <DocumentDetails> <ConsignmentDocDetails>   CustomsOfficeDes */
+                            /*  <DocumentDetails> <ConsignmentDocDetails>   CustomsOfficeDes */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setCustomsOfficeDesc(ecsConDocDetail.getCDTransportCustomsOfficeDesc());
-                             /*  <DocumentDetails> <ConsignmentDocDetails>    VesselName */
+                            /*  <DocumentDetails> <ConsignmentDocDetails>    VesselName */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setVesselName(ecsConDocDetail.getCDTransportVesselName());
-                             /*  <DocumentDetails> <ConsignmentDocDetails>    VoyageNo */
+                            /*  <DocumentDetails> <ConsignmentDocDetails>    VoyageNo */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setVoyageNo(ecsConDocDetail.getCDTransportVoyageNo());
-                             /*  <DocumentDetails> <ConsignmentDocDetails>    ShipmentDate */
+                            /*  <DocumentDetails> <ConsignmentDocDetails>    ShipmentDate */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setShipmentDate(ecsConDocDetail.getCDTransportShipmentDate());
-                             /*  <DocumentDetails> <ConsignmentDocDetails>    MarksAndNumbers */
+                            /*  <DocumentDetails> <ConsignmentDocDetails>    MarksAndNumbers */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setMarksAndNumbers(ecsConDocDetail.getCDTransportMarksAndNumbers());
-                             /*  <DocumentDetails> <ConsignmentDocDetails>    FreightStation */
+                            /*  <DocumentDetails> <ConsignmentDocDetails>    FreightStation */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setFreightStation(ecsConDocDetail.getCDTransportFreightStation());
-                             /*  <DocumentDetails> <ConsignmentDocDetails>    FreightStationDes */
+                            /*  <DocumentDetails> <ConsignmentDocDetails>    FreightStationDes */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDTransport().setFreightStationDesc(ecsConDocDetail.getCDTransportFreightStationDesc());
-                            
-                             /*  <DocumentDetails> <ConsignmentDocDetails>  <PGAHeaderFields>  <CollectionOffice> */
-                           
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getPGAHeaderFields().setCollectionOffice("" + ecsConDocDetail.getPGAHeaderFieldsCollectionOffice());
-                            
-                             /*  <DocumentDetails> <ConsignmentDocDetails>  <PGAHeaderFields>  <PreferredInspectionDate>*/
+
+                            /*  <DocumentDetails> <ConsignmentDocDetails>  <PGAHeaderFields>  <CollectionOffice> */
+                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getPGAHeaderFields().setCollectionOffice("" + ecsConDocDetail.getPGAHeaderFieldsCollectionOffice());
+
+                            /*  <DocumentDetails> <ConsignmentDocDetails>  <PGAHeaderFields>  <PreferredInspectionDate>*/
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getPGAHeaderFields().setPreferredInspectionDate(ecsConDocDetail.getPGAHeaderFieldsPreferredInspectionDate());// TO Update
-                            
-                            
+
                             List<CdFileDetails> cdFileList = new LinkedList<CdFileDetails>();
                             if (!ecsConDocDetailItemId.equals(ecsConDocDetail.getId())) {
-                                itemCounter = itemCounter + 1;
-                                System.out.println("itemCounter " + ecsConDocDetail.getId());
-                                
-                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
+
+                                System.out.println(itemCounter + " itemCounter " + ecsConDocDetail.getId());
+
+                                /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
                                 ecsConDocDetailItemId = ecsConDocDetail.getId();
-                                
-                           //  <CDHeaderOne>   
-                                BigDecimal fobfcy = BigDecimal.valueOf(itemCounter.doubleValue());
-                                BigDecimal fobncy = BigDecimal.valueOf(itemCounter.doubleValue());
-                                BigDecimal CIFFCY = BigDecimal.valueOf(itemCounter.doubleValue() + itemCounter.doubleValue());
-                                
-                                
+
+                                //  <CDHeaderOne>   
+                                BigDecimal fobfcy = BigDecimal.valueOf(0);
+                                BigDecimal fobncy = BigDecimal.valueOf(0);
+                                BigDecimal CIFFCY = BigDecimal.valueOf(0);
+                                BigDecimal CIFFNCY = BigDecimal.valueOf(0);
+
                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setFOBFCY(fobfcy);
                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setCIFFCY(CIFFCY);
-                               /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
+                                /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setFOBNCY(fobncy);
                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setCIFNCY(CIFFCY);
+                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setCIFNCY(CIFFNCY);
                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
-                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setForeignCurrencyCode("KES");
-                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
-                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setInvoiceDate(ecsConDocDetail.getCDHeaderOneInvoiceDate());
-                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
-                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setInvoiceNumber(ecsConDocDetail.getCDHeaderOneInvoiceNumber());
-                                     
+                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setForeignCurrencyCode("KES");
+                                /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
+                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setInvoiceDate(ecsConDocDetail.getCDHeaderOneInvoiceDate());
+                                /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
+                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setInvoiceNumber(ecsConDocDetail.getCDHeaderOneInvoiceNumber());
+
                            // </CDHeaderOne>                                   
                                  /* <CDProductDetails>   */
-                                      // change item one details appropriately 
-                                org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetail = keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().get(0);
-                                if (itemCounter == 1) {
+                                // change item one details appropriately 
+                                org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetail = keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().get(itemCounter);
+                                if (itemCounter == 0) {
+                                    System.out.println(itemCounter + " itemCounter ==0 " + ecsConDocDetail.getId());
+                                    System.out.println(itemCounter + " internal product number" + ecsConDocDetail.getCDProduct1InternalProductNo());
+
                                     itemDetail.setItemCount(itemCounter.toString());
                                     itemDetail.getCDProduct1().setItemDescription(ecsConDocDetail.getCDProduct1ItemDescription());
                                     //HSCODE LOOK UP IF NULL
@@ -1113,14 +1102,20 @@ class OutgoingMessageProcessor { //implements Runnable {
                                     itemDetail.getCDProduct1().setPackageQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1PackageQty()));
                                     itemDetail.getCDProduct1().setPackageType(ecsConDocDetail.getCDProduct1PackageType());
                                     itemDetail.getCDProduct1().setPackageTypeDesc(ecsConDocDetail.getCDProduct1PackageTypeDesc());
-                                    //UNIT Weight mapping 
-                                    itemDetail.getCDProduct1().setItemNetWeight(BigDecimal.valueOf(Long.parseLong(ecsConDocDetail.getCDProduct1ItemNetWeight())));  //conversion error may occur
-                                    itemDetail.getCDProduct1().setItemGrossWeight(BigDecimal.valueOf(Long.parseLong(ecsConDocDetail.getCDProduct1ItemGrossWeight())));//conversion error may occur
+                                //    itemDetail.getCDProduct1().setTotalPriceFCY(BigDecimal.valueOf(itemCounter.doubleValue()));
+                                    //     itemDetail.getCDProduct1().setUnitPriceFCY(BigDecimal.valueOf(itemCounter.doubleValue()));
+                                    //    itemDetail.getCDProduct1().setUnitPriceNCY(BigDecimal.valueOf(itemCounter.doubleValue()));
+//UNIT Weight mapping 
+                                    itemDetail.getCDProduct1().setItemNetWeight(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1ItemNetWeight()));  //conversion error may occur
+                                    itemDetail.getCDProduct1().setItemGrossWeight(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1ItemGrossWeight()));//conversion error may occur
                                      /*  <DocumentDetails> <ConsignmentDocDetails> <ConsignmentDocDetails>  <CDProductDetails> */
-                                    keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().remove(itemCounter);
-                                    keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(itemDetail);
+                                    //   keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().remove(0);
+                                     org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails newitemDetail = new org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails();
+                                    newitemDetail = itemDetail;
+                                        System.out.println("IPC details "+newitemDetail.getCDProduct1().getInternalProductNo());
+                                    keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(itemCounter,newitemDetail);
                                     InternalProductcodes IPCObj = null;
-                                    Double weight = Double.parseDouble(ecsConDocDetail.getCDProduct1ItemNetWeight());
+                                    Double weight = Double.valueOf(ecsConDocDetail.getCDProduct1QuantityQty());
 
                                     if (!ecsKeswsEntitiesController.internalProductCodesExist(ecsConDocDetail.getCDProduct1InternalProductNo())) {
                                         IPCObj = new InternalProductcodes();
@@ -1138,23 +1133,45 @@ class OutgoingMessageProcessor { //implements Runnable {
                                     CdFileDetails cdFileDetails = ecsKeswsEntitiesController.recCDFileMsgDetails(ecsResCdFileMsg, IPCObj, weight);
                                     cdFileList.add(cdFileDetails);
                                 }
-                                if (itemCounter > 1) {
+                                if (itemCounter > 0) {
                                     // create additional fields
+                                    System.out.println(itemCounter + " itemCounter >0 " + ecsConDocDetail.getId());
+                                    System.out.println(itemCounter + " internal product number" + ecsConDocDetail.getCDProduct1InternalProductNo());
+
                                     itemDetail.setItemCount(itemCounter.toString());
                                     itemDetail.getCDProduct1().setItemNo(itemCounter);
-                                    keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(itemDetail);
-
+                                    itemDetail.setItemCount(itemCounter.toString());
+                                    itemDetail.getCDProduct1().setItemDescription(ecsConDocDetail.getCDProduct1ItemDescription());
+                                    //HSCODE LOOK UP IF NULL
+                                    itemDetail.getCDProduct1().setItemHSCode(ecsConDocDetail.getCDProduct1ItemHSCode());
+                                    itemDetail.getCDProduct1().setHSDescription(ecsConDocDetail.getCDProduct1HSDescription());
+                                    itemDetail.getCDProduct1().setInternalProductNo(ecsConDocDetail.getCDProduct1InternalProductNo());
+                                    itemDetail.getCDProduct1().setProductClassCode("");
+                                    itemDetail.getCDProduct1().setProductClassDescription("");
+                                    itemDetail.getCDProduct1().getQuantity().setQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1QuantityQty()));
+                                    //UNIT QUANTITY LOOK UP IF NULL
+                                    itemDetail.getCDProduct1().getQuantity().setUnitOfQty(ecsConDocDetail.getCDProduct1QuantityUnitOfQty());
+                                    itemDetail.getCDProduct1().getQuantity().setUnitOfQtyDesc(ecsConDocDetail.getCDProduct1QuantityUnitOfQtyDesc());
+                                    //UNIT Package LOOK UP IF NULL
+                                    itemDetail.getCDProduct1().setPackageQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1PackageQty()));
+                                    itemDetail.getCDProduct1().setPackageType(ecsConDocDetail.getCDProduct1PackageType());
+                                    itemDetail.getCDProduct1().setPackageTypeDesc(ecsConDocDetail.getCDProduct1PackageTypeDesc());
+                                    org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails newitemDetail = new org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails();
+                                    newitemDetail = itemDetail;
+                                    System.out.println("IPC details "+newitemDetail.getCDProduct1().getInternalProductNo());
+                                   keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(itemCounter,newitemDetail);
                                 }
-                                keswsConsignmentDocumentObj.getDocumentSummary().setIssuedDateTime(ecsConDocDetail.getPGAHeaderFieldsPreferredInspectionDate());
-                                if (ecsConDocDetail.getUCRNo() != null) {
-                                    keswsConsignmentDocumentObj.getDocumentSummary().setSummaryPageUrl("https://trial.kenyatradenet.go.ke/keswsoga/IDFSummaryPage.mda?ucr=" + ecsConDocDetail.getUCRNo());
-                                }
+                                itemCounter = itemCounter + 1;
                             }
+                            keswsConsignmentDocumentObj.getDocumentSummary().setIssuedDateTime(ecsConDocDetail.getPGAHeaderFieldsPreferredInspectionDate());
 
+                            if (ecsConDocDetail.getUCRNo() != null) {
+                                keswsConsignmentDocumentObj.getDocumentSummary().setSummaryPageUrl("https://trial.kenyatradenet.go.ke/keswsoga/IDFSummaryPage.mda?ucr=" + ecsConDocDetail.getUCRNo());
+                            }
                             ecsResCdFileMsg.setCdFileDetailsCollection(cdFileList);
                         }
                         keswsConsignmentDocumentResObj = keswsConsignmentDocumentObj;
-                        resObjm.marshal(keswsConsignmentDocumentResObj, System.out);
+                        // resObjm.marshal(keswsConsignmentDocumentResObj, System.out);
                         resObjm.marshal(keswsConsignmentDocumentResObj, cdResFile);
                         String[] attachments = new String[]{"", ""};
                         String attachment = "";
@@ -1167,26 +1184,27 @@ class OutgoingMessageProcessor { //implements Runnable {
                             if ((SubmittedConsignmentId != 0) && (fileProcessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file, attachments, "OG_SUB_CD-" + RefrenceNo + "-1-" + "B-" + msgyear + SeqNumber + ".xml", RefrenceNo, "OG_SUB_CD", attachment))) {
                                 ecsKeswsEntitiesController.logInfo2(fileName, "SUBMITTED " + fileName);
                                 ecsKeswsEntitiesController.OgUpdateResCd1Msg(ecsResCdFileMsg);
+
+                                //Move to process box and sourceDir
+                                String processDir = applicationConfigurationXMLMapper.getProcessingFolder();
+                                String sourceDir = applicationConfigurationXMLMapper.getOutboxFolder();
+                                fileProcessor.moveXmlFileProcessed(sourceDir, processDir, cdResFile.getName());
+                                String destDir = applicationConfigurationXMLMapper.getOutboxArchiveFolder()
+                                        + util.getCurrentYear() + File.separator + util.getCurrentMonth()
+                                        + File.separator + util.getCurrentDay() + File.separator + "cd" + File.separator;
+
+                                fileProcessor.moveXmlFileProcessed(sourceDir, destDir, cdResFile.getName());
+
+                                File deleteOuboxfile = new File(sourceDir + cdResFile.getName());
+
+                                if (deleteOuboxfile.delete()) {
+                                    //System.out.println(file.getName() + " is deleted!");
+                                    break;
+                                } else {
+                                    //System.out.println("Delete operation is failed.");
+                                }
+
                             }
-                            //Move to process box and sourceDir
-                            String processDir = applicationConfigurationXMLMapper.getProcessingFolder();
-                            String sourceDir = applicationConfigurationXMLMapper.getOutboxFolder();
-                            fileProcessor.moveXmlFileProcessed(sourceDir, processDir, cdResFile.getName());
-                            String destDir = applicationConfigurationXMLMapper.getOutboxArchiveFolder()
-                                    + util.getCurrentYear() + File.separator + util.getCurrentMonth()
-                                    + File.separator + util.getCurrentDay() + File.separator + "cd" + File.separator;
-
-                            fileProcessor.moveXmlFileProcessed(sourceDir, destDir, cdResFile.getName());
-
-                            File deleteOuboxfile = new File(sourceDir + cdResFile.getName());
-
-                            if (deleteOuboxfile.delete()) {
-                                //System.out.println(file.getName() + " is deleted!");
-                                break;
-                            } else {
-                                //System.out.println("Delete operation is failed.");
-                            }
-
                         }
                     }
                 } catch (Exception e) {

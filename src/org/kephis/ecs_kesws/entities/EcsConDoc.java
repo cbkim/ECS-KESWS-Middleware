@@ -6,6 +6,7 @@
 package org.kephis.ecs_kesws.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -309,6 +310,7 @@ public class EcsConDoc implements Serializable {
     private String cDTransportPortOfArrival;
     @Column(name = "CDTransport_PortOfArrivalDesc")
     private String cDTransportPortOfArrivalDesc;
+    @Basic(optional = false)
     @Column(name = "CDTransport_PortOfDeparture")
     private String cDTransportPortOfDeparture;
     @Column(name = "CDTransport_PortOfDepartureDesc")
@@ -346,7 +348,7 @@ public class EcsConDoc implements Serializable {
     @Column(name = "StrPGAHeaderFields")
     private String strPGAHeaderFields;
     @Column(name = "PGAHeaderFields_CollectionOffice")
-    private Integer pGAHeaderFieldsCollectionOffice;
+    private BigInteger pGAHeaderFieldsCollectionOffice;
     @Column(name = "PGAHeaderFields_PreferredInspectionDate")
     private String pGAHeaderFieldsPreferredInspectionDate;
     @Column(name = "EndPGAHeaderFields")
@@ -362,7 +364,7 @@ public class EcsConDoc implements Serializable {
     private String cDHeaderOneCountryOfSupply;
     @Column(name = "EndCDHeaderOne")
     private String endCDHeaderOne;
-    @Column(name = "StrCDDetails")
+    @Column(name = "StrCDProductDetails")
     private String strCDProductDetails;
     @Basic(optional = false)
     @Column(name = "CDProduct1_ItemDescription")
@@ -375,7 +377,7 @@ public class EcsConDoc implements Serializable {
     private String cDProduct1InternalProductNo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "CDProduct1_Quantity_Qty")
-    private Float cDProduct1QuantityQty;
+    private Double cDProduct1QuantityQty;
     @Column(name = "CDProduct1_Quantity_UnitOfQty")
     private String cDProduct1QuantityUnitOfQty;
     @Column(name = "CDProduct1_Quantity_UnitOfQtyDesc")
@@ -393,9 +395,9 @@ public class EcsConDoc implements Serializable {
     @Column(name = "CDProduct1_PackageType")
     private String cDProduct1PackageType;
     @Column(name = "CDProduct1_ItemNetWeight")
-    private String cDProduct1ItemNetWeight;
+    private Double cDProduct1ItemNetWeight;
     @Column(name = "CDProduct1_ItemGrossWeight")
-    private String cDProduct1ItemGrossWeight;
+    private Double cDProduct1ItemGrossWeight;
     @Column(name = "EndCDProductDetails")
     private String endCDProductDetails;
 
@@ -1122,11 +1124,11 @@ public class EcsConDoc implements Serializable {
         this.strPGAHeaderFields = strPGAHeaderFields;
     }
 
-    public Integer getPGAHeaderFieldsCollectionOffice() {
+    public BigInteger getPGAHeaderFieldsCollectionOffice() {
         return pGAHeaderFieldsCollectionOffice;
     }
 
-    public void setPGAHeaderFieldsCollectionOffice(Integer pGAHeaderFieldsCollectionOffice) {
+    public void setPGAHeaderFieldsCollectionOffice(BigInteger pGAHeaderFieldsCollectionOffice) {
         this.pGAHeaderFieldsCollectionOffice = pGAHeaderFieldsCollectionOffice;
     }
 
@@ -1226,11 +1228,11 @@ public class EcsConDoc implements Serializable {
         this.cDProduct1InternalProductNo = cDProduct1InternalProductNo;
     }
 
-    public Float getCDProduct1QuantityQty() {
+    public Double getCDProduct1QuantityQty() {
         return cDProduct1QuantityQty;
     }
 
-    public void setCDProduct1QuantityQty(Float cDProduct1QuantityQty) {
+    public void setCDProduct1QuantityQty(Double cDProduct1QuantityQty) {
         this.cDProduct1QuantityQty = cDProduct1QuantityQty;
     }
 
@@ -1290,19 +1292,19 @@ public class EcsConDoc implements Serializable {
         this.cDProduct1PackageType = cDProduct1PackageType;
     }
 
-    public String getCDProduct1ItemNetWeight() {
+    public Double getCDProduct1ItemNetWeight() {
         return cDProduct1ItemNetWeight;
     }
 
-    public void setCDProduct1ItemNetWeight(String cDProduct1ItemNetWeight) {
+    public void setCDProduct1ItemNetWeight(Double cDProduct1ItemNetWeight) {
         this.cDProduct1ItemNetWeight = cDProduct1ItemNetWeight;
     }
 
-    public String getCDProduct1ItemGrossWeight() {
+    public Double getCDProduct1ItemGrossWeight() {
         return cDProduct1ItemGrossWeight;
     }
 
-    public void setCDProduct1ItemGrossWeight(String cDProduct1ItemGrossWeight) {
+    public void setCDProduct1ItemGrossWeight(Double cDProduct1ItemGrossWeight) {
         this.cDProduct1ItemGrossWeight = cDProduct1ItemGrossWeight;
     }
 
