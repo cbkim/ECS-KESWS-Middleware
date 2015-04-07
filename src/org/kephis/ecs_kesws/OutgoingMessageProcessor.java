@@ -1064,15 +1064,15 @@ class OutgoingMessageProcessor { //implements Runnable {
                                 BigDecimal CIFFCY = BigDecimal.valueOf(0);
                                 BigDecimal CIFFNCY = BigDecimal.valueOf(0);
 
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setFOBFCY(fobfcy);
+                                //keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setFOBFCY(fobfcy);
                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setCIFFCY(CIFFCY);
+                               // keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setCIFFCY(CIFFCY);
                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setFOBNCY(fobncy);
+                              //  keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setFOBNCY(fobncy);
                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setCIFNCY(CIFFNCY);
+                              //  keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setCIFNCY(CIFFNCY);
                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
-                                keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setForeignCurrencyCode("KES");
+                               // keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setForeignCurrencyCode("KES");
                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setInvoiceDate(ecsConDocDetail.getCDHeaderOneInvoiceDate());
                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
@@ -1081,7 +1081,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                            // </CDHeaderOne>                                   
                                  /* <CDProductDetails>   */
                                 // change item one details appropriately 
-                                org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetail = keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().get(itemCounter);
+                                org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetail = keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().get(0);
                                 if (itemCounter == 0) {
                                     System.out.println(itemCounter + " itemCounter ==0 " + ecsConDocDetail.getId());
                                     System.out.println(itemCounter + " internal product number" + ecsConDocDetail.getCDProduct1InternalProductNo());
@@ -1109,11 +1109,11 @@ class OutgoingMessageProcessor { //implements Runnable {
                                     itemDetail.getCDProduct1().setItemNetWeight(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1ItemNetWeight()));  //conversion error may occur
                                     itemDetail.getCDProduct1().setItemGrossWeight(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1ItemGrossWeight()));//conversion error may occur
                                      /*  <DocumentDetails> <ConsignmentDocDetails> <ConsignmentDocDetails>  <CDProductDetails> */
-                                    //   keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().remove(0);
+                                     keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().remove(0);
                                      org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails newitemDetail = new org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails();
                                     newitemDetail = itemDetail;
                                         System.out.println("IPC details "+newitemDetail.getCDProduct1().getInternalProductNo());
-                                    keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(itemCounter,newitemDetail);
+                                  keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(itemCounter,newitemDetail);
                                     InternalProductcodes IPCObj = null;
                                     Double weight = Double.valueOf(ecsConDocDetail.getCDProduct1QuantityQty());
 
@@ -1133,7 +1133,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                                     CdFileDetails cdFileDetails = ecsKeswsEntitiesController.recCDFileMsgDetails(ecsResCdFileMsg, IPCObj, weight);
                                     cdFileList.add(cdFileDetails);
                                 }
-                                if (itemCounter > 0) {
+                                if (false) {
                                     // create additional fields
                                     System.out.println(itemCounter + " itemCounter >0 " + ecsConDocDetail.getId());
                                     System.out.println(itemCounter + " internal product number" + ecsConDocDetail.getCDProduct1InternalProductNo());
@@ -1159,7 +1159,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                                     org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails newitemDetail = new org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails();
                                     newitemDetail = itemDetail;
                                     System.out.println("IPC details "+newitemDetail.getCDProduct1().getInternalProductNo());
-                                   keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(itemCounter,newitemDetail);
+                                //   keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(itemCounter,newitemDetail);
                                 }
                                 itemCounter = itemCounter + 1;
                             }
