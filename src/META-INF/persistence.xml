@@ -20,8 +20,7 @@
         <class>org.kephis.ecs_kesws.entities.RecPaymentFileMsg</class>
         <class>org.kephis.ecs_kesws.entities.PaymentInfoLog</class>
         <class>org.kephis.ecs_kesws.entities.RecErrorFileMsg</class>
-        <class>org.kephis.ecs_kesws.entities.ECSConDoc</class>
-        <class>org.kephis.ecs_kesws.entities.EcsConDoc</class>
+        <class>eorg.kephis.ecs_kesws.entities.EcsConDoc</class>
         <class>org.kephis.ecs_kesws.entities.KeswsRefDataCategory</class>
         <class>org.kephis.ecs_kesws.entities.KeswsRefData</class>
         <properties>

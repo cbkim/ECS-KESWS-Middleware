@@ -862,7 +862,7 @@ class OutgoingMessageProcessor { //implements Runnable {
             SubmittedConsignmentId = iterator.next();
             //System.out.println(ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId).size());
             if (ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId) != null) {
-                String resTemplateFile = "/ecs_kesws/service/xml/OG_SUB_CD-FILE.xml";
+                String resTemplateFile = "C:\\Users\\DESTINY\\ecs_kesws\\service\\xml\\OG_SUB_CD-FILE.xml";
 
                 EcsResCdFileMsg ecsResCdFileMsg = new EcsResCdFileMsg();
 
