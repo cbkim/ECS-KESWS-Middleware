@@ -85,11 +85,7 @@ class OutgoingMessageProcessor { //implements Runnable {
             e.printStackTrace();
 
         }
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+      
     }
 
     static void getMessages(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
@@ -448,7 +444,7 @@ class OutgoingMessageProcessor { //implements Runnable {
         }
 
         try {
-            java.lang.Thread.sleep(120000);
+           // java.lang.Thread.sleep(120000);
             for (Iterator<String> iterator = filesinQue.iterator(); iterator.hasNext();) {
                 String next = iterator.next();
                 File f = new File(next);
@@ -862,7 +858,7 @@ class OutgoingMessageProcessor { //implements Runnable {
             SubmittedConsignmentId = iterator.next();
             //System.out.println(ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId).size());
             if (ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId) != null) {
-                String resTemplateFile = "/ecs_kesws/service/xml/OG_SUB_CD-FILE.xml";
+                String resTemplateFile = "C:\\Users\\DESTINY\\ecs_kesws\\service\\xml\\OG_SUB_CD-FILE.xml";
 
                 EcsResCdFileMsg ecsResCdFileMsg = new EcsResCdFileMsg();
 
@@ -1432,7 +1428,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                                 DocumentDetailsType resObjDocDetails = new DocumentDetailsType();
                                 ContainerType resObjconType = new ContainerType();
                                 resObjDocHeader.setMsgid("OG_CD_RES");//OGA_CD_RES
-                                resObjDocHeader.setRefno(InvoiceNumber.substring(0, InvoiceNumber.length() - 2));
+                                resObjDocHeader.setRefno(InvoiceNumber.substring(0, InvoiceNumber.length() ));
                                 String msgdate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
                                 resObjDocHeader.setMsgdate(msgdate);
                                 resObjDocHeader.setMsgFunc(BigInteger.valueOf(9));
@@ -1443,7 +1439,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                                 resObjDocHeader.setMsgFunc(BigInteger.valueOf(9));
                                 resObjDocHeader.setVersion(versionNumber.toString());
 
-                                resObjDocDetails.setConsignmentRefnumber(InvoiceNumber.substring(0, InvoiceNumber.length() - 2));
+                                resObjDocDetails.setConsignmentRefnumber(InvoiceNumber.substring(0, InvoiceNumber.length() ));
                                 resObjDocDetails.setVerNo("1");
                                 resObjDocDetails.setCertificateNo("");
                                 resObjDocDetails.setPermitNo("");
@@ -1473,12 +1469,12 @@ class OutgoingMessageProcessor { //implements Runnable {
                                 JAXBContext contextresObj = JAXBContext.newInstance(ConsignmentApprovalStatus.class);
                                 Marshaller resObjm = contextresObj.createMarshaller();
                                 resObjm.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-                                String file = applicationConfigurationXMLMapper.getOutboxFolder() + "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate + ".xml";
-                                String fileN = "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate + ".xml";
+                                String file = applicationConfigurationXMLMapper.getOutboxFolder() + "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() ) + "-1-" + "B-" + msgdate + ".xml";
+                                String fileN = "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() ) + "-1-" + "B-" + msgdate + ".xml";
                                 resObjm.marshal(resObj, new File(file));
                                 String[] attachments = new String[]{"", ""};
                                 String attachment = "";
-                                if ((recCdFileMsgConsignmentId != 0) && (fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() - 2), "OG_CD_RES", attachment))) {
+                                if ((recCdFileMsgConsignmentId != 0) && (fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() ) + "-1-" + "B-" + msgdate + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() ), "OG_CD_RES", attachment))) {
                                     filesinQue.add(file);
                                     String sourceDir = applicationConfigurationXMLMapper.getOutboxFolder();
                                     String destDir = applicationConfigurationXMLMapper.getOutboxArchiveFolder()
@@ -1503,7 +1499,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                                 DocumentDetailsType resObjDocDetails2 = new DocumentDetailsType();
                                 ContainerType resObjconType2 = new ContainerType();
                                 resObjDocHeader2.setMsgid("OG_CD_RES");//OGA_CD_RES
-                                resObjDocHeader2.setRefno(InvoiceNumber.substring(0, InvoiceNumber.length() - 2));
+                                resObjDocHeader2.setRefno(InvoiceNumber.substring(0, InvoiceNumber.length() ));
                                 String msgdate2 = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
                                 resObjDocHeader2.setMsgdate(msgdate2);
                                 resObjDocHeader2.setMsgFunc(BigInteger.valueOf(9));
@@ -1511,7 +1507,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                                 resObjDocHeader2.setSender("KEPHIS");
                                 resObjDocHeader2.setVersion(versionNumber.toString());
 
-                                resObjDocDetails2.setConsignmentRefnumber(InvoiceNumber.substring(0, InvoiceNumber.length() - 2));
+                                resObjDocDetails2.setConsignmentRefnumber(InvoiceNumber.substring(0, InvoiceNumber.length()));
                                 resObjDocDetails2.setVerNo("1");
                                 resObjDocDetails2.setCertificateNo("");
                                 resObjDocDetails2.setPermitNo("");
@@ -1541,12 +1537,12 @@ class OutgoingMessageProcessor { //implements Runnable {
                                 JAXBContext contextresObj = JAXBContext.newInstance(ConsignmentApprovalStatus.class);
                                 Marshaller resObjm2 = contextresObj.createMarshaller();
                                 resObjm2.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-                                String file2 = applicationConfigurationXMLMapper.getOutboxFolder() + "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate2 + ".xml";
-                                String fileN = "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate2 + ".xml";
+                                String file2 = applicationConfigurationXMLMapper.getOutboxFolder() + "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() ) + "-1-" + "B-" + msgdate2 + ".xml";
+                                String fileN = "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() ) + "-1-" + "B-" + msgdate2 + ".xml";
                                 resObjm2.marshal(resObj2, new File(file2));
                                 String[] attachments = new String[]{"", ""};
                                 String attachment = "";
-                                if ((recCdFileMsgConsignmentId != 0) && fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file2, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate2 + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() - 2), "OG_CD_RES", attachment)) {
+                                if ((recCdFileMsgConsignmentId != 0) && fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file2, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length()) + "-1-" + "B-" + msgdate2 + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length()), "OG_CD_RES", attachment)) {
                                     filesinQue.add(file2);
                                     String sourceDir = applicationConfigurationXMLMapper.getOutboxFolder();
                                     String destDir = applicationConfigurationXMLMapper.getOutboxArchiveFolder()
@@ -1568,14 +1564,14 @@ class OutgoingMessageProcessor { //implements Runnable {
                                 DocumentDetailsType resObjDocDetails3 = new DocumentDetailsType();
                                 ContainerType resObjconType3 = new ContainerType();
                                 resObjDocHeader3.setMsgid("OG_CD_RES");//OGA_CD_RES
-                                resObjDocHeader3.setRefno(InvoiceNumber.substring(0, InvoiceNumber.length() - 2));
+                                resObjDocHeader3.setRefno(InvoiceNumber.substring(0, InvoiceNumber.length() ));
                                 String msgdate3 = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
                                 resObjDocHeader3.setMsgdate(msgdate3);
                                 resObjDocHeader3.setMsgFunc(BigInteger.valueOf(9));
                                 resObjDocHeader3.setReceiver("KESWS");
                                 resObjDocHeader3.setSender("KEPHIS");
                                 resObjDocHeader3.setVersion(versionNumber.toString());
-                                resObjDocDetails3.setConsignmentRefnumber(InvoiceNumber.substring(0, InvoiceNumber.length() - 2));
+                                resObjDocDetails3.setConsignmentRefnumber(InvoiceNumber.substring(0, InvoiceNumber.length() ));
                                 resObjDocDetails3.setVerNo("1");
                                 resObjDocDetails3.setCertificateNo("");
                                 resObjDocDetails3.setPermitNo("");
@@ -1604,12 +1600,12 @@ class OutgoingMessageProcessor { //implements Runnable {
                                 JAXBContext contextresObj = JAXBContext.newInstance(ConsignmentApprovalStatus.class);
                                 Marshaller resObjm3 = contextresObj.createMarshaller();
                                 resObjm3.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-                                String file3 = applicationConfigurationXMLMapper.getOutboxFolder() + "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate3 + ".xml";
-                                String fileN = "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate3 + ".xml";
+                                String file3 = applicationConfigurationXMLMapper.getOutboxFolder() + "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length()) + "-1-" + "B-" + msgdate3 + ".xml";
+                                String fileN = "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() ) + "-1-" + "B-" + msgdate3 + ".xml";
                                 resObjm3.marshal(resObj3, new File(file3));
                                 String[] attachments = new String[]{"", ""};
                                 String attachment = "";
-                                if ((recCdFileMsgConsignmentId != 0) && fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file3, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate3 + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() - 2), "OG_CD_RES", attachment)) {
+                                if ((recCdFileMsgConsignmentId != 0) && fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file3, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length()) + "-1-" + "B-" + msgdate3 + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() ), "OG_CD_RES", attachment)) {
                                     filesinQue.add(file3);
                                     String sourceDir = applicationConfigurationXMLMapper.getOutboxFolder();
                                     String destDir = applicationConfigurationXMLMapper.getOutboxArchiveFolder()
@@ -1641,8 +1637,7 @@ class OutgoingMessageProcessor { //implements Runnable {
 
             }
 
-            try {
-                java.lang.Thread.sleep(100);
+            try { 
                 for (Iterator<String> iterator = filesinQue.iterator(); iterator.hasNext();) {
                     String next = iterator.next();
                     File f = new File(next);
@@ -1693,8 +1688,8 @@ class OutgoingMessageProcessor { //implements Runnable {
 
         }
         try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
+            //Thread.sleep(2000);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2015,7 +2010,7 @@ class OutgoingMessageProcessor { //implements Runnable {
         }
 
         try {
-            java.lang.Thread.sleep(60);
+           
             for (Iterator<String> iterator = filesinQue.iterator(); iterator.hasNext();) {
                 String next = iterator.next();
                 File f = new File(next);
