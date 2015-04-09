@@ -414,7 +414,7 @@ class OutgoingMessageProcessor { //implements Runnable {
             }
 
             /**
-             * *
+             * 
              * query database for consignements received and response messages
              * not sent by checking on saved files in processing box and get
              * application refrence query ecs database based on refrence id
@@ -858,7 +858,7 @@ class OutgoingMessageProcessor { //implements Runnable {
             SubmittedConsignmentId = iterator.next();
             //System.out.println(ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId).size());
             if (ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId) != null) {
-                String resTemplateFile = "C:\\Users\\DESTINY\\ecs_kesws\\service\\xml\\OG_SUB_CD-FILE.xml";
+                String resTemplateFile = "/ecs_kesws/service/xml/OG_SUB_CD-FILE.xml";
 
                 EcsResCdFileMsg ecsResCdFileMsg = new EcsResCdFileMsg();
 
