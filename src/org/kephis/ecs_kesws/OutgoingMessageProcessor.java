@@ -858,7 +858,7 @@ class OutgoingMessageProcessor { //implements Runnable {
             SubmittedConsignmentId = iterator.next();
             //System.out.println(ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId).size());
             if (ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId) != null) {
-                String resTemplateFile = "C:\\Users\\DESTINY\\ecs_kesws\\service\\xml\\OG_SUB_CD-FILE.xml";
+                String resTemplateFile = "/ecs_kesws/service/xml/OG_SUB_CD-FILE.xml";
 
                 EcsResCdFileMsg ecsResCdFileMsg = new EcsResCdFileMsg();
 
@@ -899,8 +899,8 @@ class OutgoingMessageProcessor { //implements Runnable {
                             keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setDocumentNumber(ecsConDocDetail.getDocumentNumber());
                             /* <ConsignmentDocument> <DocumentHeader> <DocumentReference> <CommonRefNumber> */
                             keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setCommonRefNumber("" + RefrenceNo);
-                            //keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setSenderID(""+ecsConDocDetail.getExporterSenderName()+"");
-                            keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setSenderID("conyangoexim");
+                            keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setSenderID(""+ecsConDocDetail.getSenderID()+"");
+                            //keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().setSenderID("conyangoexim");
                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard> <avider>  <ApplicationCode>   */
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getServiceProvider().setApplicationCode("" + ecsConDocDetail.getServiceProviderApplicationCode());
                             /*  <DocumentDetails> <ConsignmentDocDetails>  <CDStandard> <ServiceProvider>  <Name>   */
@@ -1077,8 +1077,10 @@ class OutgoingMessageProcessor { //implements Runnable {
                            // </CDHeaderOne>                                   
                                  /* <CDProductDetails>   */
                                 // change item one details appropriately 
-                                org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetail = keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().get(0);
                                 if (itemCounter == 0) {
+                                    try{
+                                       org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetail = keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().get(0);
+                                    
                                     System.out.println(itemCounter + " itemCounter ==0 " + ecsConDocDetail.getId());
                                     System.out.println(itemCounter + " internal product number" + ecsConDocDetail.getCDProduct1InternalProductNo());
 
@@ -1109,8 +1111,13 @@ class OutgoingMessageProcessor { //implements Runnable {
                                      org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails newitemDetail = new org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails();
                                     newitemDetail = itemDetail;
                                         System.out.println("IPC details "+newitemDetail.getCDProduct1().getInternalProductNo());
-                                  keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(itemCounter,newitemDetail);
-                                    InternalProductcodes IPCObj = null;
+                                  keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(newitemDetail);
+                                   }
+                                    catch(java.lang.IndexOutOfBoundsException e){
+                                    e.printStackTrace();
+                                    }
+                                  
+                                  InternalProductcodes IPCObj = null;
                                     Double weight = Double.valueOf(ecsConDocDetail.getCDProduct1QuantityQty());
 
                                     if (!ecsKeswsEntitiesController.internalProductCodesExist(ecsConDocDetail.getCDProduct1InternalProductNo())) {
@@ -1129,7 +1136,10 @@ class OutgoingMessageProcessor { //implements Runnable {
                                     CdFileDetails cdFileDetails = ecsKeswsEntitiesController.recCDFileMsgDetails(ecsResCdFileMsg, IPCObj, weight);
                                     cdFileList.add(cdFileDetails);
                                 }
-                                if (false) {
+                                if (itemCounter > 1) {
+                                        try{
+                                       org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetail = keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().get(0);
+                                  
                                     // create additional fields
                                     System.out.println(itemCounter + " itemCounter >0 " + ecsConDocDetail.getId());
                                     System.out.println(itemCounter + " internal product number" + ecsConDocDetail.getCDProduct1InternalProductNo());
@@ -1157,6 +1167,10 @@ class OutgoingMessageProcessor { //implements Runnable {
                                     System.out.println("IPC details "+newitemDetail.getCDProduct1().getInternalProductNo());
                                 //   keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().add(itemCounter,newitemDetail);
                                 }
+                                    catch(java.lang.IndexOutOfBoundsException e){
+                                    e.printStackTrace();
+                                    }
+                                        }
                                 itemCounter = itemCounter + 1;
                             }
                             keswsConsignmentDocumentObj.getDocumentSummary().setIssuedDateTime(ecsConDocDetail.getPGAHeaderFieldsPreferredInspectionDate());
@@ -1178,7 +1192,7 @@ class OutgoingMessageProcessor { //implements Runnable {
 
                             ecsKeswsEntitiesController.OgUpdateResCd1Msg(ecsResCdFileMsg);
                             if ((SubmittedConsignmentId != 0) && (fileProcessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file, attachments, "OG_SUB_CD-" + RefrenceNo + "-1-" + "B-" + msgyear + SeqNumber + ".xml", RefrenceNo, "OG_SUB_CD", attachment))) {
-                                ecsKeswsEntitiesController.logInfo2(fileName, "SUBMITTED " + fileName);
+                                ecsKeswsEntitiesController.logInfo2(fileName, "SUBMITTED " + fileName+" AT "+ util.getCurrentTime());
                                 ecsKeswsEntitiesController.OgUpdateResCd1Msg(ecsResCdFileMsg);
 
                                 //Move to process box and sourceDir
