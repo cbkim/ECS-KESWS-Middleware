@@ -553,14 +553,16 @@ public static class ConsignmentDocDetailsType {
 public static class ProductDetailsType {
 
     @XmlElement(name = "ItemDetails", required = true)
-    protected List<ProductDetailsType.ItemDetails> itemDetails;
+    protected List<ProductDetailsType.ItemDetails> itemDetails=new ArrayList<DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails>();
 
         public List<DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails> getItemDetails() {
-                    if (itemDetails == null) {
-                        itemDetails = new ArrayList<DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails>();
-                    }
                     return this.itemDetails;
                 }
+        
+    public void setItemDetails(DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetails) {
+        
+        this.itemDetails.add(itemDetails);
+    }
 
     /**
      * Gets the value of the itemDetails property.
