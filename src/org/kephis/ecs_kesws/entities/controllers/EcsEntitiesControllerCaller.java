@@ -52,8 +52,7 @@ public class EcsEntitiesControllerCaller {
     String PASS_ECS_KESWS;
     
     public EcsEntitiesControllerCaller() {
-
-    }
+        }
 
     public EcsEntitiesControllerCaller(ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
         utilclass = new UtilityClass();
@@ -61,16 +60,16 @@ public class EcsEntitiesControllerCaller {
         DB_URL = applicationConfigurationXMLMapper.getECSDatabaseUrl();
         USER = applicationConfigurationXMLMapper.getECSDatabaseuser();
         PASS = applicationConfigurationXMLMapper.getECSDatabasepassword();
+        
         FIN_DB_URL = applicationConfigurationXMLMapper.getIntergrationDatabaseUrl();
-         FIN_USER = applicationConfigurationXMLMapper.getIntergrationDatabaseuser();
-         FIN_PASS = applicationConfigurationXMLMapper.getIntergrationDatabasepassword();
+        FIN_USER = applicationConfigurationXMLMapper.getIntergrationDatabaseuser();
+        FIN_PASS = applicationConfigurationXMLMapper.getIntergrationDatabasepassword();
          
          
          //THIS IS THE CONNECTION TO ECS_KESWS database
          DB_URL_ECS_KESWS = applicationConfigurationXMLMapper.getECS_Kesws_DbUrl();
          USER_ECS_KESWS = applicationConfigurationXMLMapper.getECS_Kesws_user();
          PASS_ECS_KESWS = applicationConfigurationXMLMapper.getECS_Kesws_pass();
-
     }
 
     public boolean ecsTransactionCommit(RecCdFileMsg recCdFileMsg, EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController, ConsignmentDocument keswsConsignmentDocumentObj, ECSConsignmentDoc ecsConsignmentDocumentObj, int ClientId) {
@@ -94,7 +93,7 @@ public class EcsEntitiesControllerCaller {
     }
 
     private int createECSconsignmentdetails(ECSConsignmentDoc desObject,
-            int clientId, RecCdFileMsg recCdFileMsg, EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController) {
+        int clientId, RecCdFileMsg recCdFileMsg, EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController) {
         BoneCP connectionPool = null;
         Connection connection = null;
         int ConsignmentId = 0;
@@ -2485,6 +2484,7 @@ public class EcsEntitiesControllerCaller {
             ResultSet temp1 = null;
 
             Statement stmt = null; 
+            DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());   
             connection = DriverManager.getConnection(FIN_DB_URL, FIN_USER, FIN_PASS); 
             stmt = connection.createStatement();
             if (connection != null) {
@@ -2612,6 +2612,7 @@ public class EcsEntitiesControllerCaller {
         // load the database driver (make sure this is in your classpath!)
         try {
             System.out.println("-"+FIN_DB_URL+"-"+FIN_USER+"-"+FIN_PASS);
+            DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());   
             connection = DriverManager.getConnection(FIN_DB_URL, FIN_USER, FIN_PASS);
 
             if (connection != null) {
@@ -2661,7 +2662,10 @@ public class EcsEntitiesControllerCaller {
         String CUST_NUMBER="";
 
         // load the database driver (make sure this is in your classpath!)
+        
         try { 
+            //register the driver
+            DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());   
             connection = DriverManager.getConnection(FIN_DB_URL, FIN_USER, FIN_PASS);
 
             if (connection != null) {
@@ -2691,12 +2695,13 @@ public class EcsEntitiesControllerCaller {
     public String getLikelyClientACCPACId(String ClientPin, String ClientName) {
         Statement stmt = null;
         ResultSet rs = null;
-           ResultSet rs2 = null;
+        ResultSet rs2 = null;
         Connection connection = null;
-    String INDCUST2 = "";
+        String INDCUST2 = "";
         // load the database driver (make sure this is in your classpath!)
         try {
 
+            DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver()); 
             connection = DriverManager.getConnection("jdbc:sqlserver://192.168.0.3;databaseName=KEPHIS60", "sa", "K@ph1$67q");
 
             if (connection != null) {
