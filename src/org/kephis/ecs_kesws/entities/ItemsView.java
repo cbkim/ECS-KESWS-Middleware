@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -48,6 +49,7 @@ public class ItemsView implements Serializable {
     @Column(name = "CDProduct1_HSDescription")
     private String cDProduct1HSDescription;
     @Column(name = "CDProduct1_InternalProductNo")
+    @Id
     private String cDProduct1InternalProductNo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "CDProduct1_Quantity_Qty")
