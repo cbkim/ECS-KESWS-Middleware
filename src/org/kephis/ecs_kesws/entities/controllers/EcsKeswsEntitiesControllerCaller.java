@@ -5,6 +5,9 @@
  */
 package org.kephis.ecs_kesws.entities.controllers;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -324,7 +327,7 @@ public class EcsKeswsEntitiesControllerCaller {
         Double priceChargeKshs = 0.00;
         if (internalProductCode.getAggregateIPCCodeLevel() == 0) {
             CdFileDetailsJpaController cdFileDetailsController = new CdFileDetailsJpaController(emf);
-            if ((recCdFileMsgController.findEcsResCdFileMsg(CDFile.getRECCDFileID()) == null) || (recCdFileMsgController.findEcsResCdFileMsg(CDFile.getRECCDFileID()).getCdFileDetailsCollection().size() != 0)) {
+          /**  if ((recCdFileMsgController.findEcsResCdFileMsg(CDFile.getRECCDFileID()) == null) || (recCdFileMsgController.findEcsResCdFileMsg(CDFile.getRECCDFileID()).getCdFileDetailsCollection().size() != 0)) {
                 for (Iterator iterator1 = CDFile.getCdFileDetailsCollection().iterator(); iterator1.hasNext();) {
                     cdFileDetails = (CdFileDetails) iterator1.next();
                     itemweight = itemweight + cdFileDetails.getWeight();
@@ -371,14 +374,14 @@ public class EcsKeswsEntitiesControllerCaller {
                 return cdFileDetails;
 
             } else {
-
+**/
                 cdFileDetails.setIpcIdCode(internalProductCode.getInternalProductCode());
                 cdFileDetails.setAggregateIPCCodeLevel(internalProductCode.getAggregateIPCCodeLevel());
                 cdFileDetails.setECSRESCDFILEMSGRECCDFileID(CDFile);
                 cdFileDetails.setWeight(itemweight);
                 PricelistInternalProductcodeDocumentMapJpaController plipcdoc = new PricelistInternalProductcodeDocumentMapJpaController(emf);
                 //PricelistInternalProductcodeDocumentMap defaultdocprice = plipcdoc.findPricelistInternalProductcodeDocumentMap(627);
-                PricelistInternalProductcodeDocumentMap defaultdocprice = plipcdoc.findPricelistInternalProductcodeDocumentMap(492);
+                PricelistInternalProductcodeDocumentMap defaultdocprice = plipcdoc.findPricelistInternalProductcodeDocumentMap(1);
                 
                 Double temp_max_weight = 0.00;
                         Double temp_min_weight = 0.00;
@@ -388,8 +391,8 @@ public class EcsKeswsEntitiesControllerCaller {
                     PricelistInternalProductcodeDocumentMap next = (PricelistInternalProductcodeDocumentMap) iterator.next();
                     PricelistJpaController pricelistController = new PricelistJpaController(emf);
                     Pricelist pricelist = pricelistController.findPricelist(next.getPRICELISTPriceIDRef().getPriceID());
-                    if ((pricelist.getMaxWeight() >= cdFileDetails.getWeight()) && (cdFileDetails.getWeight() <= pricelist.getMinWeight())) {
-                        
+                    if ((pricelist.getMaxWeight() >= itemweight) && (itemweight <= pricelist.getMinWeight())) {
+                        System.out.println("min weight "+temp_min_weight+" max weight "+temp_max_weight+"Price map id"+defaultdocprice.getPricelistIPCMAPID());
                         if (temp_max_weight <= pricelist.getMaxWeight()) {
                             temp_max_weight = pricelist.getMaxWeight();
                             pricelistid1 = pricelist.getPriceID();
@@ -398,6 +401,7 @@ public class EcsKeswsEntitiesControllerCaller {
                         if (temp_min_weight >= pricelist.getMinWeight()) {
                             temp_min_weight = pricelist.getMinWeight();
                             pricelistid2 = pricelist.getPriceID();
+                              defaultdocprice = next;
                         }
                         if (pricelistid2 == pricelistid1) {
                             priceChargeKshs = pricelist.getChargeKshs();
@@ -421,8 +425,8 @@ public class EcsKeswsEntitiesControllerCaller {
                 paymentInfoLog.setPRICELISTINTERNALPRODUCTCODEDOCUMENTMAPPricelistIPCMAPID(defaultdocprice);
                 paymentInfoLog.setRevenueCode("");
                 createPaymentInfoLog(paymentInfoLog);
-                return cdFileDetails;
-            }
+              //  return cdFileDetails;
+           // }
             /**
              * } else if (true) { //aggregate level is 11 aggregate on commodity
              * category // if non is founs } else if (true) { //aggregate level
@@ -735,7 +739,12 @@ public class EcsKeswsEntitiesControllerCaller {
             }
         }
     }
-
+/**
+ * This method return the internal product code (IPC) 
+ * and 06014262216147 as the code if IPC notavailable
+ * @param internalProductNo
+ * @return IPC
+ */
     public InternalProductcodes getInternalProductcodes(String internalProductNo) {
         EntityManager em = null;
         try {
@@ -775,7 +784,8 @@ public class EcsKeswsEntitiesControllerCaller {
         //get default mappping on existing ipc if none create mappings
         InternalProductcodesJpaController ipjpc = new InternalProductcodesJpaController(emf);
      
-        if (!findPricelistIPCDocMapEntitiesbyIPC(IPCObj).isEmpty()) {
+        if (findPricelistIPCDocMapEntitiesbyIPC(IPCObj).isEmpty()&&IPCObj!=null) {
+            System.out.println("IPC IS NOT EMPTY");
             List<EcsDocumentTypes> docType = new ArrayList<EcsDocumentTypes>();
             EcsDocumentTypesJpaController ecsDocumentTypesJpaController = new EcsDocumentTypesJpaController(emf);
             docType = ecsDocumentTypesJpaController.findEcsDocumentTypesEntities();
@@ -792,24 +802,32 @@ public class EcsKeswsEntitiesControllerCaller {
                         plIpcDocmapping.setPRICELISTPriceIDRef(pricelist);
                         plIpcDocmapping.setINTERNALPRODUCTCODESIPCIDRef(IPCObj);
                         plIpcDocmapping.setDocumentIDRef("AUTO GENERATED"); 
+                         
                         //Phytosanitary Certificate (Commercial Agricultural commondities)
-                       // if (!IPCObj.getCommodityCategory().toLowerCase().contains("vegatable") && (!IPCObj.getCommodityCategory().toLowerCase().contains("flower"))
-                        //        && (!IPCObj.getCommodityCategory().toLowerCase().contains("fruit")) && (pricelist.getPriceID() < 6) && (15 > pricelist.getPriceID())) {
-                       //     plIpcDocMapper.create(plIpcDocmapping);
-                       // } //Phytosanitary Certificate for Fresh Produce excluding fruits and veg
+                       if (!IPCObj.getCommodityCategory().toLowerCase().contains("vegatable") && (!IPCObj.getCommodityCategory().toLowerCase().contains("flower"))
+                             && (!IPCObj.getCommodityCategory().toLowerCase().contains("fruit")) && (pricelist.getPriceID() < 6) && (15 > pricelist.getPriceID())) {
+                         plIpcDocMapper.create(plIpcDocmapping);
+                          System.out.println("CREATE NON FRUIT OR VEGETABLE");
+                       } 
+//Phytosanitary Certificate for Fresh Produce excluding fruits and veg
                          if (IPCObj.getCommodityCategory().toLowerCase().contains("vegatable") && (pricelist.getPriceID() >= 10) && (pricelist.getPriceID() <= 15)) {
                             plIpcDocMapper.create(plIpcDocmapping);
+                            System.out.println("CREATE VEGETABLE");
                         } //Phytosanitary Certificate for Fresh Produce  fruits and veg
                         else if (IPCObj.getCommodityCategory().toLowerCase().contains("fruit") && (pricelist.getPriceID() >= 10) && (pricelist.getPriceID() <= 15)) {
                             plIpcDocMapper.create(plIpcDocmapping);
+                             System.out.println("CREATE FRUIT");
                         } else if (IPCObj.getCommodityCategory().toLowerCase().contains("flower") && (pricelist.getPriceID() >= 6) && (pricelist.getPriceID() <= 9)) {
                             plIpcDocMapper.create(plIpcDocmapping);
+                             System.out.println("CREATE FLOWER");
                         }
                     }
                 }
             }
-        } else {
-            /***
+        } /**
+        else {
+             System.out.println("IPC IS NOT EMPTY");
+            
             List<PricelistInternalProductcodeDocumentMap> findPricelistIPCDocMapEntitiesbyIPC = findPricelistIPCDocMapEntitiesbyIPC(IPCObj);
             for (Iterator<PricelistInternalProductcodeDocumentMap> iterator = findPricelistIPCDocMapEntitiesbyIPC.iterator(); iterator.hasNext();) {
                 PricelistJpaController plc = new PricelistJpaController(emf);
@@ -821,10 +839,12 @@ public class EcsKeswsEntitiesControllerCaller {
                           
                             plIpcDocmapping.setINTERNALPRODUCTCODESIPCIDRef(IPCObj);
                             plIpcDocmapping.setDocumentIDRef("AUTO GENERATED");
+                            System.out.println(plIpcDocmapping.getPricelistIPCMAPID());
                 for (Iterator<EcsDocumentTypes> iterator2 = docType.iterator(); iterator2.hasNext();) {
                     EcsDocumentTypes ecsDocumentTypes = iterator2.next();
                     for (Iterator<Pricelist> iterator1 = pl.iterator(); iterator1.hasNext();) {
                         Pricelist pricelist = iterator1.next();
+                          System.out.println(pricelist.getChargeDescription());
                         if (pricelist.getChargeDescription().contains(ecsDocumentTypes.getDocumentName())) {
                          PricelistInternalProductcodeDocumentMapJpaController plIpcDocMapper = new PricelistInternalProductcodeDocumentMapJpaController(emf);
                             plIpcDocmapping.setDOCUMENTTYPESid(ecsDocumentTypes);
@@ -832,21 +852,25 @@ public class EcsKeswsEntitiesControllerCaller {
                             try {
                                 if (!IPCObj.getCommodityCategory().toLowerCase().contains("vegatable") && (!IPCObj.getCommodityCategory().toLowerCase().contains("flower"))
                                         && (!IPCObj.getCommodityCategory().toLowerCase().contains("fruit")) && (pricelist.getPriceID() < 6) && (15 > pricelist.getPriceID())) {
-                               plIpcDocMapper.edit(plIpcDocmapping);
+                               plIpcDocMapper.create(plIpcDocmapping);
+                               System.out.println("CREATE 2 NON FRUIT OR VEGETABLE");
                                    logInfo(ecsResCdFileMsg.getFileName(), "CREATE  MAPPING NOT TO HAVE VEGATABLES AND FRUITS"+plIpcDocmapping.getPricelistIPCMAPID());
 
                                 } //Phytosanitary Certificate for Fresh Produce excluding fruits and veg
                                 else if (IPCObj.getCommodityCategory().toLowerCase().contains("vegatable") && (pricelist.getPriceID() >= 10) && (pricelist.getPriceID() <= 15)) {
-                                   plIpcDocMapper.edit(plIpcDocmapping);
+                                   plIpcDocMapper.create(plIpcDocmapping);
+                                   System.out.println("CREATE 2 VEGETABLE");
                                     logInfo(ecsResCdFileMsg.getFileName(), "CREATE MAPPING TO HAVE VEGATABLES" + plIpcDocmapping.getPricelistIPCMAPID());
 
                                 } //Phytosanitary Certificate for Fresh Produce  fruits and veg
                                 else if (IPCObj.getCommodityCategory().toLowerCase().contains("fruit") && (pricelist.getPriceID() >= 10) && (pricelist.getPriceID() <= 15)) {
-                                   plIpcDocMapper.edit(plIpcDocmapping);
+                                   plIpcDocMapper.create(plIpcDocmapping);
+                                   System.out.println("CREATE 2  FRUIT");
                                     logInfo(ecsResCdFileMsg.getFileName(), "CREATE MAPPING TO HAVE FRUITS" + plIpcDocmapping.getPricelistIPCMAPID());
 
                                 } else if (IPCObj.getCommodityCategory().toLowerCase().contains("flower") && (pricelist.getPriceID() >= 6) && (pricelist.getPriceID() <= 9)) {
-                                    plIpcDocMapper.edit(plIpcDocmapping);
+                                    plIpcDocMapper.create(plIpcDocmapping);
+                                    System.out.println("CREATE 2 FLOWER");
                                     logInfo(ecsResCdFileMsg.getFileName(), "CREATE MAPPING NOT TO HAVE FLOWERS" + plIpcDocmapping.getPricelistIPCMAPID());
 
                                 }
@@ -858,17 +882,15 @@ public class EcsKeswsEntitiesControllerCaller {
                                 
                                 
                                 
-                            } catch (NonexistentEntityException ex) {
-                                Logger.getLogger(EcsKeswsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
-                            }catch (Exception ex) {
+                            } catch (Exception ex) {
                                 Logger.getLogger(EcsKeswsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                             
                     }
                 }
-            } ***/
-        }
+            }  
+        }**/
        
     }
     public void updateCreateInternalProductcodePriceDocMappings(RecCdFileMsg ecsResCdFileMsg, InternalProductcodes IPCObj) {
@@ -1205,5 +1227,7 @@ public class EcsKeswsEntitiesControllerCaller {
             }
         }
     }
+    
+
 
 }

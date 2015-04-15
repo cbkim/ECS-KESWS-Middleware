@@ -41,6 +41,7 @@ import org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_0.DocumentDetailsType;
 import org.kephis.ecs_kesws.xml.validator.XmlFileValidator;
 import org.kephis.ecs_kesws.entities.EcsConDoc;
 import org.kephis.ecs_kesws.entities.InternalProductcodes;
+import org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsOneType;
 
 /**
  *
@@ -877,7 +878,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                     keswsConsignmentDocumentObj = (org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument) um.unmarshal(new FileReader(resTemplateFile));
                     List<EcsConDoc> ecsConDocDetails = ecsKeswsEntitiesController.findEcsConDocByConsignmentId(SubmittedConsignmentId);
                     String ecsConDocDetailItemId = "";
-                    Integer itemCounter = 0;
+                    Integer itemCounter = 1;
                     String msgyear = new SimpleDateFormat("yyyy").format(new Date());
                     String docType = "KEEXP";
                     String SeqNumber = util.RPad(SubmittedConsignmentId.toString(), 10, '0');
@@ -1047,92 +1048,102 @@ class OutgoingMessageProcessor { //implements Runnable {
                             keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getPGAHeaderFields().setPreferredInspectionDate(ecsConDocDetail.getPGAHeaderFieldsPreferredInspectionDate());// TO Update
 
                             List<CdFileDetails> cdFileList = new LinkedList<CdFileDetails>();
-                            if (!ecsConDocDetailItemId.equals(ecsConDocDetail.getId())) { 
-                                System.out.println(itemCounter + " itemCounter " + ecsConDocDetail.getId()); 
+                            if (!ecsConDocDetailItemId.equals(ecsConDocDetail.getId())) {
+                                System.out.println(itemCounter + " itemCounter " + ecsConDocDetail.getId());
                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
-                                ecsConDocDetailItemId = ecsConDocDetail.getId(); 
+                                ecsConDocDetailItemId = ecsConDocDetail.getId();
                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setInvoiceDate(ecsConDocDetail.getCDHeaderOneInvoiceDate());
                                 /*  <DocumentDetails> <ConsignmentDocDetails> <CDHeaderOne>  */
                                 keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDHeaderOne().setInvoiceNumber(ecsConDocDetail.getCDHeaderOneInvoiceNumber());
- 
-                                if (itemCounter == 0) { 
-                                        org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetail = keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().get(0);
-                                        keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().clear();
-                                        itemDetail.setItemCount(itemCounter.toString());
-                                        itemDetail.getCDProduct1().setItemDescription(ecsConDocDetail.getCDProduct1ItemDescription()); 
-                                        itemDetail.getCDProduct1().setItemHSCode(ecsConDocDetail.getCDProduct1ItemHSCode());
-                                        itemDetail.getCDProduct1().setHSDescription(ecsConDocDetail.getCDProduct1HSDescription());
-                                        itemDetail.getCDProduct1().setInternalProductNo(ecsConDocDetail.getCDProduct1InternalProductNo());
-                                        itemDetail.getCDProduct1().setProductClassCode("");
-                                        itemDetail.getCDProduct1().setProductClassDescription("");
-                                        itemDetail.getCDProduct1().getQuantity().setQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1QuantityQty())); 
-                                        itemDetail.getCDProduct1().getQuantity().setUnitOfQty(ecsConDocDetail.getCDProduct1QuantityUnitOfQty());
-                                        itemDetail.getCDProduct1().getQuantity().setUnitOfQtyDesc(ecsConDocDetail.getCDProduct1QuantityUnitOfQtyDesc()); 
-                                        itemDetail.getCDProduct1().setPackageQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1PackageQty()));
-                                        itemDetail.getCDProduct1().setPackageType(ecsConDocDetail.getCDProduct1PackageType());
-                                        itemDetail.getCDProduct1().setPackageTypeDesc(ecsConDocDetail.getCDProduct1PackageTypeDesc()); 
-                                        itemDetail.getCDProduct1().setItemNetWeight(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1ItemNetWeight()));  //conversion error may occur
-                                        itemDetail.getCDProduct1().setItemGrossWeight(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1ItemGrossWeight()));//conversion error may occur
+                            //
+
+                                if (itemCounter == 1) {
+                                    org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsOneType CProductDetailsOneType = new org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsOneType();
+                                     org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsTwoType CProductDetailsTwoType = new org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsTwoType();
+                                    org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetail = new org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails();
+                                    org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.QuantityType Quantity = new org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.QuantityType();
+                                    itemDetail.setItemCount(itemCounter.toString());
+                                    CProductDetailsOneType.setItemNo(itemCounter);
+                                    CProductDetailsOneType.setItemDescription(ecsConDocDetail.getCDProduct1ItemDescription());
+                                    CProductDetailsOneType.setItemHSCode(ecsConDocDetail.getCDProduct1ItemHSCode());
+                                    CProductDetailsOneType.setHSDescription(ecsConDocDetail.getCDProduct1HSDescription());
+                                    CProductDetailsOneType.setInternalProductNo(ecsConDocDetail.getCDProduct1InternalProductNo());
+                                    CProductDetailsOneType.setProductClassCode("");
+                                    CProductDetailsOneType.setProductClassDescription("");
+                                    Quantity.setQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1QuantityQty()));
+                                    Quantity.setUnitOfQty(ecsConDocDetail.getCDProduct1QuantityUnitOfQty());
+                                    Quantity.setUnitOfQtyDesc(ecsConDocDetail.getCDProduct1QuantityUnitOfQtyDesc());
+                                    CProductDetailsOneType.setQuantity(Quantity);
+                                    CProductDetailsOneType.setPackageQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1PackageQty()));
+                                    CProductDetailsOneType.setPackageType(ecsConDocDetail.getCDProduct1PackageType());
+                                    CProductDetailsOneType.setPackageTypeDesc(ecsConDocDetail.getCDProduct1PackageTypeDesc());
+                                    CProductDetailsOneType.setItemNetWeight(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1ItemNetWeight()));  //conversion error may occur
+                                    CProductDetailsOneType.setItemGrossWeight(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1ItemGrossWeight()));//conversion error may occur
                                      /*  <DocumentDetails> <ConsignmentDocDetails> <ConsignmentDocDetails>  <CDProductDetails> */
- 
-                                        org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails newitemDetail = new org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails();
-                                        newitemDetail = itemDetail;
-                                        System.out.println("IPC details " + newitemDetail.getCDProduct1().getInternalProductNo());
-                                        keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().setItemDetails(newitemDetail);
-                                    
+                                    itemDetail.setCDProduct1(CProductDetailsOneType);
+                                    CProductDetailsTwoType.setApplicantRemarks("REMARKS");
+                                    itemDetail.setCDProduct2(CProductDetailsTwoType);
+                                    org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails newitemDetail = itemDetail;
+                                    newitemDetail = itemDetail;
+                                    keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().setItemDetails(itemCounter,newitemDetail);
 
                                 }
-                                if (itemCounter > 0) {
-                                    
-                                        org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetail = keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().get(0);
+                                if (itemCounter > 1) {
+                                    org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsOneType CProductDetailsOneType = new ProductDetailsOneType();
+                                    org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsTwoType CProductDetailsTwoType = new org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsTwoType();
+                                    org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetail = new org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails();
+                                    org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.QuantityType Quantity = new org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.QuantityType();
+                                    itemDetail.setItemCount(itemCounter.toString());
+                                    CProductDetailsOneType.setItemNo(itemCounter);
+                                    CProductDetailsOneType.setItemDescription(ecsConDocDetail.getCDProduct1ItemDescription());
+                                    CProductDetailsOneType.setItemHSCode(ecsConDocDetail.getCDProduct1ItemHSCode());
+                                    CProductDetailsOneType.setHSDescription(ecsConDocDetail.getCDProduct1HSDescription());
+                                    CProductDetailsOneType.setInternalProductNo(ecsConDocDetail.getCDProduct1InternalProductNo());
+                                    CProductDetailsOneType.setProductClassCode("");
+                                    CProductDetailsOneType.setProductClassDescription("");
+                                    Quantity.setQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1QuantityQty()));
+                                    Quantity.setUnitOfQty(ecsConDocDetail.getCDProduct1QuantityUnitOfQty());
+                                    Quantity.setUnitOfQtyDesc(ecsConDocDetail.getCDProduct1QuantityUnitOfQtyDesc());
+                                    CProductDetailsOneType.setQuantity(Quantity);
+                                    CProductDetailsOneType.setPackageQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1PackageQty()));
+                                    CProductDetailsOneType.setPackageType(ecsConDocDetail.getCDProduct1PackageType());
+                                    CProductDetailsOneType.setPackageTypeDesc(ecsConDocDetail.getCDProduct1PackageTypeDesc());
+                                    CProductDetailsOneType.setItemNetWeight(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1ItemNetWeight()));  //conversion error may occur
+                                    CProductDetailsOneType.setItemGrossWeight(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1ItemGrossWeight()));//conversion error may occur
+                                     /*  <DocumentDetails> <ConsignmentDocDetails> <ConsignmentDocDetails>  <CDProductDetails> */
+                                    itemDetail.setCDProduct1(CProductDetailsOneType);
+                                     CProductDetailsTwoType.setApplicantRemarks("REMARKS");
+                                    itemDetail.setCDProduct2(CProductDetailsTwoType);
+                                    org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails newitemDetail = itemDetail;
+                                    newitemDetail = itemDetail;
+                                    System.out.println("IPC details " + newitemDetail.getCDProduct1().getInternalProductNo());
+                                    keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().setItemDetails(itemCounter,newitemDetail);
 
-                                        // create additional fields
-                                        System.out.println(itemCounter + " itemCounter >0 " + ecsConDocDetail.getId());
-                                        System.out.println(itemCounter + " internal product number" + ecsConDocDetail.getCDProduct1InternalProductNo());
-
-                                        itemDetail.setItemCount(itemCounter.toString());
-                                        itemDetail.getCDProduct1().setItemNo(itemCounter);
-                                        itemDetail.setItemCount(itemCounter.toString());
-                                        itemDetail.getCDProduct1().setItemDescription(ecsConDocDetail.getCDProduct1ItemDescription());
-                                        //HSCODE LOOK UP IF NULL
-                                        itemDetail.getCDProduct1().setItemHSCode(ecsConDocDetail.getCDProduct1ItemHSCode());
-                                        itemDetail.getCDProduct1().setHSDescription(ecsConDocDetail.getCDProduct1HSDescription());
-                                        itemDetail.getCDProduct1().setInternalProductNo(ecsConDocDetail.getCDProduct1InternalProductNo());
-                                        itemDetail.getCDProduct1().setProductClassCode("");
-                                        itemDetail.getCDProduct1().setProductClassDescription("");
-                                        itemDetail.getCDProduct1().getQuantity().setQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1QuantityQty()));
-                                        //UNIT QUANTITY LOOK UP IF NULL
-                                        itemDetail.getCDProduct1().getQuantity().setUnitOfQty(ecsConDocDetail.getCDProduct1QuantityUnitOfQty());
-                                        itemDetail.getCDProduct1().getQuantity().setUnitOfQtyDesc(ecsConDocDetail.getCDProduct1QuantityUnitOfQtyDesc());
-                                        //UNIT Package LOOK UP IF NULL
-                                        itemDetail.getCDProduct1().setPackageQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1PackageQty()));
-                                        itemDetail.getCDProduct1().setPackageType(ecsConDocDetail.getCDProduct1PackageType());
-                                        itemDetail.getCDProduct1().setPackageTypeDesc(ecsConDocDetail.getCDProduct1PackageTypeDesc());
-                                        org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails newitemDetail = new org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails();
-                                        newitemDetail = itemDetail;
-                                        System.out.println("IPC details " + newitemDetail.getCDProduct1().getInternalProductNo());
-                                                            keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().setItemDetails(newitemDetail);
                                 }
-                                itemCounter = itemCounter + 1;
+                               itemCounter = itemCounter + 1;
                                 
-                                    InternalProductcodes IPCObj = null;
-                                    Double weight = Double.valueOf(ecsConDocDetail.getCDProduct1QuantityQty());
+                             
+                                System.out.println(itemCounter + " ic value");
 
-                                    if (!ecsKeswsEntitiesController.internalProductCodesExist(ecsConDocDetail.getCDProduct1InternalProductNo())) {
-                                        IPCObj = new InternalProductcodes();
-                                        Date date = new java.sql.Date(2010, 10, 10);
-                                        IPCObj.setAggregateIPCCodeLevel(0);
-                                        IPCObj.setInternalProductCode(ecsConDocDetail.getCDProduct1InternalProductNo());
-                                        IPCObj.setHscode(ecsConDocDetail.getCDProduct1ItemHSCode());
-                                        IPCObj.setHscodeDesc("SYSTEM GENERATED " + ecsConDocDetail.getCDProduct1HSDescription() + ":" + ecsConDocDetail.getCDProduct1ItemDescription());
-                                        IPCObj.setDateDeactivated(date);
-                                        ecsKeswsEntitiesController.createInternalProductcode(IPCObj);
-                                        ecsKeswsEntitiesController.logInfo2(file, "CREATED IPC ENTRY ON ECSKESWSDB");
-                                    }
-                                    IPCObj = ecsKeswsEntitiesController.getInternalProductcodes(ecsConDocDetail.getCDProduct1InternalProductNo());
-                                    ecsKeswsEntitiesController.updateCreateInternalProductcodePriceDocMappings(ecsResCdFileMsg, IPCObj);
-                                    CdFileDetails cdFileDetails = ecsKeswsEntitiesController.recCDFileMsgDetails(ecsResCdFileMsg, IPCObj, weight);
-                                    cdFileList.add(cdFileDetails);
+                                InternalProductcodes IPCObj = null;
+                                Double weight = Double.valueOf(ecsConDocDetail.getTotalConsignmentForBilling());
+
+                                if (!ecsKeswsEntitiesController.internalProductCodesExist(ecsConDocDetail.getCDProduct1InternalProductNo())) {
+                                    IPCObj = new InternalProductcodes();
+                                    Date date = new java.sql.Date(2010, 10, 10);
+                                    IPCObj.setAggregateIPCCodeLevel(0);
+                                    IPCObj.setInternalProductCode(ecsConDocDetail.getCDProduct1InternalProductNo());
+                                    IPCObj.setHscode(ecsConDocDetail.getCDProduct1ItemHSCode());
+                                    IPCObj.setHscodeDesc("SYSTEM GENERATED " + ecsConDocDetail.getCDProduct1HSDescription() + ":" + ecsConDocDetail.getCDProduct1ItemDescription());
+                                    IPCObj.setDateDeactivated(date);
+                                    ecsKeswsEntitiesController.createInternalProductcode(IPCObj);
+                                    ecsKeswsEntitiesController.logInfo2(file, "CREATED IPC ENTRY ON ECSKESWSDB");
+                                }
+                                IPCObj = ecsKeswsEntitiesController.getInternalProductcodes(ecsConDocDetail.getCDProduct1InternalProductNo());
+                                ecsKeswsEntitiesController.updateCreateInternalProductcodePriceDocMappings(ecsResCdFileMsg, IPCObj);
+                                CdFileDetails cdFileDetails = ecsKeswsEntitiesController.recCDFileMsgDetails(ecsResCdFileMsg, IPCObj, weight);
+                                cdFileList.add(cdFileDetails);
+
                             }
                             keswsConsignmentDocumentObj.getDocumentSummary().setIssuedDateTime(ecsConDocDetail.getPGAHeaderFieldsPreferredInspectionDate());
 
@@ -1141,6 +1152,8 @@ class OutgoingMessageProcessor { //implements Runnable {
                             }
                             ecsResCdFileMsg.setCdFileDetailsCollection(cdFileList);
                         }
+                         keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDProductDetails().getItemDetails().remove(0);
+                               
                         keswsConsignmentDocumentResObj = keswsConsignmentDocumentObj;
                         // resObjm.marshal(keswsConsignmentDocumentResObj, System.out);
                         resObjm.marshal(keswsConsignmentDocumentResObj, cdResFile);
@@ -1531,7 +1544,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                         }
 // to be changed to issued
 
-                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("ISSUED")
+                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("PENDING")
                                 && (recCdFileMsgConsignmentId != 0)) {
                             if (isFirstMessageSent == 1) {
                                 ConsignmentApprovalStatus resObj3 = new ConsignmentApprovalStatus();

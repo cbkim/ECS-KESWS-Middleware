@@ -4,8 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2015.02.15 at 12:17:31 PM EAT 
 //
-
-
 package org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1;
 
 import java.util.ArrayList;
@@ -29,17 +27,18 @@ import org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.Standar
 import org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.StandardDetailsType;
 import org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.TransportType;
 
-  
-import org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.FeeType; 
- 
+import org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.FeeType;
+
 import org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ThirdPartyDetailsType;
- 
 
 /**
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p>
+ * Java class for anonymous complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType>
  *   &lt;complexContent>
@@ -53,8 +52,8 @@ import org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ThirdPa
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -69,1041 +68,940 @@ public class ConsignmentDocument {
     protected DocumentHeaderType documentHeader;
     @XmlElement(name = "DocumentDetails", required = true)
     protected DocumentDetailsType documentDetails;
-    /**
- * <p>Java class for DocumentDetailsType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="DocumentDetailsType">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="ConsignmentDocDetails" type="{}ConsignmentDocDetailsType"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DocumentDetailsType", propOrder = {
-    "consignmentDocDetails"
-})
-public static class DocumentDetailsType {
-
-    @XmlElement(name = "ConsignmentDocDetails", required = true)
-    protected ConsignmentDocDetailsType consignmentDocDetails;
 
     /**
-     * Gets the value of the consignmentDocDetails property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ConsignmentDocDetailsType }
-     *     
+     * <p>
+     * Java class for DocumentDetailsType complex type.
+     *
+     * <p>
+     * The following schema fragment specifies the expected content contained
+     * within this class.
+     *
+     * <pre>
+     * &lt;complexType name="DocumentDetailsType">
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *       &lt;sequence>
+     *         &lt;element name="ConsignmentDocDetails" type="{}ConsignmentDocDetailsType"/>
+     *       &lt;/sequence>
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     *
+     *
      */
-    public ConsignmentDocDetailsType getConsignmentDocDetails() {
-        return consignmentDocDetails;
-    }
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "DocumentDetailsType", propOrder = {
+        "consignmentDocDetails"
+    })
+    public static class DocumentDetailsType {
 
-    /**
-     * Sets the value of the consignmentDocDetails property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ConsignmentDocDetailsType }
-     *     
-     */
-    public void setConsignmentDocDetails(ConsignmentDocDetailsType value) {
-        this.consignmentDocDetails = value;
-    }
-    /**
- * <p>Java class for ConsignmentDocDetailsType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="ConsignmentDocDetailsType">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="CDStandard" type="{MDA_Common_Types}StandardDetailsType"/>
- *         &lt;element name="ApprovalDetails" type="{}ApprovalDetailsType" minOccurs="0"/>
- *         &lt;element name="CDImporter" type="{MDA_Common_Types}EXIM_CON_Type"/>
- *         &lt;element name="CDConsignee" type="{MDA_Common_Types}EXIM_CON_Type"/>
- *         &lt;element name="CDExporter" type="{MDA_Common_Types}EXIM_CON_Type"/>
- *         &lt;element name="CDConsignor" type="{MDA_Common_Types}EXIM_CON_Type"/>
- *         &lt;element name="CDTransport" type="{MDA_Common_Types}TransportType"/>
- *         &lt;element name="PGAHeaderFields" type="{}KEPHISHeaderFieldsType" minOccurs="0"/>
- *         &lt;element name="CDHeaderOne" type="{MDA_Common_Types}HeaderOneType"/>
- *         &lt;element name="CDHeaderTwo" type="{MDA_Common_Types}HeaderTwoType" minOccurs="0"/>
- *         &lt;element name="CDStandardTwo" type="{MDA_Common_Types}StandardDetailsTwoType"/>
- *         &lt;element name="CDHdrAdditional" type="{MDA_Common_Types}HdrAdditionalDetailsType" minOccurs="0"/>
- *         &lt;element name="CDProductDetails" type="{}ProductDetailsType" minOccurs="0"/>
- *         &lt;element name="CDRiskDetails" type="{}CDRiskDetailsType" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ConsignmentDocDetailsType", propOrder = {
-    "cdStandard",
-    "approvalDetails",
-    "cdImporter",
-    "cdConsignee",
-    "cdExporter",
-    "cdConsignor",
-    "cdTransport",
-    "pgaHeaderFields",
-    "cdHeaderOne",
-    "cdHeaderTwo",
-    "cdStandardTwo",
-    "cdHdrAdditional",
-    "cdProductDetails",
-    "cdRiskDetails"
-})
-public static class ConsignmentDocDetailsType {
+        @XmlElement(name = "ConsignmentDocDetails", required = true)
+        protected ConsignmentDocDetailsType consignmentDocDetails;
 
-    @XmlElement(name = "CDStandard", required = true)
-    protected StandardDetailsType cdStandard;
-    @XmlElement(name = "ApprovalDetails")
-    protected ApprovalDetailsType approvalDetails;
-    @XmlElement(name = "CDImporter", required = true)
-    protected EXIMCONType cdImporter;
-    @XmlElement(name = "CDConsignee", required = true)
-    protected EXIMCONType cdConsignee;
-    @XmlElement(name = "CDExporter", required = true)
-    protected EXIMCONType cdExporter;
-    @XmlElement(name = "CDConsignor", required = true)
-    protected EXIMCONType cdConsignor;
-    @XmlElement(name = "CDTransport", required = true)
-    protected TransportType cdTransport;
-    @XmlElement(name = "PGAHeaderFields")
-    protected KEPHISHeaderFieldsType pgaHeaderFields;
-    @XmlElement(name = "CDHeaderOne", required = true)
-    protected HeaderOneType cdHeaderOne;
-    @XmlElement(name = "CDHeaderTwo")
-    protected HeaderTwoType cdHeaderTwo;
-    @XmlElement(name = "CDStandardTwo", required = true)
-    protected StandardDetailsTwoType cdStandardTwo;
-    @XmlElement(name = "CDHdrAdditional")
-    protected HdrAdditionalDetailsType cdHdrAdditional;
-    @XmlElement(name = "CDProductDetails")
-    protected ProductDetailsType cdProductDetails;
-    @XmlElement(name = "CDRiskDetails")
-    protected CDRiskDetailsType cdRiskDetails;
+        /**
+         * Gets the value of the consignmentDocDetails property.
+         *
+         * @return possible object is {@link ConsignmentDocDetailsType }
+         *
+         */
+        public ConsignmentDocDetailsType getConsignmentDocDetails() {
+            return consignmentDocDetails;
+        }
 
-    /**
-     * Gets the value of the cdStandard property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StandardDetailsType }
-     *     
-     */
-    public StandardDetailsType getCDStandard() {
-        return cdStandard;
-    }
+        /**
+         * Sets the value of the consignmentDocDetails property.
+         *
+         * @param value allowed object is {@link ConsignmentDocDetailsType }
+         *
+         */
+        public void setConsignmentDocDetails(ConsignmentDocDetailsType value) {
+            this.consignmentDocDetails = value;
+        }
 
-    /**
-     * Sets the value of the cdStandard property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StandardDetailsType }
-     *     
-     */
-    public void setCDStandard(StandardDetailsType value) {
-        this.cdStandard = value;
-    }
+        /**
+         * <p>
+         * Java class for ConsignmentDocDetailsType complex type.
+         *
+         * <p>
+         * The following schema fragment specifies the expected content
+         * contained within this class.
+         *
+         * <pre>
+         * &lt;complexType name="ConsignmentDocDetailsType">
+         *   &lt;complexContent>
+         *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+         *       &lt;sequence>
+         *         &lt;element name="CDStandard" type="{MDA_Common_Types}StandardDetailsType"/>
+         *         &lt;element name="ApprovalDetails" type="{}ApprovalDetailsType" minOccurs="0"/>
+         *         &lt;element name="CDImporter" type="{MDA_Common_Types}EXIM_CON_Type"/>
+         *         &lt;element name="CDConsignee" type="{MDA_Common_Types}EXIM_CON_Type"/>
+         *         &lt;element name="CDExporter" type="{MDA_Common_Types}EXIM_CON_Type"/>
+         *         &lt;element name="CDConsignor" type="{MDA_Common_Types}EXIM_CON_Type"/>
+         *         &lt;element name="CDTransport" type="{MDA_Common_Types}TransportType"/>
+         *         &lt;element name="PGAHeaderFields" type="{}KEPHISHeaderFieldsType" minOccurs="0"/>
+         *         &lt;element name="CDHeaderOne" type="{MDA_Common_Types}HeaderOneType"/>
+         *         &lt;element name="CDHeaderTwo" type="{MDA_Common_Types}HeaderTwoType" minOccurs="0"/>
+         *         &lt;element name="CDStandardTwo" type="{MDA_Common_Types}StandardDetailsTwoType"/>
+         *         &lt;element name="CDHdrAdditional" type="{MDA_Common_Types}HdrAdditionalDetailsType" minOccurs="0"/>
+         *         &lt;element name="CDProductDetails" type="{}ProductDetailsType" minOccurs="0"/>
+         *         &lt;element name="CDRiskDetails" type="{}CDRiskDetailsType" minOccurs="0"/>
+         *       &lt;/sequence>
+         *     &lt;/restriction>
+         *   &lt;/complexContent>
+         * &lt;/complexType>
+         * </pre>
+         *
+         *
+         */
+        @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(name = "ConsignmentDocDetailsType", propOrder = {
+            "cdStandard",
+            "approvalDetails",
+            "cdImporter",
+            "cdConsignee",
+            "cdExporter",
+            "cdConsignor",
+            "cdTransport",
+            "pgaHeaderFields",
+            "cdHeaderOne",
+            "cdHeaderTwo",
+            "cdStandardTwo",
+            "cdHdrAdditional",
+            "cdProductDetails",
+            "cdRiskDetails"
+        })
+        public static class ConsignmentDocDetailsType {
 
-    /**
-     * Gets the value of the approvalDetails property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ApprovalDetailsType }
-     *     
-     */
-    public ApprovalDetailsType getApprovalDetails() {
-        return approvalDetails;
-    }
+            @XmlElement(name = "CDStandard", required = true)
+            protected StandardDetailsType cdStandard;
+            @XmlElement(name = "ApprovalDetails")
+            protected ApprovalDetailsType approvalDetails;
+            @XmlElement(name = "CDImporter", required = true)
+            protected EXIMCONType cdImporter;
+            @XmlElement(name = "CDConsignee", required = true)
+            protected EXIMCONType cdConsignee;
+            @XmlElement(name = "CDExporter", required = true)
+            protected EXIMCONType cdExporter;
+            @XmlElement(name = "CDConsignor", required = true)
+            protected EXIMCONType cdConsignor;
+            @XmlElement(name = "CDTransport", required = true)
+            protected TransportType cdTransport;
+            @XmlElement(name = "PGAHeaderFields")
+            protected KEPHISHeaderFieldsType pgaHeaderFields;
+            @XmlElement(name = "CDHeaderOne", required = true)
+            protected HeaderOneType cdHeaderOne;
+            @XmlElement(name = "CDHeaderTwo")
+            protected HeaderTwoType cdHeaderTwo;
+            @XmlElement(name = "CDStandardTwo", required = true)
+            protected StandardDetailsTwoType cdStandardTwo;
+            @XmlElement(name = "CDHdrAdditional")
+            protected HdrAdditionalDetailsType cdHdrAdditional;
+            @XmlElement(name = "CDProductDetails")
+            protected ProductDetailsType cdProductDetails;
+            @XmlElement(name = "CDRiskDetails")
+            protected CDRiskDetailsType cdRiskDetails;
 
-    /**
-     * Sets the value of the approvalDetails property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ApprovalDetailsType }
-     *     
-     */
-    public void setApprovalDetails(ApprovalDetailsType value) {
-        this.approvalDetails = value;
-    }
+            /**
+             * Gets the value of the cdStandard property.
+             *
+             * @return possible object is {@link StandardDetailsType }
+             *
+             */
+            public StandardDetailsType getCDStandard() {
+                return cdStandard;
+            }
 
-    /**
-     * Gets the value of the cdImporter property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link EXIMCONType }
-     *     
-     */
-    public EXIMCONType getCDImporter() {
-        return cdImporter;
-    }
+            /**
+             * Sets the value of the cdStandard property.
+             *
+             * @param value allowed object is {@link StandardDetailsType }
+             *
+             */
+            public void setCDStandard(StandardDetailsType value) {
+                this.cdStandard = value;
+            }
 
-    /**
-     * Sets the value of the cdImporter property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link EXIMCONType }
-     *     
-     */
-    public void setCDImporter(EXIMCONType value) {
-        this.cdImporter = value;
-    }
+            /**
+             * Gets the value of the approvalDetails property.
+             *
+             * @return possible object is {@link ApprovalDetailsType }
+             *
+             */
+            public ApprovalDetailsType getApprovalDetails() {
+                return approvalDetails;
+            }
 
-    /**
-     * Gets the value of the cdConsignee property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link EXIMCONType }
-     *     
-     */
-    public EXIMCONType getCDConsignee() {
-        return cdConsignee;
-    }
+            /**
+             * Sets the value of the approvalDetails property.
+             *
+             * @param value allowed object is {@link ApprovalDetailsType }
+             *
+             */
+            public void setApprovalDetails(ApprovalDetailsType value) {
+                this.approvalDetails = value;
+            }
 
-    /**
-     * Sets the value of the cdConsignee property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link EXIMCONType }
-     *     
-     */
-    public void setCDConsignee(EXIMCONType value) {
-        this.cdConsignee = value;
-    }
+            /**
+             * Gets the value of the cdImporter property.
+             *
+             * @return possible object is {@link EXIMCONType }
+             *
+             */
+            public EXIMCONType getCDImporter() {
+                return cdImporter;
+            }
 
-    /**
-     * Gets the value of the cdExporter property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link EXIMCONType }
-     *     
-     */
-    public EXIMCONType getCDExporter() {
-        return cdExporter;
-    }
+            /**
+             * Sets the value of the cdImporter property.
+             *
+             * @param value allowed object is {@link EXIMCONType }
+             *
+             */
+            public void setCDImporter(EXIMCONType value) {
+                this.cdImporter = value;
+            }
 
-    /**
-     * Sets the value of the cdExporter property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link EXIMCONType }
-     *     
-     */
-    public void setCDExporter(EXIMCONType value) {
-        this.cdExporter = value;
-    }
+            /**
+             * Gets the value of the cdConsignee property.
+             *
+             * @return possible object is {@link EXIMCONType }
+             *
+             */
+            public EXIMCONType getCDConsignee() {
+                return cdConsignee;
+            }
 
-    /**
-     * Gets the value of the cdConsignor property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link EXIMCONType }
-     *     
-     */
-    public EXIMCONType getCDConsignor() {
-        return cdConsignor;
-    }
+            /**
+             * Sets the value of the cdConsignee property.
+             *
+             * @param value allowed object is {@link EXIMCONType }
+             *
+             */
+            public void setCDConsignee(EXIMCONType value) {
+                this.cdConsignee = value;
+            }
 
-    /**
-     * Sets the value of the cdConsignor property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link EXIMCONType }
-     *     
-     */
-    public void setCDConsignor(EXIMCONType value) {
-        this.cdConsignor = value;
-    }
+            /**
+             * Gets the value of the cdExporter property.
+             *
+             * @return possible object is {@link EXIMCONType }
+             *
+             */
+            public EXIMCONType getCDExporter() {
+                return cdExporter;
+            }
 
-    /**
-     * Gets the value of the cdTransport property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TransportType }
-     *     
-     */
-    public TransportType getCDTransport() {
-        return cdTransport;
-    }
+            /**
+             * Sets the value of the cdExporter property.
+             *
+             * @param value allowed object is {@link EXIMCONType }
+             *
+             */
+            public void setCDExporter(EXIMCONType value) {
+                this.cdExporter = value;
+            }
 
-    /**
-     * Sets the value of the cdTransport property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TransportType }
-     *     
-     */
-    public void setCDTransport(TransportType value) {
-        this.cdTransport = value;
-    }
+            /**
+             * Gets the value of the cdConsignor property.
+             *
+             * @return possible object is {@link EXIMCONType }
+             *
+             */
+            public EXIMCONType getCDConsignor() {
+                return cdConsignor;
+            }
 
-    /**
-     * Gets the value of the pgaHeaderFields property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link KEPHISHeaderFieldsType }
-     *     
-     */
-    public KEPHISHeaderFieldsType getPGAHeaderFields() {
-        return pgaHeaderFields;
-    }
+            /**
+             * Sets the value of the cdConsignor property.
+             *
+             * @param value allowed object is {@link EXIMCONType }
+             *
+             */
+            public void setCDConsignor(EXIMCONType value) {
+                this.cdConsignor = value;
+            }
 
-    /**
-     * Sets the value of the pgaHeaderFields property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link KEPHISHeaderFieldsType }
-     *     
-     */
-    public void setPGAHeaderFields(KEPHISHeaderFieldsType value) {
-        this.pgaHeaderFields = value;
-    }
+            /**
+             * Gets the value of the cdTransport property.
+             *
+             * @return possible object is {@link TransportType }
+             *
+             */
+            public TransportType getCDTransport() {
+                return cdTransport;
+            }
 
-    /**
-     * Gets the value of the cdHeaderOne property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link HeaderOneType }
-     *     
-     */
-    public HeaderOneType getCDHeaderOne() {
-        return cdHeaderOne;
-    }
+            /**
+             * Sets the value of the cdTransport property.
+             *
+             * @param value allowed object is {@link TransportType }
+             *
+             */
+            public void setCDTransport(TransportType value) {
+                this.cdTransport = value;
+            }
 
-    /**
-     * Sets the value of the cdHeaderOne property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link HeaderOneType }
-     *     
-     */
-    public void setCDHeaderOne(HeaderOneType value) {
-        this.cdHeaderOne = value;
-    }
+            /**
+             * Gets the value of the pgaHeaderFields property.
+             *
+             * @return possible object is {@link KEPHISHeaderFieldsType }
+             *
+             */
+            public KEPHISHeaderFieldsType getPGAHeaderFields() {
+                return pgaHeaderFields;
+            }
 
-    /**
-     * Gets the value of the cdHeaderTwo property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link HeaderTwoType }
-     *     
-     */
-    public HeaderTwoType getCDHeaderTwo() {
-        return cdHeaderTwo;
-    }
+            /**
+             * Sets the value of the pgaHeaderFields property.
+             *
+             * @param value allowed object is {@link KEPHISHeaderFieldsType }
+             *
+             */
+            public void setPGAHeaderFields(KEPHISHeaderFieldsType value) {
+                this.pgaHeaderFields = value;
+            }
 
-    /**
-     * Sets the value of the cdHeaderTwo property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link HeaderTwoType }
-     *     
-     */
-    public void setCDHeaderTwo(HeaderTwoType value) {
-        this.cdHeaderTwo = value;
-    }
+            /**
+             * Gets the value of the cdHeaderOne property.
+             *
+             * @return possible object is {@link HeaderOneType }
+             *
+             */
+            public HeaderOneType getCDHeaderOne() {
+                return cdHeaderOne;
+            }
 
-    /**
-     * Gets the value of the cdStandardTwo property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StandardDetailsTwoType }
-     *     
-     */
-    public StandardDetailsTwoType getCDStandardTwo() {
-        return cdStandardTwo;
-    }
+            /**
+             * Sets the value of the cdHeaderOne property.
+             *
+             * @param value allowed object is {@link HeaderOneType }
+             *
+             */
+            public void setCDHeaderOne(HeaderOneType value) {
+                this.cdHeaderOne = value;
+            }
 
-    /**
-     * Sets the value of the cdStandardTwo property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StandardDetailsTwoType }
-     *     
-     */
-    public void setCDStandardTwo(StandardDetailsTwoType value) {
-        this.cdStandardTwo = value;
-    }
+            /**
+             * Gets the value of the cdHeaderTwo property.
+             *
+             * @return possible object is {@link HeaderTwoType }
+             *
+             */
+            public HeaderTwoType getCDHeaderTwo() {
+                return cdHeaderTwo;
+            }
 
-    /**
-     * Gets the value of the cdHdrAdditional property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link HdrAdditionalDetailsType }
-     *     
-     */
-    public HdrAdditionalDetailsType getCDHdrAdditional() {
-        return cdHdrAdditional;
-    }
+            /**
+             * Sets the value of the cdHeaderTwo property.
+             *
+             * @param value allowed object is {@link HeaderTwoType }
+             *
+             */
+            public void setCDHeaderTwo(HeaderTwoType value) {
+                this.cdHeaderTwo = value;
+            }
 
-    /**
-     * Sets the value of the cdHdrAdditional property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link HdrAdditionalDetailsType }
-     *     
-     */
-    public void setCDHdrAdditional(HdrAdditionalDetailsType value) {
-        this.cdHdrAdditional = value;
-    }
+            /**
+             * Gets the value of the cdStandardTwo property.
+             *
+             * @return possible object is {@link StandardDetailsTwoType }
+             *
+             */
+            public StandardDetailsTwoType getCDStandardTwo() {
+                return cdStandardTwo;
+            }
 
-    /**
-     * Gets the value of the cdProductDetails property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ProductDetailsType }
-     *     
-     */
-    public ProductDetailsType getCDProductDetails() {
-        return cdProductDetails;
-    }
+            /**
+             * Sets the value of the cdStandardTwo property.
+             *
+             * @param value allowed object is {@link StandardDetailsTwoType }
+             *
+             */
+            public void setCDStandardTwo(StandardDetailsTwoType value) {
+                this.cdStandardTwo = value;
+            }
 
-    /**
-     * Sets the value of the cdProductDetails property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ProductDetailsType }
-     *     
-     */
-    public void setCDProductDetails(ProductDetailsType value) {
-        this.cdProductDetails = value;
-    }
+            /**
+             * Gets the value of the cdHdrAdditional property.
+             *
+             * @return possible object is {@link HdrAdditionalDetailsType }
+             *
+             */
+            public HdrAdditionalDetailsType getCDHdrAdditional() {
+                return cdHdrAdditional;
+            }
 
-/**
- * <p>Java class for ProductDetailsType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="ProductDetailsType">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="ItemDetails" maxOccurs="unbounded">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="ItemCount" type="{MDA_Common_Types}ItemCountType"/>
- *                   &lt;element name="CDProduct1" type="{MDA_Common_Types}ProductDetailsOneType"/>
- *                   &lt;element name="CDProduct2" type="{MDA_Common_Types}ProductDetailsTwoType" minOccurs="0"/>
- *                   &lt;element name="CDItemNonStandard" type="{MDA_Common_Types}ItemNonStandardDetailsType" minOccurs="0"/>
- *                   &lt;element name="CDItemCommodity" type="{}ItemCommodityDetailsType" minOccurs="0"/>
- *                   &lt;element name="CDItemAdditional" type="{MDA_Common_Types}ItemAdditionalDetailsType" minOccurs="0"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProductDetailsType", propOrder = {
-    "itemDetails"
-})
-public static class ProductDetailsType {
+            /**
+             * Sets the value of the cdHdrAdditional property.
+             *
+             * @param value allowed object is {@link HdrAdditionalDetailsType }
+             *
+             */
+            public void setCDHdrAdditional(HdrAdditionalDetailsType value) {
+                this.cdHdrAdditional = value;
+            }
 
-    @XmlElement(name = "ItemDetails", required = true)
-    protected List<ProductDetailsType.ItemDetails> itemDetails=new ArrayList<DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails>();
+            /**
+             * Gets the value of the cdProductDetails property.
+             *
+             * @return possible object is {@link ProductDetailsType }
+             *
+             */
+            public ProductDetailsType getCDProductDetails() {
+                return cdProductDetails;
+            }
 
-        public List<DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails> getItemDetails() {
+            /**
+             * Sets the value of the cdProductDetails property.
+             *
+             * @param value allowed object is {@link ProductDetailsType }
+             *
+             */
+            public void setCDProductDetails(ProductDetailsType value) {
+                this.cdProductDetails = value;
+            }
+
+            /**
+             * <p>
+             * Java class for ProductDetailsType complex type.
+             *
+             * <p>
+             * The following schema fragment specifies the expected content
+             * contained within this class.
+             *
+             * <pre>
+             * &lt;complexType name="ProductDetailsType">
+             *   &lt;complexContent>
+             *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+             *       &lt;sequence>
+             *         &lt;element name="ItemDetails" maxOccurs="unbounded">
+             *           &lt;complexType>
+             *             &lt;complexContent>
+             *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+             *                 &lt;sequence>
+             *                   &lt;element name="ItemCount" type="{MDA_Common_Types}ItemCountType"/>
+             *                   &lt;element name="CDProduct1" type="{MDA_Common_Types}ProductDetailsOneType"/>
+             *                   &lt;element name="CDProduct2" type="{MDA_Common_Types}ProductDetailsTwoType" minOccurs="0"/>
+             *                   &lt;element name="CDItemNonStandard" type="{MDA_Common_Types}ItemNonStandardDetailsType" minOccurs="0"/>
+             *                   &lt;element name="CDItemCommodity" type="{}ItemCommodityDetailsType" minOccurs="0"/>
+             *                   &lt;element name="CDItemAdditional" type="{MDA_Common_Types}ItemAdditionalDetailsType" minOccurs="0"/>
+             *                 &lt;/sequence>
+             *               &lt;/restriction>
+             *             &lt;/complexContent>
+             *           &lt;/complexType>
+             *         &lt;/element>
+             *       &lt;/sequence>
+             *     &lt;/restriction>
+             *   &lt;/complexContent>
+             * &lt;/complexType>
+             * </pre>
+             *
+             *
+             */
+            @XmlAccessorType(XmlAccessType.FIELD)
+            @XmlType(name = "ProductDetailsType", propOrder = {
+                "itemDetails"
+            })
+            public static class ProductDetailsType {
+
+                @XmlElement(name = "ItemDetails", required = true)
+                public List<ProductDetailsType.ItemDetails> itemDetails = new ArrayList<DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails>();
+                 
+
+                public List<DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails> getItemDetails() {
+               
                     return this.itemDetails;
                 }
-        
-    public void setItemDetails(DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetails) {
-        
-        this.itemDetails.add(itemDetails);
-    }
 
-    /**
-     * Gets the value of the itemDetails property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the itemDetails property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getItemDetails().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
+                public void setItemDetails(int Index,DocumentDetailsType.ConsignmentDocDetailsType.ProductDetailsType.ItemDetails itemDetails) {
+                 
+                    this.itemDetails.add(Index,itemDetails);
+                }
+
+                /**
+                 * Gets the value of the itemDetails property.
+                 *
+                 * <p>
+                 * This accessor method returns a reference to the live list,
+                 * not a snapshot. Therefore any modification you make to the
+                 * returned list will be present inside the JAXB object. This is
+                 * why there is not a <CODE>set</CODE> method for the
+                 * itemDetails property.
+                 *
+                 * <p>
+                 * For example, to add a new item, do as follows:
+                 * <pre>
+                 *    getItemDetails().add(newItem);
+                 * </pre>
+                 *
+                 *
+                 * <p>
+                 * Objects of the following type(s) are allowed in the list
      * {@link ProductDetailsType.ItemDetails }
-     * 
-     * 
-     
-    public List<ProductDetailsType.ItemDetails> getItemDetails() {
-        if (itemDetails == null) {
-            itemDetails = new ArrayList<ProductDetailsType.ItemDetails>();
-        }
-        return this.itemDetails;
-    }
-         * @return 
-    *
-  public List<org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetails.ProductDetailsType.ItemDetails> getItemDetails() {
-                    if (itemDetails == null) {
-                        itemDetails = new ArrayList<org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetails.ProductDetailsType.ItemDetails>();
+                 *
+                 *
+                 *
+                 * public List<ProductDetailsType.ItemDetails> getItemDetails()
+                 * { if (itemDetails == null) { itemDetails = new
+                 * ArrayList<ProductDetailsType.ItemDetails>(); } return
+                 * this.itemDetails; }
+                 *
+                 * @return
+                 *
+                 * public
+                 * List<org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetails.ProductDetailsType.ItemDetails>
+                 * getItemDetails() { if (itemDetails == null) { itemDetails =
+                 * new
+                 * ArrayList<org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.ConsignmentDocument.DocumentDetailsType.ConsignmentDocDetails.ProductDetailsType.ItemDetails>();
+                 * } return this.itemDetails; }
+                 *
+                 * /
+                 **
+                 * <p>
+                 * Java class for anonymous complex type.
+                 *
+                 * <p>
+                 * The following schema fragment specifies the expected content
+                 * contained within this class.
+                 *
+                 * <pre>
+                 * &lt;complexType>
+                 *   &lt;complexContent>
+                 *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+                 *       &lt;sequence>
+                 *         &lt;element name="ItemCount" type="{MDA_Common_Types}ItemCountType"/>
+                 *         &lt;element name="CDProduct1" type="{MDA_Common_Types}ProductDetailsOneType"/>
+                 *         &lt;element name="CDProduct2" type="{MDA_Common_Types}ProductDetailsTwoType" minOccurs="0"/>
+                 *         &lt;element name="CDItemNonStandard" type="{MDA_Common_Types}ItemNonStandardDetailsType" minOccurs="0"/>
+                 *         &lt;element name="CDItemCommodity" type="{}ItemCommodityDetailsType" minOccurs="0"/>
+                 *         &lt;element name="CDItemAdditional" type="{MDA_Common_Types}ItemAdditionalDetailsType" minOccurs="0"/>
+                 *       &lt;/sequence>
+                 *     &lt;/restriction>
+                 *   &lt;/complexContent>
+                 * &lt;/complexType>
+                 * </pre>
+                 *
+                 *
+                 */
+                @XmlAccessorType(XmlAccessType.FIELD)
+                @XmlType(name = "", propOrder = {
+                    "itemCount",
+                    "cdProduct1",
+                    "cdProduct2",
+                    "cdItemNonStandard",
+                    "cdItemCommodity",
+                    "cdItemAdditional"
+                })
+                public static class ItemDetails {
+
+                    @XmlElement(name = "ItemCount", required = true)
+                    protected String itemCount;
+                    @XmlElement(name = "CDProduct1", required = true)
+                    protected org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsOneType cdProduct1;
+                    @XmlElement(name = "CDProduct2")
+                    protected org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsTwoType cdProduct2;
+                    @XmlElement(name = "CDItemNonStandard")
+                    protected org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemNonStandardDetailsType cdItemNonStandard;
+                    @XmlElement(name = "CDItemCommodity")
+                    protected org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ItemCommodityDetailsType cdItemCommodity;
+                    @XmlElement(name = "CDItemAdditional")
+                    protected org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemAdditionalDetailsType cdItemAdditional;
+
+                    /**
+                     * Gets the value of the itemCount property.
+                     *
+                     * @return possible object is {@link String }
+                     *
+                     */
+                    public String getItemCount() {
+                        return itemCount;
                     }
-                    return this.itemDetails;
+
+                    /**
+                     * Sets the value of the itemCount property.
+                     *
+                     * @param value allowed object is {@link String }
+                     *
+                     */
+                    public void setItemCount(String value) {
+                        this.itemCount = value;
+                    }
+
+                    /**
+                     * Gets the value of the cdProduct1 property.
+                     *
+                     * @return possible object is {@link ProductDetailsOneType }
+                     *
+                     */
+                    public org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsOneType getCDProduct1() {
+                        return cdProduct1;
+                    }
+
+                    /**
+                     * Sets the value of the cdProduct1 property.
+                     *
+                     * @param value allowed object is
+         *     {@link ProductDetailsOneType }
+                     *
+                     */
+                    public void setCDProduct1(org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsOneType value) {
+                        this.cdProduct1 = value;
+                    }
+
+                    /**
+                     * Gets the value of the cdProduct2 property.
+                     *
+                     * @return possible object is {@link ProductDetailsTwoType }
+                     *
+                     */
+                    public org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsTwoType getCDProduct2() {
+                        return cdProduct2;
+                    }
+
+                    /**
+                     * Sets the value of the cdProduct2 property.
+                     *
+                     * @param value allowed object is
+         *     {@link ProductDetailsTwoType }
+                     *
+                     */
+                    public void setCDProduct2(org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsTwoType value) {
+                        this.cdProduct2 = value;
+                    }
+
+                    /**
+                     * Gets the value of the cdItemNonStandard property.
+                     *
+                     * @return possible object is
+         *     {@link ItemNonStandardDetailsType }
+                     *
+                     */
+                    public org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemNonStandardDetailsType getCDItemNonStandard() {
+                        return cdItemNonStandard;
+                    }
+
+                    /**
+                     * Sets the value of the cdItemNonStandard property.
+                     *
+                     * @param value allowed object is
+         *     {@link ItemNonStandardDetailsType }
+                     *
+                     */
+                    public void setCDItemNonStandard(org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemNonStandardDetailsType value) {
+                        this.cdItemNonStandard = value;
+                    }
+
+                    /**
+                     * Gets the value of the cdItemCommodity property.
+                     *
+                     * @return possible object is
+         *     {@link ItemCommodityDetailsType }
+                     *
+                     */
+                    public org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ItemCommodityDetailsType getCDItemCommodity() {
+                        return cdItemCommodity;
+                    }
+
+                    /**
+                     * Sets the value of the cdItemCommodity property.
+                     *
+                     * @param value allowed object is
+         *     {@link ItemCommodityDetailsType }
+                     *
+                     */
+                    public void setCDItemCommodity(org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ItemCommodityDetailsType value) {
+                        this.cdItemCommodity = value;
+                    }
+
+                    /**
+                     * Gets the value of the cdItemAdditional property.
+                     *
+                     * @return possible object is
+         *     {@link ItemAdditionalDetailsType }
+                     *
+                     */
+                    public org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemAdditionalDetailsType getCDItemAdditional() {
+                        return cdItemAdditional;
+                    }
+
+                    /**
+                     * Sets the value of the cdItemAdditional property.
+                     *
+                     * @param value allowed object is
+         *     {@link ItemAdditionalDetailsType }
+                     *
+                     */
+                    public void setCDItemAdditional(org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemAdditionalDetailsType value) {
+                        this.cdItemAdditional = value;
+                    }
+
                 }
 
-    /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="ItemCount" type="{MDA_Common_Types}ItemCountType"/>
-     *         &lt;element name="CDProduct1" type="{MDA_Common_Types}ProductDetailsOneType"/>
-     *         &lt;element name="CDProduct2" type="{MDA_Common_Types}ProductDetailsTwoType" minOccurs="0"/>
-     *         &lt;element name="CDItemNonStandard" type="{MDA_Common_Types}ItemNonStandardDetailsType" minOccurs="0"/>
-     *         &lt;element name="CDItemCommodity" type="{}ItemCommodityDetailsType" minOccurs="0"/>
-     *         &lt;element name="CDItemAdditional" type="{MDA_Common_Types}ItemAdditionalDetailsType" minOccurs="0"/>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     * 
-     * 
-     */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "itemCount",
-        "cdProduct1",
-        "cdProduct2",
-        "cdItemNonStandard",
-        "cdItemCommodity",
-        "cdItemAdditional"
-    })
-    public  static class ItemDetails {
+            }
 
-        @XmlElement(name = "ItemCount", required = true)
-        protected String itemCount;
-        @XmlElement(name = "CDProduct1", required = true)
-        protected org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsOneType cdProduct1;
-        @XmlElement(name = "CDProduct2")
-        protected org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsTwoType cdProduct2;
-        @XmlElement(name = "CDItemNonStandard")
-        protected org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemNonStandardDetailsType cdItemNonStandard;
-        @XmlElement(name = "CDItemCommodity")
-        protected  org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ItemCommodityDetailsType cdItemCommodity;
-        @XmlElement(name = "CDItemAdditional")
-        protected org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemAdditionalDetailsType cdItemAdditional;
-
-        /**
-         * Gets the value of the itemCount property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getItemCount() {
-            return itemCount;
-        }
-
-        /**
-         * Sets the value of the itemCount property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setItemCount(String value) {
-            this.itemCount = value;
-        }
-
-        /**
-         * Gets the value of the cdProduct1 property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link ProductDetailsOneType }
-         *     
-         */
-        public org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsOneType getCDProduct1() {
-            return cdProduct1;
-        }
-
-        /**
-         * Sets the value of the cdProduct1 property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ProductDetailsOneType }
-         *     
-         */
-        public void setCDProduct1(org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsOneType value) {
-            this.cdProduct1 = value;
-        }
-
-        /**
-         * Gets the value of the cdProduct2 property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link ProductDetailsTwoType }
-         *     
-         */
-        public org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsTwoType getCDProduct2() {
-            return cdProduct2;
-        }
-
-        /**
-         * Sets the value of the cdProduct2 property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ProductDetailsTwoType }
-         *     
-         */
-        public void setCDProduct2(org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsTwoType value) {
-            this.cdProduct2 = value;
-        }
-
-        /**
-         * Gets the value of the cdItemNonStandard property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link ItemNonStandardDetailsType }
-         *     
-         */
-        public org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemNonStandardDetailsType getCDItemNonStandard() {
-            return cdItemNonStandard;
-        }
-
-        /**
-         * Sets the value of the cdItemNonStandard property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ItemNonStandardDetailsType }
-         *     
-         */
-        public void setCDItemNonStandard(org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemNonStandardDetailsType value) {
-            this.cdItemNonStandard = value;
-        }
-
-        /**
-         * Gets the value of the cdItemCommodity property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link ItemCommodityDetailsType }
-         *     
-         */
-        public org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ItemCommodityDetailsType getCDItemCommodity() {
-            return cdItemCommodity;
-        }
-
-        /**
-         * Sets the value of the cdItemCommodity property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ItemCommodityDetailsType }
-         *     
-         */
-        public void setCDItemCommodity(org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ItemCommodityDetailsType value) {
-            this.cdItemCommodity = value;
-        }
-
-        /**
-         * Gets the value of the cdItemAdditional property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link ItemAdditionalDetailsType }
-         *     
-         */
-        public org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemAdditionalDetailsType getCDItemAdditional() {
-            return cdItemAdditional;
-        }
-
-        /**
-         * Sets the value of the cdItemAdditional property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ItemAdditionalDetailsType }
-         *     
-         */
-        public void setCDItemAdditional(org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ItemAdditionalDetailsType value) {
-            this.cdItemAdditional = value;
-        }
-
-    }
-
-}
-/**
- * <p>Java class for ProductDetailsType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="ProductDetailsType">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="ItemDetails" maxOccurs="unbounded">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="ItemCount" type="{MDA_Common_Types}ItemCountType"/>
- *                   &lt;element name="CDProduct1" type="{MDA_Common_Types}ProductDetailsOneType"/>
- *                   &lt;element name="CDProduct2" type="{MDA_Common_Types}ProductDetailsTwoType" minOccurs="0"/>
- *                   &lt;element name="CDItemNonStandard" type="{MDA_Common_Types}ItemNonStandardDetailsType" minOccurs="0"/>
- *                   &lt;element name="CDItemCommodity" type="{}ItemCommodityDetailsType" minOccurs="0"/>
- *                   &lt;element name="CDItemAdditional" type="{MDA_Common_Types}ItemAdditionalDetailsType" minOccurs="0"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- *
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProductDetailsType", propOrder = {
-    "itemDetails"
-})
-public static class ProductDetailsType {
-
-    @XmlElement(name = "ItemDetails", required = true)
-    protected List<ProductDetailsType.ItemDetails> itemDetails;
-
-    /**
-     * Gets the value of the itemDetails property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the itemDetails property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getItemDetails().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
+            /**
+             * <p>
+             * Java class for ProductDetailsType complex type.
+             *
+             * <p>
+             * The following schema fragment specifies the expected content
+             * contained within this class.
+             *
+             * <pre>
+             * &lt;complexType name="ProductDetailsType">
+             *   &lt;complexContent>
+             *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+             *       &lt;sequence>
+             *         &lt;element name="ItemDetails" maxOccurs="unbounded">
+             *           &lt;complexType>
+             *             &lt;complexContent>
+             *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+             *                 &lt;sequence>
+             *                   &lt;element name="ItemCount" type="{MDA_Common_Types}ItemCountType"/>
+             *                   &lt;element name="CDProduct1" type="{MDA_Common_Types}ProductDetailsOneType"/>
+             *                   &lt;element name="CDProduct2" type="{MDA_Common_Types}ProductDetailsTwoType" minOccurs="0"/>
+             *                   &lt;element name="CDItemNonStandard" type="{MDA_Common_Types}ItemNonStandardDetailsType" minOccurs="0"/>
+             *                   &lt;element name="CDItemCommodity" type="{}ItemCommodityDetailsType" minOccurs="0"/>
+             *                   &lt;element name="CDItemAdditional" type="{MDA_Common_Types}ItemAdditionalDetailsType" minOccurs="0"/>
+             *                 &lt;/sequence>
+             *               &lt;/restriction>
+             *             &lt;/complexContent>
+             *           &lt;/complexType>
+             *         &lt;/element>
+             *       &lt;/sequence>
+             *     &lt;/restriction>
+             *   &lt;/complexContent>
+             * &lt;/complexType>
+             * </pre>
+             *
+             *
+             *
+             * @XmlAccessorType(XmlAccessType.FIELD)
+             * @XmlType(name = "ProductDetailsType", propOrder = { "itemDetails"
+             * }) public static class ProductDetailsType {
+             *
+             * @XmlElement(name = "ItemDetails", required = true) protected
+             * List<ProductDetailsType.ItemDetails> itemDetails;
+             *
+             * /**
+             * Gets the value of the itemDetails property.
+             *
+             * <p>
+             * This accessor method returns a reference to the live list, not a
+             * snapshot. Therefore any modification you make to the returned
+             * list will be present inside the JAXB object. This is why there is
+             * not a <CODE>set</CODE> method for the itemDetails property.
+             *
+             * <p>
+             * For example, to add a new item, do as follows:              <pre>
+             *    getItemDetails().add(newItem);
+             * </pre>
+             *
+             *
+             * <p>
+             * Objects of the following type(s) are allowed in the list
      * {@link ProductDetailsType.ItemDetails }
-     * 
-     * 
-     *
-    public List<ProductDetailsType.ItemDetails> getItemDetails() {
-        if (itemDetails == null) {
-            itemDetails = new ArrayList<ProductDetailsType.ItemDetails>();
-        }
-        return this.itemDetails;
-    }
-
-
-    /**
-     * <p>Java class for anonymous complex type.
-     * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="ItemCount" type="{MDA_Common_Types}ItemCountType"/>
-     *         &lt;element name="CDProduct1" type="{MDA_Common_Types}ProductDetailsOneType"/>
-     *         &lt;element name="CDProduct2" type="{MDA_Common_Types}ProductDetailsTwoType" minOccurs="0"/>
-     *         &lt;element name="CDItemNonStandard" type="{MDA_Common_Types}ItemNonStandardDetailsType" minOccurs="0"/>
-     *         &lt;element name="CDItemCommodity" type="{}ItemCommodityDetailsType" minOccurs="0"/>
-     *         &lt;element name="CDItemAdditional" type="{MDA_Common_Types}ItemAdditionalDetailsType" minOccurs="0"/>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     * 
-     * 
-     *
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "itemCount",
-        "cdProduct1",
-        "cdProduct2",
-        "cdItemNonStandard",
-        "cdItemCommodity",
-        "cdItemAdditional"
-    })
-    public static class ItemDetails {
-
-        @XmlElement(name = "ItemCount", required = true)
-        protected String itemCount;
-        @XmlElement(name = "CDProduct1", required = true)
-        protected ProductDetailsOneType cdProduct1;
-        @XmlElement(name = "CDProduct2")
-        protected ProductDetailsTwoType cdProduct2;
-        @XmlElement(name = "CDItemNonStandard")
-        protected ItemNonStandardDetailsType cdItemNonStandard;
-        @XmlElement(name = "CDItemCommodity")
-        protected ItemCommodityDetailsType cdItemCommodity;
-        @XmlElement(name = "CDItemAdditional")
-        protected ItemAdditionalDetailsType cdItemAdditional;
-
-        /**
-         * Gets the value of the itemCount property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         *
-        public String getItemCount() {
-            return itemCount;
-        }
-
-        /**
-         * Sets the value of the itemCount property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         *
-        public void setItemCount(String value) {
-            this.itemCount = value;
-        }
-
-        /**
-         * Gets the value of the cdProduct1 property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link ProductDetailsOneType }
-         *     
-         *
-        public ProductDetailsOneType getCDProduct1() {
-            return cdProduct1;
-        }
-
-        /**
-         * Sets the value of the cdProduct1 property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ProductDetailsOneType }
-         *     
-         *
-        public void setCDProduct1(ProductDetailsOneType value) {
-            this.cdProduct1 = value;
-        }
-
-        /**
-         * Gets the value of the cdProduct2 property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link ProductDetailsTwoType }
-         *     
-         *
-        public ProductDetailsTwoType getCDProduct2() {
-            return cdProduct2;
-        }
-
-        /**
-         * Sets the value of the cdProduct2 property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ProductDetailsTwoType }
-         *     
-         *
-        public void setCDProduct2(ProductDetailsTwoType value) {
-            this.cdProduct2 = value;
-        }
-
-        /**
-         * Gets the value of the cdItemNonStandard property.
-         * 
-         * @return
-         *     possible object is
+             *
+             *
+             *
+             * public List<ProductDetailsType.ItemDetails> getItemDetails() { if
+             * (itemDetails == null) { itemDetails = new
+             * ArrayList<ProductDetailsType.ItemDetails>(); } return
+             * this.itemDetails; }
+             *
+             *
+             * /
+             **
+             * <p>
+             * Java class for anonymous complex type.
+             *
+             * <p>
+             * The following schema fragment specifies the expected content
+             * contained within this class.
+             *
+             * <pre>
+             * &lt;complexType>
+             *   &lt;complexContent>
+             *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+             *       &lt;sequence>
+             *         &lt;element name="ItemCount" type="{MDA_Common_Types}ItemCountType"/>
+             *         &lt;element name="CDProduct1" type="{MDA_Common_Types}ProductDetailsOneType"/>
+             *         &lt;element name="CDProduct2" type="{MDA_Common_Types}ProductDetailsTwoType" minOccurs="0"/>
+             *         &lt;element name="CDItemNonStandard" type="{MDA_Common_Types}ItemNonStandardDetailsType" minOccurs="0"/>
+             *         &lt;element name="CDItemCommodity" type="{}ItemCommodityDetailsType" minOccurs="0"/>
+             *         &lt;element name="CDItemAdditional" type="{MDA_Common_Types}ItemAdditionalDetailsType" minOccurs="0"/>
+             *       &lt;/sequence>
+             *     &lt;/restriction>
+             *   &lt;/complexContent>
+             * &lt;/complexType>
+             * </pre>
+             *
+             *
+             *
+             * @XmlAccessorType(XmlAccessType.FIELD)
+             * @XmlType(name = "", propOrder = { "itemCount", "cdProduct1",
+             * "cdProduct2", "cdItemNonStandard", "cdItemCommodity",
+             * "cdItemAdditional" }) public static class ItemDetails {
+             *
+             * @XmlElement(name = "ItemCount", required = true) protected String
+             * itemCount;
+             * @XmlElement(name = "CDProduct1", required = true) protected
+             * ProductDetailsOneType cdProduct1;
+             * @XmlElement(name = "CDProduct2") protected ProductDetailsTwoType
+             * cdProduct2;
+             * @XmlElement(name = "CDItemNonStandard") protected
+             * ItemNonStandardDetailsType cdItemNonStandard;
+             * @XmlElement(name = "CDItemCommodity") protected
+             * ItemCommodityDetailsType cdItemCommodity;
+             * @XmlElement(name = "CDItemAdditional") protected
+             * ItemAdditionalDetailsType cdItemAdditional;
+             *
+             * /**
+             * Gets the value of the itemCount property.
+             *
+             * @return possible object is {@link String }
+             *
+             *
+             * public String getItemCount() { return itemCount; }
+             *
+             * /**
+             * Sets the value of the itemCount property.
+             *
+             * @param value allowed object is {@link String }
+             *
+             *
+             * public void setItemCount(String value) { this.itemCount = value;
+             * }
+             *
+             * /**
+             * Gets the value of the cdProduct1 property.
+             *
+             * @return possible object is {@link ProductDetailsOneType }
+             *
+             *
+             * public ProductDetailsOneType getCDProduct1() { return cdProduct1;
+             * }
+             *
+             * /**
+             * Sets the value of the cdProduct1 property.
+             *
+             * @param value allowed object is {@link ProductDetailsOneType }
+             *
+             *
+             * public void setCDProduct1(ProductDetailsOneType value) {
+             * this.cdProduct1 = value; }
+             *
+             * /**
+             * Gets the value of the cdProduct2 property.
+             *
+             * @return possible object is {@link ProductDetailsTwoType }
+             *
+             *
+             * public ProductDetailsTwoType getCDProduct2() { return cdProduct2;
+             * }
+             *
+             * /**
+             * Sets the value of the cdProduct2 property.
+             *
+             * @param value allowed object is {@link ProductDetailsTwoType }
+             *
+             *
+             * public void setCDProduct2(ProductDetailsTwoType value) {
+             * this.cdProduct2 = value; }
+             *
+             * /**
+             * Gets the value of the cdItemNonStandard property.
+             *
+             * @return possible object is {@link ItemNonStandardDetailsType }
+             *
+             *
+             * public ItemNonStandardDetailsType getCDItemNonStandard() { return
+             * cdItemNonStandard; }
+             *
+             * /**
+             * Sets the value of the cdItemNonStandard property.
+             *
+             * @param value allowed object is
          *     {@link ItemNonStandardDetailsType }
-         *     
-         *
-        public ItemNonStandardDetailsType getCDItemNonStandard() {
-            return cdItemNonStandard;
-        }
+             *
+             *
+             * public void setCDItemNonStandard(ItemNonStandardDetailsType
+             * value) { this.cdItemNonStandard = value; }
+             *
+             * /**
+             * Gets the value of the cdItemCommodity property.
+             *
+             * @return possible object is {@link ItemCommodityDetailsType }
+             *
+             *
+             * public ItemCommodityDetailsType getCDItemCommodity() { return
+             * cdItemCommodity; }
+             *
+             * /**
+             * Sets the value of the cdItemCommodity property.
+             *
+             * @param value allowed object is {@link ItemCommodityDetailsType }
+             *
+             *
+             * public void setCDItemCommodity(ItemCommodityDetailsType value) {
+             * this.cdItemCommodity = value; }
+             *
+             * /**
+             * Gets the value of the cdItemAdditional property.
+             *
+             * @return possible object is {@link ItemAdditionalDetailsType }
+             *
+             *
+             * public ItemAdditionalDetailsType getCDItemAdditional() { return
+             * cdItemAdditional; }
+             *
+             * /**
+             * Sets the value of the cdItemAdditional property.
+             *
+             * @param value allowed object is {@link ItemAdditionalDetailsType }
+             *
+             *
+             * public void setCDItemAdditional(ItemAdditionalDetailsType value)
+             * { this.cdItemAdditional = value; }
+             *
+             * }
+             *
+             * }
+             *
+             */
+            /**
+             * Gets the value of the cdRiskDetails property.
+             *
+             * @return possible object is {@link CDRiskDetailsType }
+             *
+             */
+            public CDRiskDetailsType getCDRiskDetails() {
+                return cdRiskDetails;
+            }
 
-        /**
-         * Sets the value of the cdItemNonStandard property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ItemNonStandardDetailsType }
-         *     
-         *
-        public void setCDItemNonStandard(ItemNonStandardDetailsType value) {
-            this.cdItemNonStandard = value;
-        }
+            /**
+             * Sets the value of the cdRiskDetails property.
+             *
+             * @param value allowed object is {@link CDRiskDetailsType }
+             *
+             */
+            public void setCDRiskDetails(CDRiskDetailsType value) {
+                this.cdRiskDetails = value;
+            }
 
-        /**
-         * Gets the value of the cdItemCommodity property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link ItemCommodityDetailsType }
-         *     
-         *
-        public ItemCommodityDetailsType getCDItemCommodity() {
-            return cdItemCommodity;
-        }
-
-        /**
-         * Sets the value of the cdItemCommodity property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ItemCommodityDetailsType }
-         *     
-         *
-        public void setCDItemCommodity(ItemCommodityDetailsType value) {
-            this.cdItemCommodity = value;
-        }
-
-        /**
-         * Gets the value of the cdItemAdditional property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link ItemAdditionalDetailsType }
-         *     
-         *
-        public ItemAdditionalDetailsType getCDItemAdditional() {
-            return cdItemAdditional;
-        }
-
-        /**
-         * Sets the value of the cdItemAdditional property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link ItemAdditionalDetailsType }
-         *     
-         *
-        public void setCDItemAdditional(ItemAdditionalDetailsType value) {
-            this.cdItemAdditional = value;
         }
 
     }
-
-}
-**/
-    /**
-     * Gets the value of the cdRiskDetails property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link CDRiskDetailsType }
-     *     
-     */
-    public CDRiskDetailsType getCDRiskDetails() {
-        return cdRiskDetails;
-    }
-
-    /**
-     * Sets the value of the cdRiskDetails property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link CDRiskDetailsType }
-     *     
-     */
-    public void setCDRiskDetails(CDRiskDetailsType value) {
-        this.cdRiskDetails = value;
-    }
-    
-    
-
-}
-
-}
     @XmlElement(name = "DocumentSummary", required = true)
     protected DocumentSummaryType documentSummary;
 
     /**
      * Gets the value of the documentHeader property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link DocumentHeaderType }
-     *     
+     *
+     * @return possible object is {@link DocumentHeaderType }
+     *
      */
     public DocumentHeaderType getDocumentHeader() {
         return documentHeader;
@@ -1111,11 +1009,9 @@ public static class ProductDetailsType {
 
     /**
      * Sets the value of the documentHeader property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link DocumentHeaderType }
-     *     
+     *
+     * @param value allowed object is {@link DocumentHeaderType }
+     *
      */
     public void setDocumentHeader(DocumentHeaderType value) {
         this.documentHeader = value;
@@ -1123,11 +1019,9 @@ public static class ProductDetailsType {
 
     /**
      * Gets the value of the documentDetails property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link DocumentDetailsType }
-     *     
+     *
+     * @return possible object is {@link DocumentDetailsType }
+     *
      */
     public DocumentDetailsType getDocumentDetails() {
         return documentDetails;
@@ -1135,11 +1029,9 @@ public static class ProductDetailsType {
 
     /**
      * Sets the value of the documentDetails property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link DocumentDetailsType }
-     *     
+     *
+     * @param value allowed object is {@link DocumentDetailsType }
+     *
      */
     public void setDocumentDetails(DocumentDetailsType value) {
         this.documentDetails = value;
@@ -1147,11 +1039,9 @@ public static class ProductDetailsType {
 
     /**
      * Gets the value of the documentSummary property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link DocumentSummaryType }
-     *     
+     *
+     * @return possible object is {@link DocumentSummaryType }
+     *
      */
     public DocumentSummaryType getDocumentSummary() {
         return documentSummary;
@@ -1159,11 +1049,9 @@ public static class ProductDetailsType {
 
     /**
      * Sets the value of the documentSummary property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link DocumentSummaryType }
-     *     
+     *
+     * @param value allowed object is {@link DocumentSummaryType }
+     *
      */
     public void setDocumentSummary(DocumentSummaryType value) {
         this.documentSummary = value;

@@ -15,7 +15,7 @@ import org.kephis.ecs_kesws.entities.RecCdFileMsg;
 import org.kephis.ecs_kesws.entities.controllers.EcsKeswsEntitiesControllerCaller;
 import org.kephis.ecs_kesws.entities.controllers.MessageTypesJpaController;
 import org.kephis.ecs_kesws.entities.controllers.RecCdFileMsgJpaController;
-
+import org.kephis.ecs_kesws.entities.controllers.EcsEntitiesControllerCaller;
 /**
  *
  * @author kim
@@ -42,10 +42,10 @@ public class EcsKeswsEntititesControllerCallerTester {
         }
         * **/
         
-           EcsKeswsEntitiesControllerCaller cntr = new EcsKeswsEntitiesControllerCaller();
-        
+           EcsEntitiesControllerCaller cntr = new EcsEntitiesControllerCaller();
+        cntr.getSimpleConnection();
         // System.err.println(cntr.getInternalProductcodes("00000000000000").getIpcId());
-        InternalProductcodes internalProductcodes=cntr.getInternalProductcodes("06014262216147");
+       // InternalProductcodes internalProductcodes=cntr.getInternalProductcodes("06014262216147");
         //   cntr.findPricelistIPCDocMapEntitiesbyIPC(internalProductcodes);
            //cntr.updateCreateInternalProductcodePriceDocMappings(internalProductcodes);
      

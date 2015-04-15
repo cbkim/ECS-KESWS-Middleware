@@ -138,7 +138,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EcsConDoc.findByCDProduct1PackageType", query = "SELECT e FROM EcsConDoc e WHERE e.cDProduct1PackageType = :cDProduct1PackageType"),
     @NamedQuery(name = "EcsConDoc.findByCDProduct1ItemNetWeight", query = "SELECT e FROM EcsConDoc e WHERE e.cDProduct1ItemNetWeight = :cDProduct1ItemNetWeight"),
     @NamedQuery(name = "EcsConDoc.findByCDProduct1ItemGrossWeight", query = "SELECT e FROM EcsConDoc e WHERE e.cDProduct1ItemGrossWeight = :cDProduct1ItemGrossWeight"),
-    @NamedQuery(name = "EcsConDoc.findByEndCDProductDetails", query = "SELECT e FROM EcsConDoc e WHERE e.endCDProductDetails = :endCDProductDetails")})
+    @NamedQuery(name = "EcsConDoc.findByEndCDProductDetails", query = "SELECT e FROM EcsConDoc e WHERE e.endCDProductDetails = :endCDProductDetails"),
+    @NamedQuery(name = "EcsConDoc.findByTotalConsignmentForBilling", query = "SELECT e FROM EcsConDoc e WHERE e.totalConsignmentForBilling = :totalConsignmentForBilling")})
 public class EcsConDoc implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "id")
@@ -386,7 +387,6 @@ public class EcsConDoc implements Serializable {
     private Float cDProduct1SupplementryQuantityQty;
     @Column(name = "CDProduct1_SupplementryQuantity_UnitOfQty")
     private String cDProduct1SupplementryQuantityUnitOfQty;
-    @Basic(optional = false)
     @Column(name = "CDProduct1_PackageTypeDesc")
     private String cDProduct1PackageTypeDesc;
     @Basic(optional = false)
@@ -400,6 +400,8 @@ public class EcsConDoc implements Serializable {
     private Double cDProduct1ItemGrossWeight;
     @Column(name = "EndCDProductDetails")
     private String endCDProductDetails;
+    @Column(name = "Total_Consignment_For_Billing")
+    private String totalConsignmentForBilling;
 
     public EcsConDoc() {
     }
@@ -1314,6 +1316,14 @@ public class EcsConDoc implements Serializable {
 
     public void setEndCDProductDetails(String endCDProductDetails) {
         this.endCDProductDetails = endCDProductDetails;
+    }
+
+    public String getTotalConsignmentForBilling() {
+        return totalConsignmentForBilling;
+    }
+
+    public void setTotalConsignmentForBilling(String totalConsignmentForBilling) {
+        this.totalConsignmentForBilling = totalConsignmentForBilling;
     }
     
 }
