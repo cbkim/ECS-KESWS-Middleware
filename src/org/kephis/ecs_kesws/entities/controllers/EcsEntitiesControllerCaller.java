@@ -52,8 +52,7 @@ public class EcsEntitiesControllerCaller {
     String PASS_ECS_KESWS;
 
     public EcsEntitiesControllerCaller() {
-
-    }
+        }
 
     public EcsEntitiesControllerCaller(ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
         utilclass = new UtilityClass();
@@ -61,6 +60,7 @@ public class EcsEntitiesControllerCaller {
         DB_URL = applicationConfigurationXMLMapper.getECSDatabaseUrl();
         USER = applicationConfigurationXMLMapper.getECSDatabaseuser();
         PASS = applicationConfigurationXMLMapper.getECSDatabasepassword();
+        
         FIN_DB_URL = applicationConfigurationXMLMapper.getIntergrationDatabaseUrl();
         FIN_USER = applicationConfigurationXMLMapper.getIntergrationDatabaseuser();
         FIN_PASS = applicationConfigurationXMLMapper.getIntergrationDatabasepassword();
@@ -93,7 +93,7 @@ public class EcsEntitiesControllerCaller {
     }
 
     private int createECSconsignmentdetails(ECSConsignmentDoc desObject,
-            int clientId, RecCdFileMsg recCdFileMsg, EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController) {
+        int clientId, RecCdFileMsg recCdFileMsg, EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController) {
         BoneCP connectionPool = null;
         Connection connection = null;
         int ConsignmentId = 0;
@@ -2694,6 +2694,7 @@ public class EcsEntitiesControllerCaller {
         }
         try {
 
+            DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver()); 
             connection = DriverManager.getConnection("jdbc:sqlserver://192.168.0.3;databaseName=KEPHIS60", "sa", "K@ph1$67q");
 
             if (connection != null) {

@@ -415,7 +415,7 @@ class OutgoingMessageProcessor { //implements Runnable {
             }
 
             /**
-             * *
+             * 
              * query database for consignements received and response messages
              * not sent by checking on saved files in processing box and get
              * application refrence query ecs database based on refrence id
