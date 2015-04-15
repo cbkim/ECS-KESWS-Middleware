@@ -2337,7 +2337,8 @@ public class EcsEntitiesControllerCaller {
         BoneCP connectionPool = null;
         Connection connection = null;
         try {
-            // load the database driver (make sure this is in your classpath!)
+            
+          // load the database driver (make sure this is in your classpath!)
             Class.forName(JDBC_DRIVER);
             // setup the connection pool
             BoneCPConfig config = new BoneCPConfig();
@@ -2349,6 +2350,7 @@ public class EcsEntitiesControllerCaller {
             config.setPartitionCount(1);
             connectionPool = new BoneCP(config); // setup the connection pool 
             connection = connectionPool.getConnection(); // fetch a connection 
+            
             if (connection != null) {
 
                 int p_flag = inseertupdateflag;
@@ -2484,7 +2486,7 @@ public class EcsEntitiesControllerCaller {
                 float INV_AMOUNT = Amount;
                 String INV_DATE = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                 String TRANSACTION_TYPE = "";
-                String CUR_CODE = "KSH";
+                int CUR_CODE = 1;
                 int STATUS = 0;
                 String BATCHNUMBER = "";
                 String ENTRYNUMBER = "";
@@ -2500,7 +2502,7 @@ public class EcsEntitiesControllerCaller {
                 if (stmt.execute("SET ANSI_WARNINGS  OFF;"
                         + "INSERT INTO dbo.ECS_INVOICE_DETAILS ("
                         //+ "INV_ID"
-                        + "CUST_NUMBER"
+                        + " CUST_NUMBER"
                         + ",REFERENCE_NUMBER"
                         + ",INV_DESCRIPTION"
                         + ",INV_AMOUNT"
@@ -2524,8 +2526,8 @@ public class EcsEntitiesControllerCaller {
                         + "" + INV_AMOUNT + ","
                         + "'" + INV_DATE + "',"
                         + "'" + TRANSACTION_TYPE + "',"
-                        + "" + CUR_CODE + ","
-                        + "" + STATUS + ","
+                        + "'" + CUR_CODE + "',"
+                        + "'" + STATUS + "',"
                         + "'" + BATCHNUMBER + "',"
                         + "'" + ENTRYNUMBER + "',"
                         + "" + Ispaid + ","
