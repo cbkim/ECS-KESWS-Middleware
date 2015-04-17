@@ -1395,7 +1395,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                         //System.out.println("select all on submitted table not on payment log messages");
                         //System.out.println(" STATUS:  "+ ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId));
                         
-                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("HOLD")
+                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("PENDING")
                                 && (recCdFileMsgConsignmentId == 0)) {
                             //System.out.println("Inside recCdFileMsgConsignmentId == 0");
                             try {
