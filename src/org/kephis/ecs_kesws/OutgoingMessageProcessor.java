@@ -1069,7 +1069,10 @@ class OutgoingMessageProcessor { //implements Runnable {
                                     CProductDetailsOneType.setHSDescription(ecsConDocDetail.getCDProduct1HSDescription());
                                     CProductDetailsOneType.setInternalProductNo(ecsConDocDetail.getCDProduct1InternalProductNo());
                                     CProductDetailsOneType.setProductClassCode("");
-                                    CProductDetailsOneType.setProductClassDescription("");
+                                    CProductDetailsOneType.setProductClassDescription(""); 
+                                    CProductDetailsOneType.setForeignCurrencyCode("KES");
+                                    CProductDetailsOneType.setCountryOfOrigin("KE");
+                                    CProductDetailsOneType.setCountryOfOriginDesc("Kenya");
                                     Quantity.setQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1QuantityQty()));
                                     Quantity.setUnitOfQty(ecsConDocDetail.getCDProduct1QuantityUnitOfQty());
                                     Quantity.setUnitOfQtyDesc(ecsConDocDetail.getCDProduct1QuantityUnitOfQtyDesc());
