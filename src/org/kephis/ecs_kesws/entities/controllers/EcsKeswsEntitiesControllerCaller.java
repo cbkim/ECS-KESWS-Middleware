@@ -50,7 +50,7 @@ public class EcsKeswsEntitiesControllerCaller {
     public EcsKeswsEntitiesControllerCaller() {
 
         Properties p = new Properties(System.getProperties());
-         p.put("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
+        p.put("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
         p.put("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "OFF");
         // or any other System.setProperties(p);
         org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger("org.hibernate");

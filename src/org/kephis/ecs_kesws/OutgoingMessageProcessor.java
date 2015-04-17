@@ -74,9 +74,11 @@ class OutgoingMessageProcessor { //implements Runnable {
                         }
                         case 3: {
                             getMessages(fileprocessor, applicationConfigurationXMLMapper);
+                            System.gc();
                             scenario3FileProcessor(fileprocessor, applicationConfigurationXMLMapper);
                             scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
-                            // scenario3FileProcessorTester(fileprocessor, applicationConfigurationXMLMapper);
+                            System.gc();
+                        // scenario3FileProcessorTester(fileprocessor, applicationConfigurationXMLMapper);
                         }
                     }
                     System.gc();
@@ -1390,18 +1392,26 @@ class OutgoingMessageProcessor { //implements Runnable {
                             }
                         }
                         // select all on submitted table not on payment log messages
-                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("PENDING")
+                        //System.out.println("select all on submitted table not on payment log messages");
+                        //System.out.println(" STATUS:  "+ ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId));
+                        
+                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("HOLD")
                                 && (recCdFileMsgConsignmentId == 0)) {
+                            //System.out.println("Inside recCdFileMsgConsignmentId == 0");
                             try {
                                 ecsEntitiesControllerCaller.InvoiceConsignmentonECS(recCdFileMsgConsignmentId, ClientCustomerId, Amount, "Pending Accpac Invoice No", InvoiceNumber, ChargeDescription, ServiceType, ecsKeswsEntitiesControllerCaller, 1, "");
                                 ecsKeswsEntitiesControllerCaller.logInfo2(fileName, " INVOICED CLIENT WITH PIN " + ClientPin.toUpperCase() + " FOR CONSIGNMENT ID " + recCdFileMsgConsignmentId + " ON ECS KES " + Amount + " FOR " + ChargeDescription.toUpperCase());
 
+                                
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
                             try {
+                               // System.out.println("Trying to creat client pin");
                                 if (ecsEntitiesControllerCaller.CreateClientinACCPAC(ClientPin, ClientName)) {
+                                   // System.out.println("JUST CREATED A CLIENT + " +ClientPin + " "+ ClientName);
+                                   // System.out.println("Inside recCdFileMsgConsignmentId == 0");
                                     ecsEntitiesControllerCaller.InvoiceConsignmentonAccpac(recCdFileMsgConsignmentId, ClientPin, Amount, "Pending Accpac Invoice No", InvoiceNumber, ChargeDescription, ecsKeswsEntitiesControllerCaller);
                                     ecsKeswsEntitiesControllerCaller.logInfo2(fileName, " INVOICED CLIENT WITH PIN " + ClientPin.toUpperCase() + " FOR CONSIGNMENT ID " + recCdFileMsgConsignmentId + " ON ACCPAC KES " + Amount + " FOR " + ChargeDescription.toUpperCase());
                                 }

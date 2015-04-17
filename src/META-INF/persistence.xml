@@ -24,7 +24,7 @@
     <class>org.kephis.ecs_kesws.entities.KeswsRefDataCategory</class>
     <class>org.kephis.ecs_kesws.entities.KeswsRefData</class>  
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ECS_KESWS?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.0.9:3306/ecs_kesws?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="ecsapps"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.user" value="ecsapps"/>
