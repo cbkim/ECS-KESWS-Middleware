@@ -9,6 +9,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -116,6 +120,9 @@ class OutgoingMessageProcessor { //implements Runnable {
 
         DBDAO dbao_omp = new DBDAO();
         DBDAO dbao_omp2 = new DBDAO();
+        
+        
+        
         List<String> filesinQue = new ArrayList<String>();
         fileprocessor.readFilesBeingProcessed(applicationConfigurationXMLMapper.getProcessingFolder());
         List<String> filespendingprocesser = fileprocessor.getFilesbeingProcessed();
@@ -1392,7 +1399,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                         //System.out.println("select all on submitted table not on payment log messages");
                         //System.out.println(" STATUS:  "+ ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId));
                         
-                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("HOLD")
+                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("PENDING")
                                 && (recCdFileMsgConsignmentId == 0)) {
                             //System.out.println("Inside recCdFileMsgConsignmentId == 0");
                             try {
@@ -1696,27 +1703,63 @@ class OutgoingMessageProcessor { //implements Runnable {
 
         DBDAO dbao_omp = new DBDAO();
         DBDAO dbao_omp2 = new DBDAO();
-        List<String> filesinQue = new ArrayList<String>();
-        fileprocessor.readFilesBeingProcessed(applicationConfigurationXMLMapper.getProcessingFolder());
-        List<String> filespendingprocesser = fileprocessor.getFilesbeingProcessed();
+        //List<String> filesinQue = new ArrayList<String>();
+        //fileprocessor.readFilesBeingProcessed(applicationConfigurationXMLMapper.getProcessingFolder());
+        ///List<String> filespendingprocesser = fileprocessor.getFilesbeingProcessed();
+        
+        List<String> filespendingprocesser = null; 
+        //******************************************************************************************************************************
+        //************************************REPLACE THIS SECTION WITH EXISTING DB CONNECTION *****************************************
+        Connection conn = null;
+        try {
+      // This will load the MySQL driver, each DB has its own driver
+      Class.forName("com.mysql.jdbc.Driver");
+      // Setup the connection with the DB
+      conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecs_kesws?" +
+              "user=ecsapps&password=ecsapps");
+    
+            if (conn != null) {
+                System.out.println("Connection created");
+                CallableStatement cs = conn.prepareCall("{call CDKE_ID()}");
+                ResultSet rs = cs.executeQuery();
+
+                while (rs.next()) {
+                    String documentNo = rs.getString("CDKE_ID");
+                    filespendingprocesser.add(documentNo);
+                }
+            }
+            conn.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+            
+        }
+        
+        //******************************************************************************************************************************
+        
         for (Iterator<String> iterator = filespendingprocesser.iterator(); iterator.hasNext();) {
-            String fileName = (String) iterator.next();
+            String InvoiceNumber =  (String) iterator.next();
             String deleteFile = "";
-            if (fileName.contains(applicationConfigurationXMLMapper.getFilesTypestoReceive().get(0).toString())) {
-                JAXBContext context = null;
+            if (true) {
+                //JAXBContext context = null;
                 try {
-                    context = JAXBContext.newInstance(ConsignmentDocument.class);
-                    Unmarshaller um = null;
-                    um = context.createUnmarshaller();
-                    ConsignmentDocument keswsConsignmentDocumentObj = null;
-                    keswsConsignmentDocumentObj = (ConsignmentDocument) um.unmarshal(new FileReader(applicationConfigurationXMLMapper.getProcessingFolder() + fileName));
-                    String InvoiceNumber = keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().getCommonRefNumber();
-                    Double versionNumber = Double.parseDouble(keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getVersionNo());
-                    String submittedTime = keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getUpdatedDate();
+                    //context = JAXBContext.newInstance(ConsignmentDocument.class);
+                   // Unmarshaller um = null;
+                   // um = context.createUnmarshaller();
+                    //ConsignmentDocument keswsConsignmentDocumentObj = null;
+                    //keswsConsignmentDocumentObj = (ConsignmentDocument) um.unmarshal(new FileReader(applicationConfigurationXMLMapper.getProcessingFolder() + fileName));
+                    //String InvoiceNumber = keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().getCommonRefNumber();
+                    //Double versionNumber = Double.parseDouble(keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getVersionNo());
+                    //String submittedTime = keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getUpdatedDate();
+                    
+                    Double versionNumber = 1.1;
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+                    Date date = new Date();
+                    String submittedTime = sdf.format(date);
                     // System.out.println(" s t"+keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getUpdatedDate());
                     // Query file creation time if more than 48 hours delete the file 
-                    Date date = new Date(new File(applicationConfigurationXMLMapper.getProcessingFolder() + fileName).lastModified());
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+                    //Date date = new Date(new File(applicationConfigurationXMLMapper.getProcessingFolder() + fileName).lastModified());
+                    
                     String fileCreatedOnDate = sdf.format(date);
                     sdf.setTimeZone(TimeZone.getTimeZone("GMT+3"));
                     Date curdate = new Date();
@@ -1737,13 +1780,16 @@ class OutgoingMessageProcessor { //implements Runnable {
                     //System.out.print(diffDays + " days ");
 
                     int recCdFileMsgConsignmentId = 0;
-                    RecCdFileMsg recCdFileMsg = dbao_omp2.getRecCDFileMsgbyFileName(fileName);
-                    int isFirstMessageSent = 0;
-                    if (!(recCdFileMsg == null)) {
-                        recCdFileMsgConsignmentId = recCdFileMsg.getECSCONSIGNEMENTIDRef();
-                        isFirstMessageSent = recCdFileMsg.getResCdFileMsgCollection().size();
-                    }
-
+//                    RecCdFileMsg recCdFileMsg = dbao_omp2.getRecCDFileMsgbyFileName(fileName);
+                   int isFirstMessageSent = 0;
+//                    if (!(recCdFileMsg == null)) {
+//                        recCdFileMsgConsignmentId = recCdFileMsg.getECSCONSIGNEMENTIDRef();
+//                        isFirstMessageSent = recCdFileMsg.getResCdFileMsgCollection().size();
+//                    }
+                    
+                                   
+                         recCdFileMsgConsignmentId = recCdFileMsgConsignmentId = Integer.parseInt(InvoiceNumber.substring(17, InvoiceNumber.length()));
+                        
                     /**
                      *
                      * for (Iterator<ResCdFileMsg> iterator1 =
@@ -1802,6 +1848,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                             resObjDocDetails.setAssessedRemarks("");
                             resObj.setDocumentDetails(resObjDocDetails);
                             resObj.setDocumentHeader(resObjDocHeader);
+                            
                             JAXBContext contextresObj = JAXBContext.newInstance(ConsignmentApprovalStatus.class);
                             Marshaller resObjm = contextresObj.createMarshaller();
                             resObjm.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -1810,11 +1857,12 @@ class OutgoingMessageProcessor { //implements Runnable {
                             String[] attachments = new String[]{"", ""};
                             String attachment = "";
                             if ((recCdFileMsgConsignmentId != 0) && (fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() - 2), "OG_CD_RES", attachment))) {
-                                filesinQue.add(file);
-//                                ResCdFileMsg resCdFileMsg = dbao_omp2.resCDFileMsg(recCdFileMsg, 2);
+                                //filesinQue.add(file);
+                                //ResCdFileMsg resCdFileMsg = dbao_omp2.resCDFileMsg(recCdFileMsg, 2);
                             }
                         }
                     }
+                    
                     /**
                      * *
                      * TO DO this to be replaced with database trigger hence
@@ -1830,8 +1878,8 @@ class OutgoingMessageProcessor { //implements Runnable {
                      */
                     if (dbao_omp.getECSconsignmentStatus(InvoiceNumber, 0).contains("PENDING")) {
                         //inspection status 1
-                        String additionaldetails = submittedTime;
-                        dbao_omp.trackTransactionDetails("PENDINGINSPECTIONSTATUS", 1, fileName, additionaldetails);
+                        //String additionaldetails = submittedTime;
+                       dbao_omp.trackTransactionDetails("PENDINGINSPECTIONSTATUS", 1, InvoiceNumber, submittedTime);
                     }
                     /**
                      * *
@@ -1891,6 +1939,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                             resObjDocDetails2.setAssessedRemarks("");
                             resObj2.setDocumentDetails(resObjDocDetails2);
                             resObj2.setDocumentHeader(resObjDocHeader2);
+                            
                             JAXBContext contextresObj = JAXBContext.newInstance(ConsignmentApprovalStatus.class);
                             Marshaller resObjm2 = contextresObj.createMarshaller();
                             resObjm2.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -1900,7 +1949,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                             String attachment = "";
 //  if(true){
                             if ((recCdFileMsgConsignmentId != 0) && fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file2, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate2 + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() - 2), "OG_CD_RES", attachment)) {
-                                filesinQue.add(file2);
+                               // filesinQue.add(file2);
 //                                ResCdFileMsg resCdFileMsg = dbao_omp2.resCDFileMsg(recCdFileMsg, 2);
                             }
                         }
@@ -1962,11 +2011,11 @@ class OutgoingMessageProcessor { //implements Runnable {
                             String attachment = "";
 
                             // if(true){
-                            if ((recCdFileMsgConsignmentId != 0)
-                                    && fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file3, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate3 + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() - 2), "OG_CD_RES", attachment)) {
-                                filesinQue.add(file3);
-                                //        ResCdFileMsg resCdFileMsg = dbao_omp2.resCDFileMsg(recCdFileMsg, 2);
-                            }
+//                            if ((recCdFileMsgConsignmentId != 0)
+//                                    && fileprocessor.submitMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), file3, attachments, "OG_CD_RES-" + InvoiceNumber.substring(0, InvoiceNumber.length() - 2) + "-1-" + "B-" + msgdate3 + ".xml", InvoiceNumber.substring(0, InvoiceNumber.length() - 2), "OG_CD_RES", attachment)) {
+//                                filesinQue.add(file3);
+//                                //        ResCdFileMsg resCdFileMsg = dbao_omp2.resCDFileMsg(recCdFileMsg, 2);
+//                            }
 
                         }
 
@@ -1983,7 +2032,7 @@ class OutgoingMessageProcessor { //implements Runnable {
 
                         if (diffHours > 2) {
                             //delete
-                            deleteFile = fileName;
+                            //deleteFile = fileName;
 
                         }
 
@@ -1994,7 +2043,7 @@ class OutgoingMessageProcessor { //implements Runnable {
 //                                        ECSKESWSFileLogger.Log(e.toString(), "SEVERE");
                 }
 
-            }
+    }
             File file = new File(applicationConfigurationXMLMapper.getProcessingFolder() + deleteFile);
             filespendingprocesser.remove(deleteFile);
 
@@ -2009,16 +2058,16 @@ class OutgoingMessageProcessor { //implements Runnable {
 
         try {
 
-            for (Iterator<String> iterator = filesinQue.iterator(); iterator.hasNext();) {
-                String next = iterator.next();
-                File f = new File(next);
-                if (f.delete()) {
-                    //System.out.println(file.getName() + " is deleted!");
-                    break;
-                } else {
-                    //System.out.println("Delete operation is failed.");
-                }
-            }
+//            for (Iterator<String> iterator = filesinQue.iterator(); iterator.hasNext();) {
+//                String next = iterator.next();
+//                File f = new File(next);
+//                if (f.delete()) {
+//                    //System.out.println(file.getName() + " is deleted!");
+//                    break;
+//                } else {
+//                    //System.out.println("Delete operation is failed.");
+//                }
+//            }
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
