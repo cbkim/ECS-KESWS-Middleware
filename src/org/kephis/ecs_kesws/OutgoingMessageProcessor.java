@@ -53,6 +53,7 @@ class OutgoingMessageProcessor { //implements Runnable {
     private static Lock lock = new ReentrantLock();//locking mechanism to have just one thread run
 
     public OutgoingMessageProcessor() {
+        
     }
 
     //   @Override
@@ -76,7 +77,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                             getMessages(fileprocessor, applicationConfigurationXMLMapper);
                             System.gc();
                             scenario3FileProcessor(fileprocessor, applicationConfigurationXMLMapper);
-                            scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
+                           // scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
                             System.gc();
                         // scenario3FileProcessorTester(fileprocessor, applicationConfigurationXMLMapper);
                         }
@@ -1106,6 +1107,9 @@ class OutgoingMessageProcessor { //implements Runnable {
                                     CProductDetailsOneType.setInternalProductNo(ecsConDocDetail.getCDProduct1InternalProductNo());
                                     CProductDetailsOneType.setProductClassCode("");
                                     CProductDetailsOneType.setProductClassDescription("");
+                                    CProductDetailsOneType.setForeignCurrencyCode("KES");
+                                    CProductDetailsOneType.setCountryOfOrigin("KE");
+                                    CProductDetailsOneType.setCountryOfOriginDesc("Kenya");
                                     Quantity.setQty(BigDecimal.valueOf(ecsConDocDetail.getCDProduct1QuantityQty()));
                                     Quantity.setUnitOfQty(ecsConDocDetail.getCDProduct1QuantityUnitOfQty());
                                     Quantity.setUnitOfQtyDesc(ecsConDocDetail.getCDProduct1QuantityUnitOfQtyDesc());

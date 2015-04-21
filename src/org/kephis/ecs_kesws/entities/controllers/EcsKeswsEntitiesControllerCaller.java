@@ -802,7 +802,7 @@ public class EcsKeswsEntitiesControllerCaller {
                         plIpcDocmapping.setPRICELISTPriceIDRef(pricelist);
                         plIpcDocmapping.setINTERNALPRODUCTCODESIPCIDRef(IPCObj);
                         plIpcDocmapping.setDocumentIDRef("AUTO GENERATED"); 
-                         
+                         if(IPCObj.getCommodityCategory()!=null){
                         //Phytosanitary Certificate (Commercial Agricultural commondities)
                        if (!IPCObj.getCommodityCategory().toLowerCase().contains("vegatable") && (!IPCObj.getCommodityCategory().toLowerCase().contains("flower"))
                              && (!IPCObj.getCommodityCategory().toLowerCase().contains("fruit")) && (pricelist.getPriceID() < 6) && (15 > pricelist.getPriceID())) {
@@ -821,6 +821,7 @@ public class EcsKeswsEntitiesControllerCaller {
                             plIpcDocMapper.create(plIpcDocmapping);
                              System.out.println("CREATE FLOWER");
                         }
+                    }
                     }
                 }
             }
