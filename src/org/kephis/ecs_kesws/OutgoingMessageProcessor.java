@@ -81,7 +81,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                             getMessages(fileprocessor, applicationConfigurationXMLMapper);
                             System.gc();
                             scenario3FileProcessor(fileprocessor, applicationConfigurationXMLMapper);
-                           // scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
+                            scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
                             System.gc();
                         // scenario3FileProcessorTester(fileprocessor, applicationConfigurationXMLMapper);
                         }
@@ -855,13 +855,7 @@ class OutgoingMessageProcessor { //implements Runnable {
         EcsEntitiesControllerCaller ecsEntitiesController = new EcsEntitiesControllerCaller(applicationConfigurationXMLMapper);
         OutgoingMessageProcessor outGoingMessage;
         List<Integer> SubmittedConsignmentIds = new ArrayList<Integer>();
-
-        // Query submitted consignement id 
-        // check if consignement id is not on response table
-        // if not on response table create object to send back
-        //send file 
-        //update ecsResCdfileMsg
-        // query
+ 
         SubmittedConsignmentIds = ecsEntitiesController.getSubmittedConsignementIds();
 
         for (Iterator<Integer> iterator = SubmittedConsignmentIds.iterator(); iterator.hasNext();) {
@@ -1326,8 +1320,7 @@ class OutgoingMessageProcessor { //implements Runnable {
 
         EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesControllerCaller = new EcsKeswsEntitiesControllerCaller();
         EcsEntitiesControllerCaller ecsEntitiesControllerCaller = new EcsEntitiesControllerCaller(applicationConfigurationXMLMapper);
-
-        //DBDAO dbao_omp = new DBDAO();
+ 
         List<String> filesinQue = new ArrayList<String>();
         UtilityClass util = new UtilityClass();
         fileprocessor.readFilesBeingProcessed(applicationConfigurationXMLMapper.getProcessingFolder());
@@ -1347,12 +1340,6 @@ class OutgoingMessageProcessor { //implements Runnable {
                         org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument keswsConsignmentDocumentObj = null;
                         //  try{
                         keswsConsignmentDocumentObj = (org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_1.ConsignmentDocument) um.unmarshal(new FileReader(applicationConfigurationXMLMapper.getProcessingFolder() + fileName));
-                        //   }
-                        //   catch(Exception e){
-                        //      System.out.println(applicationConfigurationXMLMapper.getProcessingFolder() + fileName);
-                        //  e.printStackTrace();
-                        //  System.exit(0);
-                        //   }
                         String InvoiceNumber = keswsConsignmentDocumentObj.getDocumentHeader().getDocumentReference().getCommonRefNumber();
                         System.out.println("(InvoiceNumber)" + InvoiceNumber);
                         Double versionNumber = Double.parseDouble(keswsConsignmentDocumentObj.getDocumentDetails().getConsignmentDocDetails().getCDStandard().getVersionNo());
@@ -1402,11 +1389,7 @@ class OutgoingMessageProcessor { //implements Runnable {
 
                             }
                         }
-                        // select all on submitted table not on payment log messages
-                        //System.out.println("select all on submitted table not on payment log messages");
-                        //System.out.println(" STATUS:  "+ ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId));
-                        
-                        if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("PENDING")
+                          if (ecsEntitiesControllerCaller.getECSconsignmentStatus(InvoiceNumber, recCdFileMsgConsignmentId).contains("PENDING")
                                 && (recCdFileMsgConsignmentId == 0)) {
                             //System.out.println("Inside recCdFileMsgConsignmentId == 0");
                             try {
