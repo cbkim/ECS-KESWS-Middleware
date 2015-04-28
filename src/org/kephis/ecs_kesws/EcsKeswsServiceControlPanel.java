@@ -184,7 +184,7 @@ public class EcsKeswsServiceControlPanel extends javax.swing.JFrame {
             new OutgoingMessageProcessor(scenario);
         }else{
             //INCOMING MODE
-            new IncomingMessageProcessor(scenario);
+           // new IncomingMessageProcessor(scenario);
         }
     }//GEN-LAST:event_btnStartActionPerformed
 
