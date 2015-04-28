@@ -2271,6 +2271,7 @@ public class EcsEntitiesControllerCaller {
     }
 
     public List<Integer> getSubmittedConsignementIds() {
+        
         List<Integer> consignmentIds = new ArrayList<Integer>() {
         };
         BoneCP connectionPool = null;
