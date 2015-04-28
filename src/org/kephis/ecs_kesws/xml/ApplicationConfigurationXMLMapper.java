@@ -40,7 +40,7 @@ public class ApplicationConfigurationXMLMapper {
     private static String LogLevel;
     private static String LogFile;
     private static String MHXUserProfileFilePath;
-    private static String InboxArchiveFolder;
+    private static String archiveFolder;
     private static String OutboxArchiveFolder;
     private static String ProcessingFolder;
     private static String errorFiles;
@@ -82,7 +82,7 @@ public class ApplicationConfigurationXMLMapper {
                     setIntergrationDatabasepassword(eElement.getElementsByTagName("IntergrationDatabasepassword").item(0).getTextContent());
                     setMHXUserProfileFilePath(eElement.getElementsByTagName("MHXUserProfileFilePath").item(0).getTextContent());
                     setLogFile(eElement.getElementsByTagName("LogFile").item(0).getTextContent());
-                    setInboxArchiveFolder(eElement.getElementsByTagName("ArchiveFolder").item(0).getTextContent());
+                    setArchiveFolder(eElement.getElementsByTagName("ArchiveFolder").item(0).getTextContent());
                     setOutboxArchiveFolder(eElement.getElementsByTagName("OutboxArchiveFolder").item(0).getTextContent());
                     setProcessingFolder(eElement.getElementsByTagName("ProcessingFolder").item(0).getTextContent());
                     setSenderId(eElement.getElementsByTagName("SenderId").item(0).getTextContent());
@@ -237,13 +237,13 @@ public class ApplicationConfigurationXMLMapper {
         MHXUserProfileFilePath = mHXUserProfileFilePath;
     }
 
-    public static String getInboxArchiveFolder() {
-        return InboxArchiveFolder;
+    public static String getArchiveFolder() {
+        return archiveFolder;
     }
 
-    public static void setInboxArchiveFolder(
+    public static void setArchiveFolder(
             String kESWSXMLInboxArchiveFolder) {
-        InboxArchiveFolder = kESWSXMLInboxArchiveFolder;
+        archiveFolder = kESWSXMLInboxArchiveFolder;
     }
 
     public static String getProcessingFolder() {
