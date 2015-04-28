@@ -115,8 +115,61 @@ class OutgoingMessageProcessor { //implements Runnable {
     static void getErrorMessage(String receivedFileName, String invalid_XML_File) {
         //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
  
-    } 
- 
+    }
+
+
+    public void sendErrorMessage(String receivedFileName, String filetype){
+        
+    }
+    
+    
+    private static void recErrorFileMsg(FileProcessor fileprocessor, 
+        ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
+
+
+       EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesControllerCaller = 
+               new EcsKeswsEntitiesControllerCaller();
+       
+
+        List<String> filesinQue = new ArrayList<String>();
+
+        fileprocessor.readFilesBeingProcessed(applicationConfigurationXMLMapper.getInboxFolder());
+        List<String> filespendingprocesser = fileprocessor.getFilesbeingProcessed();
+       
+        for (Iterator<String> iterator = filespendingprocesser.iterator(); iterator.hasNext();) {
+            String fileName = (String) iterator.next();
+            String deleteFile = "";
+            if (fileName.contains(applicationConfigurationXMLMapper.getFilesTypestoReceive().get(1).toString())) {
+                //ERR_MSG-CD2015KEPHISKEEXP0000227755-1-F-20150428061513
+                String docid = fileName.substring(25, 35);
+                String refDocID = docid.substring(docid.lastIndexOf("0") + 1);
+
+                String filePath = new File(applicationConfigurationXMLMapper.getInboxFolder() + fileName).getAbsolutePath();
+
+                int cdFileMsgId = Integer.parseInt(refDocID);
+                int messageType = 6;
+
+                EcsResCdFileMsg ecsResCdFileMsg = ecsKeswsEntitiesControllerCaller.findECSResCdFileMsgbyConsignmentId(cdFileMsgId);
+
+                RecErrorFileMsg recErrorFileMsg = ecsKeswsEntitiesControllerCaller.OgErrorResMsg(
+                        filePath, messageType, ecsResCdFileMsg);
+                
+                //MOVE FILES TO ARCHIVE : 
+                 UtilityClass util = new UtilityClass();
+                String destDir = applicationConfigurationXMLMapper.getArchiveFolder()
+                                        + util.getCurrentYear() + File.separator + util.getCurrentMonth()
+                                        + File.separator + util.getCurrentDay() + File.separator;
+                String sourceDir = applicationConfigurationXMLMapper.getInboxFolder();
+                
+                fileprocessor.moveXmlFileProcessed(sourceDir, destDir, fileName);
+               
+
+            }
+
+        }
+    }
+
+     
 
     public static void scenario3FileProcessor(FileProcessor fileProcessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
         EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController = new EcsKeswsEntitiesControllerCaller();
