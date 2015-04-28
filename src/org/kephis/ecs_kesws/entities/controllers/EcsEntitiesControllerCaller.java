@@ -2479,6 +2479,7 @@ public class EcsEntitiesControllerCaller {
         return consignmentRefNos;
     }
     public List<Integer> getSubmittedConsignementIds() {
+        
         List<Integer> consignmentIds = new ArrayList<Integer>() {
         };
         BoneCP connectionPool = null;

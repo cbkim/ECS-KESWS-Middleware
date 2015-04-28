@@ -126,6 +126,7 @@ public class EcsKeswsEntitiesControllerCaller {
     }
 
     public ResCdFileMsg resCDFileMsg(RecCdFileMsg recCdFileMsg, int messageTypeId) {
+        
         ResCdFileMsg resCdFileMsg = null;
         MessageTypesJpaController messagetypeContr = new MessageTypesJpaController(emf);
         MessageTypes messageType = messagetypeContr.findMessageTypes(messageTypeId);
@@ -181,7 +182,7 @@ public class EcsKeswsEntitiesControllerCaller {
 
     }
 
-    public RecErrorFileMsg OgErrorResMsg(String receivedFilePath, int message_type, ResCdFileMsg resCdFileMsg, EcsResCdFileMsg ecsResCDFileMsg) {
+    public RecErrorFileMsg OgErrorResMsg(String receivedFilePath, int message_type, EcsResCdFileMsg ecsResCDFileMsg) {
 
         RecErrorFileMsg recErrorMsg = new RecErrorFileMsg();
         UtilityClass utilityclass = new UtilityClass();
@@ -189,7 +190,7 @@ public class EcsKeswsEntitiesControllerCaller {
         MessageTypes messageType = messagetypeContr.findMessageTypes(message_type);
         RecErrorFileMsgJpaController recErrorFileMsgContr = new RecErrorFileMsgJpaController(emf);
         recErrorMsg.setFilePath(receivedFilePath);
-        recErrorMsg.setResCdFileMsgResCdFileId(resCdFileMsg);
+        
         recErrorMsg.setRecErrorMsgTime(utilityclass.getCurrentDate());
 
         if (findRecErrorMsgbyFilePath(receivedFilePath) == null) {
@@ -957,6 +958,9 @@ public class EcsKeswsEntitiesControllerCaller {
             }
         }
     }
+    
+    
+    
 
     public void createCdFileDetails(CdFileDetails cdFileDetails) {
         EntityManager em = null;

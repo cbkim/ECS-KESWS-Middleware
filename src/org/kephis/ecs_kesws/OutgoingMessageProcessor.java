@@ -31,7 +31,6 @@ import org.kephis.ecs_kesws.entities.RecCdFileMsg;
 import org.kephis.ecs_kesws.entities.ResCdFileMsg;
 import org.kephis.ecs_kesws.entities.controllers.DBDAO;
 import org.kephis.ecs_kesws.entities.controllers.EcsEntitiesControllerCaller;
-import org.kephis.ecs_kesws.entities.controllers.EcsKeswsEntitiesControllerCaller;
 import org.kephis.ecs_kesws.utilities.FileProcessor;
 import org.kephis.ecs_kesws.utilities.UtilityClass;
 import org.kephis.ecs_kesws.xml.ApplicationConfigurationXMLMapper;
@@ -39,13 +38,16 @@ import org.kephis.ecs_kesws.xml.parser.ECSConsignmentDoc;
 import org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_0.ConsignmentDocument;
 import org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_0.ConsignmentApprovalStatus;
 import org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_0.ContainerType;
-import org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_0.DocumentDetailsType;
 import org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_0.DocumentHeaderType;
 import org.kephis.ecs_kesws.xml.parser.o.ogcdres.v_1_0.DocumentDetailsType;
 import org.kephis.ecs_kesws.xml.validator.XmlFileValidator;
 import org.kephis.ecs_kesws.entities.EcsConDoc;
 import org.kephis.ecs_kesws.entities.InternalProductcodes;
 import org.kephis.ecs_kesws.xml.parser.i.ogcdsubi.v_1_1.mda_common_types.ProductDetailsOneType;
+import org.kephis.ecs_kesws.entities.RecErrorFileMsg;
+import org.kephis.ecs_kesws.entities.controllers.EcsKeswsEntitiesControllerCaller;
+
+
 
 /**
  *
@@ -70,15 +72,20 @@ class OutgoingMessageProcessor { //implements Runnable {
 
                 while (!stop && !endthread) {
                     int senario = 3;
-                    switch (senario) {
-                        
+                    switch (senario) { 
                         case 3: {
-                            getMessages(fileprocessor, applicationConfigurationXMLMapper);
-                            System.gc();
+                            
                             scenario3FileProcessor(fileprocessor, applicationConfigurationXMLMapper);
                             scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
                             System.gc();
-                            // scenario3FileProcessorTester(fileprocessor, applicationConfigurationXMLMapper);
+                            getMessages(fileprocessor, applicationConfigurationXMLMapper);
+                            System.gc();
+                            recErrorFileMsg(fileprocessor, applicationConfigurationXMLMapper);
+                            
+                            
+                            
+                        // scenario3FileProcessorTester(fileprocessor, applicationConfigurationXMLMapper);
+
                         }
                     }
                     System.gc();
@@ -93,7 +100,8 @@ class OutgoingMessageProcessor { //implements Runnable {
 
     static void getMessages(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
         try {
-            fileprocessor.retrieveMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), applicationConfigurationXMLMapper.getSenderId(), applicationConfigurationXMLMapper.getInboxFolder(), true);
+            fileprocessor.retrieveMessage(applicationConfigurationXMLMapper.getMHXUserProfileFilePath(), 
+                    applicationConfigurationXMLMapper.getSenderId(), applicationConfigurationXMLMapper.getInboxFolder(), true);
             //  get error messages 
             // enter these to rec cd error file msg
             //move to acheive from inbox
@@ -104,9 +112,11 @@ class OutgoingMessageProcessor { //implements Runnable {
 
     }
 
-    static void sendErrorMessage(String receivedFileName, String invalid_XML_File) {
+    static void getErrorMessage(String receivedFileName, String invalid_XML_File) {
         //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+ 
     } 
+ 
 
     public static void scenario3FileProcessor(FileProcessor fileProcessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
         EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController = new EcsKeswsEntitiesControllerCaller();
@@ -146,6 +156,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                     File cdResFile = new File(file);
                     System.out.println("File path " + cdResFile.getAbsoluteFile());
                     ecsResCdFileMsg = ecsKeswsEntitiesController.createEcsResCdFileMsg(fileName, 5, SubmittedConsignmentId);
+                    
                     if (ecsResCdFileMsg != null) {
 
                         for (Iterator<EcsConDoc> iterator1 = ecsConDocDetails.iterator(); iterator1.hasNext();) {
@@ -856,8 +867,8 @@ class OutgoingMessageProcessor { //implements Runnable {
 
                 while (!stop && !endthread) {
 
-                    switch (senario) {
-                        
+                    switch (senario) { 
+ 
                         case 3: {
                             getMessages(fileprocessor, applicationConfigurationXMLMapper);
                             scenario3FileProcessor(fileprocessor, applicationConfigurationXMLMapper);
