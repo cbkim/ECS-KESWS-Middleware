@@ -147,11 +147,11 @@ class OutgoingMessageProcessor { //implements Runnable {
             if (fileName.contains(applicationConfigurationXMLMapper.getFilesTypestoReceive().get(1).toString())) {
                 //ERR_MSG-CD2015KEPHISKEEXP0000227755-1-F-20150428061513
                 String docid = fileName.substring(25, 35);
-                String refDocID = docid.substring(docid.lastIndexOf("0") + 1);
+                
 
                 String filePath = new File(applicationConfigurationXMLMapper.getInboxFolder() + fileName).getAbsolutePath();
 
-                int cdFileMsgId = Integer.parseInt(refDocID);
+                int cdFileMsgId = Integer.parseInt(docid);
                 int messageType = 6;
 
                 EcsResCdFileMsg ecsResCdFileMsg = ecsKeswsEntitiesControllerCaller.findECSResCdFileMsgbyConsignmentId(cdFileMsgId);
@@ -163,7 +163,7 @@ class OutgoingMessageProcessor { //implements Runnable {
                  UtilityClass util = new UtilityClass();
                 String destDir = applicationConfigurationXMLMapper.getArchiveFolder()
                                         + util.getCurrentYear() + File.separator + util.getCurrentMonth()
-                                        + File.separator + util.getCurrentDay() + File.separator;
+                                        + File.separator + util.getCurrentDay() + File.separator + cdFileMsgId + File.separator;
                 String sourceDir = applicationConfigurationXMLMapper.getInboxFolder();
                 
                 fileprocessor.moveXmlFileProcessed(sourceDir, destDir, fileName);
