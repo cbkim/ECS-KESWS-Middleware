@@ -22,7 +22,9 @@
     <class>org.kephis.ecs_kesws.entities.RecErrorFileMsg</class>
     <class>org.kephis.ecs_kesws.entities.EcsConDoc</class>
     <class>org.kephis.ecs_kesws.entities.KeswsRefDataCategory</class>
-    <class>org.kephis.ecs_kesws.entities.KeswsRefData</class>  
+    <class>org.kephis.ecs_kesws.entities.KeswsRefData</class>
+    <class>org.kephis.ecs_kesws.entities.EcsConDocHeader</class>
+    <class>org.kephis.ecs_kesws.entities.EcsConDocItems</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecs_kesws?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="ecsapps"/>

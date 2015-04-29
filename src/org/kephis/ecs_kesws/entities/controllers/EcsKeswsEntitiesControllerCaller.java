@@ -34,6 +34,8 @@ import org.kephis.ecs_kesws.entities.EcsResCdFileMsg;
 import org.kephis.ecs_kesws.entities.PaymentInfoLog;
 import org.kephis.ecs_kesws.entities.RecPaymentFileMsg;
 import org.kephis.ecs_kesws.entities.TransactionLogs;
+import org.kephis.ecs_kesws.entities.EcsConDocHeader;
+import org.kephis.ecs_kesws.entities.EcsConDocItems;
 import org.kephis.ecs_kesws.utilities.UtilityClass;
 import org.kephis.ecs_kesws.entities.controllers.exceptions.IllegalOrphanException;
 import org.kephis.ecs_kesws.entities.controllers.exceptions.NonexistentEntityException;
@@ -934,31 +936,47 @@ public class EcsKeswsEntitiesControllerCaller {
         }
     }
 
-    public List<EcsConDoc> findEcsConDocByConsignmentId(Integer SubmittedConsignmentId) {
+    
+    
+     public List<EcsConDocItems> findEcsConDocItemsByConsignmentId(Integer SubmittedConsignmentId) {
         EntityManager em = null;
         try {
             em = getEntityManager();
-            List<EcsConDoc> resEcsConDoc = new ArrayList<EcsConDoc>();
-            Query findResEcsConDoc = em.createNamedQuery("EcsConDoc.findByConsignmentId");
-            findResEcsConDoc.setParameter("consignmentId", SubmittedConsignmentId);
-
+            List<EcsConDocItems> ecsConDocItems = new ArrayList<EcsConDocItems>();
+            Query findResEcsConDoc = em.createNamedQuery("EcsConDocItems.findByConsignmentId");
+            findResEcsConDoc.setParameter("consignmentId", SubmittedConsignmentId.toString()); 
             List results = findResEcsConDoc.getResultList();
-            if (!results.isEmpty()) {
-
+            if (!results.isEmpty()) { 
                 for (Iterator iterator = results.iterator(); iterator.hasNext();) {
-                    resEcsConDoc.add((EcsConDoc) iterator.next());
-
-                }
-
+                    ecsConDocItems.add((EcsConDocItems) iterator.next()); 
+                } 
             }
-            return resEcsConDoc;
+            return ecsConDocItems;
         } finally {
             if (em != null) {
                 em.close();
             }
         }
     }
-    
+        public EcsConDocHeader findEcsConDocHeaderByConsignmentId(Integer SubmittedConsignmentId) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            EcsConDocHeader ecsConDocHeader= new EcsConDocHeader();
+            Query findResEcsConDoc = em.createNamedQuery("EcsConDocHeader.findByConsignmentId");
+            findResEcsConDoc.setParameter("consignmentId", SubmittedConsignmentId.toString());
+            List results = findResEcsConDoc.getResultList();
+            if (!results.isEmpty()) {
+                ecsConDocHeader=(EcsConDocHeader) results.get(0);
+ 
+            }
+            return ecsConDocHeader;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
     
     
 
