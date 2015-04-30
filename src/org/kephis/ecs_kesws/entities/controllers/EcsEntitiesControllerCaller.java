@@ -1256,7 +1256,8 @@ public class EcsEntitiesControllerCaller {
             BoneCPConfig config = new BoneCPConfig();
             config.setJdbcUrl(DB_URL); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
             config.setUsername(USER);
-            config.setPassword(PASS);
+            config.setPassword(PASS); 
+            config.setIdleMaxAgeInSeconds(10);
             config.setMinConnectionsPerPartition(5);
             config.setMaxConnectionsPerPartition(10);
             config.setPartitionCount(1);
@@ -1287,22 +1288,14 @@ public class EcsEntitiesControllerCaller {
         return clientId;
     }
     public String getClientPin(int ClientId) {
-        String clientPin = "";
-        BoneCP connectionPool = null;
+        String clientPin = ""; 
         Connection connection = null;
-        try {
-            // load the database driver (make sure this is in your classpath!)
-            Class.forName(JDBC_DRIVER);
+        try { 
             // setup the connection pool
-            BoneCPConfig config = new BoneCPConfig();
-            config.setJdbcUrl(DB_URL); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
-            config.setUsername(USER);
-            config.setPassword(PASS);
-            config.setMinConnectionsPerPartition(5);
-            config.setMaxConnectionsPerPartition(10);
-            config.setPartitionCount(1);
-            connectionPool = new BoneCP(config); // setup the connection pool 
-            connection = connectionPool.getConnection(); // fetch a connection 
+            Class.forName(JDBC_DRIVER); 
+            connection = DriverManager
+          .getConnection(DB_URL
+              + "user="+USER+"&password="+PASS); 
             if (connection != null) {
                 Statement stmt = connection.createStatement();
                 String sql;
@@ -1312,7 +1305,7 @@ public class EcsEntitiesControllerCaller {
                     clientPin = rs.getString("PIN");
                 }
             }
-            connectionPool.shutdown(); // shutdown connection pool.
+            connection.close(); // shutdown connection pool.
         } catch (Exception ex) {
             Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -1328,32 +1321,26 @@ public class EcsEntitiesControllerCaller {
         return clientPin;
     }
     public String getClientName(int ClientId) {
-        String clientFirmName = "";
-        BoneCP connectionPool = null;
+        String clientFirmName = ""; 
         Connection connection = null;
         try {
             // load the database driver (make sure this is in your classpath!)
             Class.forName(JDBC_DRIVER);
             // setup the connection pool
-            BoneCPConfig config = new BoneCPConfig();
-            config.setJdbcUrl(DB_URL); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
-            config.setUsername(USER);
-            config.setPassword(PASS);
-            config.setMinConnectionsPerPartition(5);
-            config.setMaxConnectionsPerPartition(10);
-            config.setPartitionCount(1);
-            connectionPool = new BoneCP(config); // setup the connection pool 
-            connection = connectionPool.getConnection(); // fetch a connection 
+                 Class.forName(JDBC_DRIVER); 
+            connection = DriverManager
+          .getConnection(DB_URL
+              + "user="+USER+"&password="+PASS); 
             if (connection != null) {
                 Statement stmt = connection.createStatement();
                 String sql;
-                sql = "SELECT `FIRM_NAME` FROM `client` WHERE `ID` = " + ClientId + " AND STATUS='REGISTERED' ";
+                sql = "SELECT `FIRM_NAME` FROM `client` WHERE `ID` = " + ClientId + " AND STATUS='REGISTERED' LIMIT 1 ";
                 ResultSet rs = stmt.executeQuery(sql); // do something with the connection.
                 if (rs.next()) {
                     clientFirmName = rs.getString("FIRM_NAME");
                 }
             }
-            connectionPool.shutdown(); // shutdown connection pool.
+            connection.close(); // shutdown connection pool.
         } catch (Exception ex) {
             Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -1781,33 +1768,25 @@ public class EcsEntitiesControllerCaller {
     }
 
     public String getECSconsignmentStatus(int ConsignmentId, String Status) {
-        String eCSconsignmentStatus = "";
-        BoneCP connectionPool = null;
+        String eCSconsignmentStatus = ""; 
         Connection connection = null;
         try {
             // load the database driver (make sure this is in your classpath!)
-            Class.forName(JDBC_DRIVER);
-            // setup the connection pool
-            BoneCPConfig config = new BoneCPConfig();
-            config.setJdbcUrl(DB_URL); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
-            config.setUsername(USER);
-            config.setPassword(PASS);
-            config.setMinConnectionsPerPartition(5);
-            config.setMaxConnectionsPerPartition(10);
-            config.setPartitionCount(1);
-            connectionPool = new BoneCP(config); // setup the connection pool 
-            connection = connectionPool.getConnection(); // fetch a connection 
+            Class.forName(JDBC_DRIVER); 
+            connection = DriverManager
+          .getConnection(DB_URL
+              + "user="+USER+"&password="+PASS);
             if (connection != null) {
                 Statement stmt = connection.createStatement();
-                String sql = "SELECT  STATUS   FROM    `consignementstatuslog` WHERE CGT_ID='" + ConsignmentId + "and STATUS='" + Status + "' ORDER BY id DESC LIMIT  0, 1";
+                String sql = "SELECT  STATUS   FROM    `consignementstatuslog` WHERE CGT_ID='" + ConsignmentId + "' and STATUS='" + Status + "' ORDER BY id DESC LIMIT  0, 1";
                 ResultSet rs = stmt.executeQuery(sql);
                ;
                 if (rs.next()) {
                    
                     eCSconsignmentStatus = rs.getString("STATUS");
                 }
-            }
-            connectionPool.shutdown(); // shutdown connection pool. 
+            } 
+            connection.close();
         } catch (Exception ex) {
 //            ECSKESWSFileLogger.Log(e.toString(), "SEVERE");
             Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
@@ -1824,21 +1803,16 @@ public class EcsEntitiesControllerCaller {
     }
     public int getECSconsignmentClientId(int ConsignmentId) {
         int eCSconsignmentClientId = 0;
-        BoneCP connectionPool = null;
+       
         Connection connection = null;
         try {
             // load the database driver (make sure this is in your classpath!)
             Class.forName(JDBC_DRIVER);
             // setup the connection pool
-            BoneCPConfig config = new BoneCPConfig();
-            config.setJdbcUrl(DB_URL); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
-            config.setUsername(USER);
-            config.setPassword(PASS);
-            config.setMinConnectionsPerPartition(5);
-            config.setMaxConnectionsPerPartition(10);
-            config.setPartitionCount(1);
-            connectionPool = new BoneCP(config); // setup the connection pool 
-            connection = connectionPool.getConnection(); // fetch a connection 
+              Class.forName(JDBC_DRIVER); 
+            connection = DriverManager
+          .getConnection(DB_URL
+              + "user="+USER+"&password="+PASS);
             if (connection != null) {
                 Statement stmt = connection.createStatement();
                 String sql = "SELECT  CLT_ID   FROM    `CONSIGNEMENT` WHERE CGT_ID='" + ConsignmentId + "' ORDER BY id DESC LIMIT  0, 1";
@@ -1849,7 +1823,7 @@ public class EcsEntitiesControllerCaller {
                     eCSconsignmentClientId = rs.getInt("CLT_ID");
                 }
             }
-            connectionPool.shutdown(); // shutdown connection pool. 
+            connection.close(); // shutdown connection pool. 
         } catch (Exception ex) {
 //            ECSKESWSFileLogger.Log(e.toString(), "SEVERE");
             Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
@@ -1865,8 +1839,7 @@ public class EcsEntitiesControllerCaller {
         return eCSconsignmentClientId;
     }
     public int getECSconsignmentPkId(int ConsignmentId) {
-        int eCSconsignmentPkId = 0;
-        BoneCP connectionPool = null;
+        int eCSconsignmentPkId = 0; 
         Connection connection = null;
         try {
             // load the database driver (make sure this is in your classpath!)
@@ -1875,12 +1848,11 @@ public class EcsEntitiesControllerCaller {
             BoneCPConfig config = new BoneCPConfig();
             config.setJdbcUrl(DB_URL); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
             config.setUsername(USER);
-            config.setPassword(PASS);
-            config.setMinConnectionsPerPartition(5);
-            config.setMaxConnectionsPerPartition(10);
-            config.setPartitionCount(1);
-            connectionPool = new BoneCP(config); // setup the connection pool 
-            connection = connectionPool.getConnection(); // fetch a connection 
+            config.setPassword(PASS); 
+               Class.forName(JDBC_DRIVER); 
+            connection = DriverManager
+          .getConnection(DB_URL
+              + "user="+USER+"&password="+PASS);
             if (connection != null) {
                 Statement stmt = connection.createStatement();
                 String sql = "SELECT  ID   FROM    `CONSIGNEMENT` WHERE CGT_ID='" + ConsignmentId + "' ORDER BY id DESC LIMIT  0, 1";
@@ -1891,7 +1863,7 @@ public class EcsEntitiesControllerCaller {
                     eCSconsignmentPkId = rs.getInt("ID");
                 }
             }
-            connectionPool.shutdown(); // shutdown connection pool. 
+            connection.close();
         } catch (Exception ex) {
 //            ECSKESWSFileLogger.Log(e.toString(), "SEVERE");
             Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
@@ -2542,23 +2514,17 @@ public class EcsEntitiesControllerCaller {
      */
     public boolean InvoiceConsignmentonECS(int ECSconsignmentId, String ClientId, float Amount, String AccpacInvoiceNo, String AccpacInvoiceRefNo, String InvoiceDescription, String ServiceType, EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController, int inseertupdateflag, String Flow) {
 
-        boolean iscreated = false;
-        BoneCP connectionPool = null;
+        boolean iscreated = false; 
         Connection connection = null;
         try {
             
           // load the database driver (make sure this is in your classpath!)
             Class.forName(JDBC_DRIVER);
             // setup the connection pool
-            BoneCPConfig config = new BoneCPConfig();
-            config.setJdbcUrl(DB_URL); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
-            config.setUsername(USER);
-            config.setPassword(PASS);
-            config.setMinConnectionsPerPartition(5);
-            config.setMaxConnectionsPerPartition(10);
-            config.setPartitionCount(1);
-            connectionPool = new BoneCP(config); // setup the connection pool 
-            connection = connectionPool.getConnection(); // fetch a connection 
+               Class.forName(JDBC_DRIVER); 
+            connection = DriverManager
+          .getConnection(DB_URL
+              + "user="+USER+"&password="+PASS);
             
             if (connection != null) {
 
@@ -2648,10 +2614,9 @@ public class EcsEntitiesControllerCaller {
                 iscreated = stmt1.execute();
 
             }
-            connectionPool.shutdown(); // shutdown connection pool.
+            connection.close(); // shutdown connection pool.
         } catch (Exception ex) {
-            Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
-            connectionPool.shutdown(); // shutdown connection pool.
+            Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex); 
 //            ECSKESWSFileLogger.Log(e.toString(), "SEVERE");
         } finally {
             if (connection != null) {
@@ -2980,22 +2945,14 @@ public class EcsEntitiesControllerCaller {
     }
 
     public String getClientCustomerId(String ClientPin) {
-        String clientId = "";
-        BoneCP connectionPool = null;
+        String clientId = ""; 
         Connection connection = null;
         try {
             // load the database driver (make sure this is in your classpath!)
-            Class.forName(JDBC_DRIVER);
-            // setup the connection pool
-            BoneCPConfig config = new BoneCPConfig();
-            config.setJdbcUrl(DB_URL); // jdbc url specific to your database, eg jdbc:mysql://127.0.0.1/yourdb
-            config.setUsername(USER);
-            config.setPassword(PASS);
-            config.setMinConnectionsPerPartition(5);
-            config.setMaxConnectionsPerPartition(10);
-            config.setPartitionCount(1);
-            connectionPool = new BoneCP(config); // setup the connection pool 
-            connection = connectionPool.getConnection(); // fetch a connection 
+            Class.forName(JDBC_DRIVER); 
+            connection = DriverManager
+          .getConnection(DB_URL
+              + "user="+USER+"&password="+PASS); 
             if (connection != null) {
                 Statement stmt = connection.createStatement();
                 String sql;
@@ -3005,7 +2962,7 @@ public class EcsEntitiesControllerCaller {
                     clientId = rs.getString("CLT_ID");
                 }
             }
-            connectionPool.shutdown(); // shutdown connection pool.
+            connection.close(); // shutdown connection pool.
         } catch (Exception ex) {
 
             Logger.getLogger(EcsEntitiesControllerCaller.class.getName()).log(Level.SEVERE, null, ex);
