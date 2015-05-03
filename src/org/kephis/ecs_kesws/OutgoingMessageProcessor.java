@@ -74,18 +74,10 @@ class OutgoingMessageProcessor { //implements Runnable {
                     switch (senario) {
                         case 3: {
 
-                            scenario3FileProcessor(fileprocessor, applicationConfigurationXMLMapper);
-                            //scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
-                            // getMessages(fileprocessor, applicationConfigurationXMLMapper); 
-                            recErrorFileMsg(fileprocessor, applicationConfigurationXMLMapper);
-
-                            try {
-                                Thread.sleep(60);
-                                // Thread.sleep(60000);                 //1000 milliseconds is one second.
-                                //   closeDbConnections(applicationConfigurationXMLMapper);
-                            } catch (InterruptedException ex) {
-                                Thread.currentThread().interrupt();
-                            }
+                            scenario3CDFileMsgProcessor(fileprocessor, applicationConfigurationXMLMapper);
+                            scenario3CDApprovalMsgProccessor(fileprocessor, applicationConfigurationXMLMapper);
+                            getMessages(fileprocessor, applicationConfigurationXMLMapper); 
+                            recErrorFileMsgProcessor(fileprocessor, applicationConfigurationXMLMapper);
 
                         }
                     }
@@ -117,19 +109,19 @@ class OutgoingMessageProcessor { //implements Runnable {
         ecsEntitiesControllerCaller.closeOpenConnections();
     }
 
-    private static void recErrorFileMsg(FileProcessor fileprocessor,
+    private static void recErrorFileMsgProcessor(FileProcessor fileprocessor,
             ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
-
-        EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesControllerCaller
-                = new EcsKeswsEntitiesControllerCaller();
 
         fileprocessor.readFilesBeingProcessed(applicationConfigurationXMLMapper.getInboxFolder());
         List<String> filespendingprocesser = fileprocessor.getFilesbeingProcessed();
 
         for (Iterator<String> iterator = filespendingprocesser.iterator(); iterator.hasNext();) {
+          
             String fileName = (String) iterator.next();
             if (fileName.contains(applicationConfigurationXMLMapper.getFilesTypestoReceive().get(1).toString())) {
-                String docid = fileName.substring(25, 35);//Get the consignment id 
+                 EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesControllerCaller
+                    = new EcsKeswsEntitiesControllerCaller();
+                 String docid = fileName.substring(25, 35);//Get the consignment id 
                 File file = new File(applicationConfigurationXMLMapper.getInboxFolder() + fileName);
                 int cdFileMsgId = Integer.parseInt(docid);
                 int messageType = 6;
@@ -151,8 +143,8 @@ class OutgoingMessageProcessor { //implements Runnable {
         }
     }
 
-    public static void scenario3FileProcessor(FileProcessor fileProcessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
-       
+    public static void scenario3CDFileMsgProcessor(FileProcessor fileProcessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
+
         EcsEntitiesControllerCaller ecsEntitiesController = new EcsEntitiesControllerCaller(applicationConfigurationXMLMapper);
         List<Integer> submittedConsignmentIds = new ArrayList<Integer>();
         submittedConsignmentIds = ecsEntitiesController.getSubmittedConsignementIds();
@@ -497,10 +489,9 @@ class OutgoingMessageProcessor { //implements Runnable {
                     e.printStackTrace();
                 }
             }
-             ecsKeswsEntitiesController.CloseEmf();
+            ecsKeswsEntitiesController.CloseEmf();
         }
 
-       
     }
 
     /**
@@ -509,16 +500,16 @@ class OutgoingMessageProcessor { //implements Runnable {
      * @param fileprocessor
      * @param applicationConfigurationXMLMapper
      */
-    private static void scenario3CDApprovalMesg(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
+    private static void scenario3CDApprovalMsgProccessor(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
 
-        EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesControllerCaller = new EcsKeswsEntitiesControllerCaller();
         EcsEntitiesControllerCaller ecsEntitiesControllerCaller = new EcsEntitiesControllerCaller(applicationConfigurationXMLMapper);
 
         List<String> filesinQue = new ArrayList<String>();
         UtilityClass util = new UtilityClass();
         List<String> cdFileApprovalMessages = ecsEntitiesControllerCaller.getConsignmentsApprovalMesg();
         if (!cdFileApprovalMessages.isEmpty()) {
-            try {
+         EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesControllerCaller = new EcsKeswsEntitiesControllerCaller();
+           try {
                 for (Iterator<String> iterator = cdFileApprovalMessages.iterator(); iterator.hasNext();) {
                     String CdRefNo = (String) iterator.next();
 
@@ -707,7 +698,12 @@ class OutgoingMessageProcessor { //implements Runnable {
 // to be changed to issued 
                         if (ecsEntitiesControllerCaller.getECSconsignmentStatus(consignmentPkId, "PENDING").contains("PENDING")
                                 && (recCdFileMsgConsignmentId != 0)) {
-                            if (isFirstMessageSent == 1) {
+                            if (isFirstMessageSent == 1) { 
+                            try {
+                                  Thread.sleep(60000);                 // one minute lag is one second. 
+                            } catch (InterruptedException ex) {
+                                Thread.currentThread().interrupt();
+                            }
                                 ConsignmentApprovalStatus resObj3 = new ConsignmentApprovalStatus();
                                 DocumentHeaderType resObjDocHeader3 = new DocumentHeaderType();
                                 DocumentDetailsType resObjDocDetails3 = new DocumentDetailsType();
@@ -793,8 +789,8 @@ class OutgoingMessageProcessor { //implements Runnable {
 
                         case 3: {
                             getMessages(fileprocessor, applicationConfigurationXMLMapper);
-                            scenario3FileProcessor(fileprocessor, applicationConfigurationXMLMapper);
-                            scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
+                            scenario3CDFileMsgProcessor(fileprocessor, applicationConfigurationXMLMapper);
+                            scenario3CDApprovalMsgProccessor(fileprocessor, applicationConfigurationXMLMapper);
                             // scenario3FileProcessorTester(fileprocessor, applicationConfigurationXMLMapper);
                         }
                     }
