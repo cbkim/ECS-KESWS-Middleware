@@ -36,8 +36,6 @@ public class EcsKeswsServiceControlPanel extends javax.swing.JFrame {
         jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
-        btnEcsKeswsMode = new javax.swing.JToggleButton();
-        btnKeswsEcsMode = new javax.swing.JToggleButton();
         btnStart = new javax.swing.JButton();
         jbtnPostPayment = new javax.swing.JRadioButton();
         jbPrePayment = new javax.swing.JRadioButton();
@@ -55,20 +53,6 @@ public class EcsKeswsServiceControlPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ECS KESWS GUI");
-
-        btnEcsKeswsMode.setText("ECS KESWS mode");
-        btnEcsKeswsMode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEcsKeswsModeActionPerformed(evt);
-            }
-        });
-
-        btnKeswsEcsMode.setText("KESWS ECS Mode ");
-        btnKeswsEcsMode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKeswsEcsModeActionPerformed(evt);
-            }
-        });
 
         btnStart.setText("Start");
         btnStart.addActionListener(new java.awt.event.ActionListener() {
@@ -111,65 +95,45 @@ public class EcsKeswsServiceControlPanel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnKeswsEcsMode)
-                            .addComponent(btnEcsKeswsMode, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbPrePayment, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtnPostPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnStart)
-                            .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnPostPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbPrePayment, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnStart)
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnKeswsEcsMode)
-                    .addComponent(jbtnPostPayment)
-                    .addComponent(btnStart))
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEcsKeswsMode)
                     .addComponent(jbPrePayment)
-                    .addComponent(btnStop))
+                    .addComponent(btnStop)
+                    .addComponent(btnStart)
+                    .addComponent(jbtnPostPayment))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
-
-        btnEcsKeswsMode.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnKeswsEcsModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeswsEcsModeActionPerformed
- 
-        btnEcsKeswsMode.setEnabled(false);
-        jbPrePayment.setEnabled(true);
-        jbtnPostPayment.setEnabled(true);
-        
-        //the variable specifies if its incoming or outgoing
-        isOutGoingMode = false ; //when the isOutGoingMode is set to FALSE, it means its incoming mode
-    }//GEN-LAST:event_btnKeswsEcsModeActionPerformed
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
                               
@@ -187,13 +151,6 @@ public class EcsKeswsServiceControlPanel extends javax.swing.JFrame {
            // new IncomingMessageProcessor(scenario);
         }
     }//GEN-LAST:event_btnStartActionPerformed
-
-    private void btnEcsKeswsModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEcsKeswsModeActionPerformed
-        btnKeswsEcsMode.setEnabled(false);
-        jbPrePayment.setEnabled(true);
-        jbtnPostPayment.setEnabled(true);
-        isOutGoingMode = true; //when true the mode is set to outgoing
-    }//GEN-LAST:event_btnEcsKeswsModeActionPerformed
 
     private void jbtnPostPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPostPaymentActionPerformed
                        jbPrePayment.setEnabled(false);
@@ -214,9 +171,7 @@ public class EcsKeswsServiceControlPanel extends javax.swing.JFrame {
            btnStop.setEnabled(false);
          
           jbPrePayment.setEnabled(false);
-          jbtnPostPayment.setEnabled(false);
-          btnKeswsEcsMode.setEnabled(true);
-          btnEcsKeswsMode.setEnabled(true);
+          jbtnPostPayment.setEnabled(false); 
          
     }//GEN-LAST:event_btnStopActionPerformed
 
@@ -259,8 +214,6 @@ public class EcsKeswsServiceControlPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnEcsKeswsMode;
-    private javax.swing.JToggleButton btnKeswsEcsMode;
     private javax.swing.JButton btnStart;
     private javax.swing.JButton btnStop;
     private javax.swing.ButtonGroup buttonGroup1;

@@ -31,7 +31,7 @@
     <MessageTypes>
         <!-- message types-->
         <MessageTypes1>OG_SUB_CD</MessageTypes1>
-        <MessageTypes2>OG_ERR_RES</MessageTypes2>
+        <MessageTypes2>ERR_MSG</MessageTypes2>
         <MessageTypes3>OG_PAY_RES</MessageTypes3>
     </MessageTypes>
 </applicationconfiguration>

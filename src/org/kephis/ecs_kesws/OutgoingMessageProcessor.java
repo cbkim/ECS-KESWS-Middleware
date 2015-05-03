@@ -75,11 +75,18 @@ class OutgoingMessageProcessor { //implements Runnable {
                         case 3: {
 
                             scenario3FileProcessor(fileprocessor, applicationConfigurationXMLMapper);
-                            scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
-                            System.gc();
-                            getMessages(fileprocessor, applicationConfigurationXMLMapper);
-                            System.gc();
+                            //scenario3CDApprovalMesg(fileprocessor, applicationConfigurationXMLMapper);
+                            // getMessages(fileprocessor, applicationConfigurationXMLMapper); 
                             recErrorFileMsg(fileprocessor, applicationConfigurationXMLMapper);
+
+                            try {
+                                Thread.sleep(60);
+                                // Thread.sleep(60000);                 //1000 milliseconds is one second.
+                                //   closeDbConnections(applicationConfigurationXMLMapper);
+                            } catch (InterruptedException ex) {
+                                Thread.currentThread().interrupt();
+                            }
+
                         }
                     }
                     System.gc();
@@ -103,44 +110,41 @@ class OutgoingMessageProcessor { //implements Runnable {
 
     }
 
+    static void closeDbConnections(ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
+        EcsEntitiesControllerCaller ecsEntitiesControllerCaller
+                = new EcsEntitiesControllerCaller(applicationConfigurationXMLMapper);
+
+        ecsEntitiesControllerCaller.closeOpenConnections();
+    }
+
     private static void recErrorFileMsg(FileProcessor fileprocessor,
             ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
 
         EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesControllerCaller
                 = new EcsKeswsEntitiesControllerCaller();
 
-        List<String> filesinQue = new ArrayList<String>();
-
         fileprocessor.readFilesBeingProcessed(applicationConfigurationXMLMapper.getInboxFolder());
         List<String> filespendingprocesser = fileprocessor.getFilesbeingProcessed();
 
         for (Iterator<String> iterator = filespendingprocesser.iterator(); iterator.hasNext();) {
             String fileName = (String) iterator.next();
-            String deleteFile = "";
             if (fileName.contains(applicationConfigurationXMLMapper.getFilesTypestoReceive().get(1).toString())) {
-                //ERR_MSG-CD2015KEPHISKEEXP0000227755-1-F-20150428061513
-                String docid = fileName.substring(25, 35);
-                
-
-                String filePath = new File(applicationConfigurationXMLMapper.getInboxFolder() + fileName).getAbsolutePath();
-
+                String docid = fileName.substring(25, 35);//Get the consignment id 
+                File file = new File(applicationConfigurationXMLMapper.getInboxFolder() + fileName);
                 int cdFileMsgId = Integer.parseInt(docid);
                 int messageType = 6;
-
                 EcsResCdFileMsg ecsResCdFileMsg = ecsKeswsEntitiesControllerCaller.findECSResCdFileMsgbyConsignmentId(cdFileMsgId);
-
-                RecErrorFileMsg recErrorFileMsg = ecsKeswsEntitiesControllerCaller.OgErrorResMsg(
-                        filePath, messageType, ecsResCdFileMsg);
-
-                //MOVE FILES TO ARCHIVE : 
+                //MOVE FILES TO ARCHIVE AND DELETE: 
                 UtilityClass util = new UtilityClass();
                 String destDir = applicationConfigurationXMLMapper.getArchiveFolder()
- 
-                                        + util.getCurrentYear() + File.separator + util.getCurrentMonth()
-                                        + File.separator + util.getCurrentDay() + File.separator + cdFileMsgId + File.separator;
+                        + util.getCurrentYear() + File.separator + util.getCurrentMonth()
+                        + File.separator + util.getCurrentDay() + File.separator + cdFileMsgId + File.separator;
                 String sourceDir = applicationConfigurationXMLMapper.getInboxFolder();
-
                 fileprocessor.moveXmlFileProcessed(sourceDir, destDir, fileName);
+                file.delete();
+                String newfilePath = destDir + fileName;
+                RecErrorFileMsg recErrorFileMsg = ecsKeswsEntitiesControllerCaller.OgErrorResMsg(
+                        fileName, newfilePath, messageType, ecsResCdFileMsg);
 
             }
 
@@ -148,13 +152,15 @@ class OutgoingMessageProcessor { //implements Runnable {
     }
 
     public static void scenario3FileProcessor(FileProcessor fileProcessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
-        EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController = new EcsKeswsEntitiesControllerCaller();
+       
         EcsEntitiesControllerCaller ecsEntitiesController = new EcsEntitiesControllerCaller(applicationConfigurationXMLMapper);
         List<Integer> submittedConsignmentIds = new ArrayList<Integer>();
         submittedConsignmentIds = ecsEntitiesController.getSubmittedConsignementIds();
-        EcsResCdFileMsg ecsResCdFileMsg = new EcsResCdFileMsg();// CDfile database entity mapper
-        UtilityClass util = new UtilityClass();
+
         for (Iterator<Integer> iterator = submittedConsignmentIds.iterator(); iterator.hasNext();) {
+            EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesController = new EcsKeswsEntitiesControllerCaller();
+            EcsResCdFileMsg ecsResCdFileMsg = new EcsResCdFileMsg();// CDfile database entity mapper
+            UtilityClass util = new UtilityClass();
             Integer SubmittedConsignmentId = 0;
             SubmittedConsignmentId = iterator.next();
             //Call view with consignment documents to be processed 
@@ -491,9 +497,10 @@ class OutgoingMessageProcessor { //implements Runnable {
                     e.printStackTrace();
                 }
             }
+             ecsKeswsEntitiesController.CloseEmf();
         }
 
-        ecsKeswsEntitiesController.CloseEmf();
+       
     }
 
     /**
@@ -504,7 +511,6 @@ class OutgoingMessageProcessor { //implements Runnable {
      */
     private static void scenario3CDApprovalMesg(FileProcessor fileprocessor, ApplicationConfigurationXMLMapper applicationConfigurationXMLMapper) {
 
-        
         EcsKeswsEntitiesControllerCaller ecsKeswsEntitiesControllerCaller = new EcsKeswsEntitiesControllerCaller();
         EcsEntitiesControllerCaller ecsEntitiesControllerCaller = new EcsEntitiesControllerCaller(applicationConfigurationXMLMapper);
 

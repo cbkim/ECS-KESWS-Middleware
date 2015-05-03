@@ -59,7 +59,6 @@ public class EcsKeswsEntitiesControllerCaller {
         java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.OFF);
         //or whatever level you need
         emf = Persistence.createEntityManagerFactory("ECS-KESWS-MiddlewarePU");
-
     }
 
     public ResCdFileMsg resCDFileMsg(RecCdFileMsg recCdFileMsg, int messageTypeId, String filePath) {
@@ -184,21 +183,22 @@ public class EcsKeswsEntitiesControllerCaller {
 
     }
 
-    public RecErrorFileMsg OgErrorResMsg(String receivedFilePath, int message_type, EcsResCdFileMsg ecsResCDFileMsg) {
+    public RecErrorFileMsg OgErrorResMsg(String receivedFileName, String receivedFilePath,int message_type, EcsResCdFileMsg ecsResCDFileMsg) {
 
         RecErrorFileMsg recErrorMsg = new RecErrorFileMsg();
         UtilityClass utilityclass = new UtilityClass();
         MessageTypesJpaController messagetypeContr = new MessageTypesJpaController(emf);
         MessageTypes messageType = messagetypeContr.findMessageTypes(message_type);
         RecErrorFileMsgJpaController recErrorFileMsgContr = new RecErrorFileMsgJpaController(emf);
+        recErrorMsg.setFileName(receivedFileName);
+        recErrorMsg.setMessageTypesMessageTypeId(messageType);
+        recErrorMsg.setEcsResCdFileMsgEcsResCdFileMsgId(ecsResCDFileMsg.getRECCDFileID());
         recErrorMsg.setFilePath(receivedFilePath);
-        
-        recErrorMsg.setRecErrorMsgTime(utilityclass.getCurrentDate());
-
-        if (findRecErrorMsgbyFilePath(receivedFilePath) == null) {
+        recErrorMsg.setRecErrorMsgTime(utilityclass.getCurrentDate()); 
+        if (findRecErrorMsgbyFileName(receivedFileName) == null) {
             try {
                 recErrorFileMsgContr.create(recErrorMsg);
-                recErrorMsg = findRecErrorMsgbyFilePath(receivedFilePath);
+                recErrorMsg = findRecErrorMsgbyFileName(receivedFileName);
                 return recErrorMsg;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -455,13 +455,13 @@ public class EcsKeswsEntitiesControllerCaller {
         }
     }
 
-    public RecErrorFileMsg findRecErrorMsgbyFilePath(String FilePath) {
+    public RecErrorFileMsg findRecErrorMsgbyFileName(String fileName) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             RecErrorFileMsg recErrorMsg = null;
-            Query findRecErrorMsgbyFilePath = em.createNamedQuery("RecErrorMsg.findByFilePath");
-            findRecErrorMsgbyFilePath.setParameter("filePath", FilePath);
+            Query findRecErrorMsgbyFilePath = em.createNamedQuery("RecErrorFileMsg.findByFileName");
+            findRecErrorMsgbyFilePath.setParameter("fileName", fileName);
             List results = findRecErrorMsgbyFilePath.getResultList();
             if (!results.isEmpty()) {
                 recErrorMsg = (RecErrorFileMsg) results.get(0);

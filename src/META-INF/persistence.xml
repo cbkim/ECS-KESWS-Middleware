@@ -27,24 +27,40 @@
     <class>org.kephis.ecs_kesws.entities.EcsConDocItems</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecs_kesws?zeroDateTimeBehavior=convertToNull"/>
-      <property name="javax.persistence.jdbc.password" value="ecsapps"/>
+      <property name="javax.persistence.jdbc.password" value="ecs_kesws"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="ecsapps"/>
+      <property name="javax.persistence.jdbc.user" value="ecs_kesws"/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <!-- Hibernate properties -->
       <property name="hibernate.show_sql" value="false"/>
       <property name="hibernate.format_sql" value="false"/>
-      <!-- Configuring Connection Pool -->
-      <property name="hibernate.c3p0.min_size" value="5"/>
-      <property name="hibernate.c3p0.max_size" value="20"/>
-      <property name="hibernate.c3p0.timeout" value="500"/>
-      <property name="hibernate.c3p0.max_statements" value="0"/>
+      <property name="hibernate.transaction.auto_close_session" value="true"/>
+      <!-- Configuring Connection Pool 
+      <property name="hibernate.c3p0.min_size" value="1"/>
+      <property name="hibernate.c3p0.max_size" value="200"/>
+      <property name="hibernate.c3p0.timeout" value="1800"/>
+      <property name="hibernate.c3p0.checkoutTimeout" value="30000"/>
+      <property name="hibernate.c3p0.max_statements" value="100"/>
       <property name="hibernate.c3p0.maxAdministrativeTaskTime" value="0"/>
-      <property name="hibernate.c3p0.idle_test_period" value="2000"/>
+      <property name="hibernate.c3p0.idle_test_period" value="30"/>
       <property name="hibernate.c3p0.numHelperThreads" value="50"/>
       <property name="hibernate.c3p0.maxIdleTime" value="2700"/>
       <property name="org.hibernate" value="false"/>
       <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
+      <property name="hibernate.dbcp.ps.whenExhaustedAction" value="2"/>
+       
+    <property name="idleConnectionTestPeriodInMinutes" value="1"/>
+    <property name="idleMaxAgeInMinutes" value="4"/>
+    <property name="maxConnectionsPerPartition" value="30"/>
+    <property name="minConnectionsPerPartition" value="1"/>
+    <property name="poolAvailabilityThreshold" value="5"/> 
+    <property name="partitionCount" value="1"/>
+    <property name="acquireIncrement" value="3"/>
+    <property name="statementsCacheSize" value="50"/>
+    <property name="releaseHelperThreads" value="3"/>
+    <property name="connectionTestStatement" value="SELECT 1"/>
+    <property name="lazyInit" value="true"/>
+    -->
     </properties>
   </persistence-unit>
 </persistence>

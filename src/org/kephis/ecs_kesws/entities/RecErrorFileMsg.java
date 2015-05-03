@@ -55,7 +55,7 @@ public class RecErrorFileMsg implements Serializable {
     @Column(name = "ECS_RES_CD_FILE_MSG_ECS_RES_CD_FILE_MSG_ID")
     private int ecsResCdFileMsgEcsResCdFileMsgId;
     @JoinColumn(name = "RES_CD_FILE_MSG_RES_CD_FILE_ID", referencedColumnName = "RES_CD_FILE_ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private ResCdFileMsg resCdFileMsgResCdFileId;
     @JoinColumn(name = "MESSAGE_TYPES_MESSAGE_TYPE_ID", referencedColumnName = "MESSAGE_TYPE_ID")
     @ManyToOne(optional = false)
